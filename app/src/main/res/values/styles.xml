@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+    <string-array name="types">
+        <item>新歌榜</item>
+        <item>热歌榜</item>
+        <item>摇滚榜</item>
+        <item>爵士</item>
+        <item>流行</item>
+        <item>欧美金曲榜</item>
+        <item>经典老歌榜</item>
+        <item>情歌对唱榜</item>
+        <item>影视金曲榜</item>
+        <item>网络歌曲榜</item>
+    </string-array>
+    <integer-array name="types_num">
+        <item>1</item>
+        <item>2</item>
+        <item>11</item>
+        <item>12</item>
+        <item>16</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+    </integer-array>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- 状态栏 -->
+    <style name="MyToolBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">?colorPrimary</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+    </style>
+</resources>

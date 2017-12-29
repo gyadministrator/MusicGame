@@ -1,5 +1,6 @@
 package fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Environment;
@@ -66,8 +67,10 @@ public class ListenFragment extends BaseFragment implements AdapterView.OnItemCl
     private static int offset = 0;
     private static int[] nums;
     private static int type;
+    private static int size = 20;
     private static String tinguid;
     private static int mProgress;
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -76,8 +79,7 @@ public class ListenFragment extends BaseFragment implements AdapterView.OnItemCl
                 DialogUtils.hidden();
                 adapter = new MusicListAdapter(list, mContext);
                 listView.setAdapter(adapter);
-                offset = offset + 1;
-                listView.loadComplete();
+                listView.loadComplete(list.size());
                 swipe.setRefreshing(false);
             } else if (msg.what == 0) {
                 DialogUtils.hidden();
@@ -115,6 +117,7 @@ public class ListenFragment extends BaseFragment implements AdapterView.OnItemCl
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (NetWorkUtils.checkNetworkState(mContext)) {
+                    size = 20;
                     list.clear();
                     type = nums[position];
                     DialogUtils.show(mContext);
@@ -186,7 +189,7 @@ public class ListenFragment extends BaseFragment implements AdapterView.OnItemCl
         });
         Map<String, Object> map = new HashMap<>();
         map.put("type", type);
-        map.put("size", 20);
+        map.put("size", size);
         map.put("offset", offset);
         httpUtils.sendGetHttp(url, map);
     }
@@ -229,6 +232,7 @@ public class ListenFragment extends BaseFragment implements AdapterView.OnItemCl
     @Override
     public void onLoad() {
         if (NetWorkUtils.checkNetworkState(mContext)) {
+            size = size + 10;
             sendHttp(url, type, offset);
         } else {
             ToastUtils.showToast(mContext, R.mipmap.music_warning, "无网络连接");

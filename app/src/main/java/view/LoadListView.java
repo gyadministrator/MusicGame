@@ -71,7 +71,7 @@ public class LoadListView extends ListView implements AbsListView.OnScrollListen
     /**
      * 加载完成
      */
-    public void loadComplete() {
+    public void loadComplete(int count) {
         isLoading = false;
         footer.findViewById(R.id.load_layout).setVisibility(GONE);
         //设置选中项

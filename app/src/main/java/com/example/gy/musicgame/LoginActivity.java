@@ -32,6 +32,7 @@ import utils.Constant;
 import utils.DialogUtils;
 import utils.HttpUtils;
 import utils.NetWorkUtils;
+import utils.PhoneUtils;
 import utils.ToastUtils;
 
 public class LoginActivity extends BaseActivity {
@@ -103,7 +104,11 @@ public class LoginActivity extends BaseActivity {
                 } else {
                     if (NetWorkUtils.checkNetworkState(LoginActivity.this)) {
                         Map<String, Object> params = new HashMap<>();
-                        params.put("username", user.getText().toString());
+                        if (PhoneUtils.checkPhone(user.getText().toString())) {
+                            params.put("phone", user.getText().toString());
+                        } else {
+                            params.put("username", user.getText().toString());
+                        }
                         params.put("password", password.getText().toString());
                         send(URL, params);
                     } else {

@@ -3,14 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/music_bg"
     android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="80" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +21,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="80"
-            android:background="@mipmap/music_icon" />
+            android:gravity="center_vertical"
+            android:paddingLeft="25sp"
+            android:text="@string/login"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
@@ -55,9 +52,7 @@
             android:layout_weight="230"
             android:hint="@string/user"
             android:inputType="text"
-            android:textColor="@color/white"
-            android:textColorHighlight="#34cf9e"
-            android:textColorHint="@color/white" />
+            android:textColorHighlight="#34cf9e" />
     </LinearLayout>
 
     <TextView
@@ -80,9 +75,7 @@
             android:layout_weight="230"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textColor="@color/white"
-            android:textColorHighlight="#34cf9e"
-            android:textColorHint="@color/white" />
+            android:textColorHighlight="#34cf9e" />
     </LinearLayout>
 
     <TextView
@@ -109,10 +102,60 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="200" />
+        android:layout_marginTop="15dp"
+        android:layout_weight="100">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/other_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/other_user"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/other_user"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="6sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/qq_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@mipmap/qq" />
+
+                <TextView
+                    android:id="@+id/weixin_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:background="@mipmap/weixin" />
+
+                <TextView
+                    android:id="@+id/weibo_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@mipmap/weibo" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -127,7 +170,6 @@
             android:layout_weight="230"
             android:gravity="center"
             android:text="@string/quick_register"
-            android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>
 

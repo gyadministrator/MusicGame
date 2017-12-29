@@ -1,5 +1,6 @@
 package com.example.gy.musicgame;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -40,13 +41,14 @@ public class StartActivity extends BaseActivity {
     private static Map<String, Object> map = new HashMap<>();
     private static CurrentUserDao userDao;
     private static final String TAG = "StartActivity";
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1) {
                 String url = parseJson(msg.obj.toString());
-                Picasso.with(StartActivity.this).load(url).resize(900, 1550).into(imageView);
+                Picasso.with(StartActivity.this).load(url).resize(1200, 1550).into(imageView);
             } else if (msg.what == 0) {
                 ToastUtils.showToast(StartActivity.this, R.mipmap.music_icon, "发生了错误");
             }

@@ -1,5 +1,6 @@
 package com.example.gy.musicgame;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,11 +14,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import org.greenrobot.greendao.query.QueryBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +47,7 @@ public class LoginActivity extends BaseActivity {
     private static final String TAG = "LoginActivity";
     private static final String URL = Constant.BASE_URL + "/user/login";
     private static User u = null;
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -90,7 +90,7 @@ public class LoginActivity extends BaseActivity {
         tex_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, PhoneActivity.class);
                 startActivity(intent);
             }
         });

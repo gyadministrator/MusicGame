@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="40" />
+            android:layout_weight="60" />
 
         <TextView
             android:layout_width="0dp"
@@ -24,13 +24,13 @@
             android:layout_weight="80"
             android:gravity="center_vertical"
             android:paddingLeft="25dp"
-            android:text="@string/userandpwd"
+            android:text="填写手机号"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="40" />
+            android:layout_weight="60" />
     </LinearLayout>
 
     <TextView
@@ -45,14 +45,14 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/user"
+            android:id="@+id/phone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_weight="230"
-            android:hint="@string/nichen"
-            android:inputType="text"
+            android:hint="@string/phone"
+            android:inputType="phone"
             android:textColorHighlight="#34cf9e" />
     </LinearLayout>
 
@@ -68,33 +68,26 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/code"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="0dp"
             android:layout_weight="230"
-            android:hint="@string/password"
-            android:inputType="textPassword"
+            android:hint="@string/code"
+            android:inputType="number"
+            android:maxLength="10"
             android:textColorHighlight="#34cf9e" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="50"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/repassword"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_weight="230"
-            android:hint="@string/repassword"
-            android:inputType="textPassword"
-            android:textColorHighlight="#34cf9e" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="15sp"
+            android:gravity="center_vertical"
+            android:text="@string/getCode"
+            android:textColor="@color/blue"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView
@@ -109,7 +102,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/register"
+            android:id="@+id/next"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
@@ -117,7 +110,7 @@
             android:layout_weight="230"
             android:background="@drawable/login_btn"
             android:enabled="false"
-            android:text="@string/register"
+            android:text="@string/btn_next"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>

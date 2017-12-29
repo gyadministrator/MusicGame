@@ -7,7 +7,7 @@
         android:layout_width="240dp"
         android:layout_height="150dp"
         android:layout_centerInParent="true"
-        android:background="#757575"
+        android:background="@drawable/loading_bg"
         android:orientation="vertical">
 
         <TextView

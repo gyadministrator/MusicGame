@@ -1,6 +1,8 @@
 package com.example.gy.musicgame;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
@@ -46,6 +48,7 @@ public class RegisterActivity extends BaseActivity {
     private static boolean flag = false;
     private static String message = "";
     private static final String TAG = "RegisterActivity";
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -65,6 +68,7 @@ public class RegisterActivity extends BaseActivity {
                 DialogUtils.hidden();
                 if (!"用户名已存在".equals(message)) {
                     register.setEnabled(true);
+                    register.setBackgroundColor(Color.GREEN);
                 }
                 ToastUtils.showToast(RegisterActivity.this, R.mipmap.music_icon, message);
             }
@@ -110,9 +114,11 @@ public class RegisterActivity extends BaseActivity {
                         ToastUtils.showToast(RegisterActivity.this, R.mipmap.music_warning, "两次密码不一致");
                     } else {
                         if (NetWorkUtils.checkNetworkState(RegisterActivity.this)) {
+                            String phone = getIntent().getStringExtra("phone");
                             Map<String, Object> params = new HashMap<>();
                             params.put("username", user.getText().toString());
                             params.put("password", password.getText().toString());
+                            params.put("phone", phone);
                             send(URL, params);
                         } else {
                             ToastUtils.showToast(RegisterActivity.this, R.mipmap.music_icon, "无网络连接");

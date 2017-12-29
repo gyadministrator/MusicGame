@@ -1,6 +1,8 @@
 package com.example.gy.musicgame;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
@@ -21,11 +23,15 @@ import java.util.Map;
 
 import base.BaseActivity;
 import bean.User;
+import bean.dao.CurrentUserDao;
+import bean.dao.DaoMaster;
+import bean.dao.DaoSession;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.Constant;
 import utils.DialogUtils;
 import utils.HttpUtils;
+import utils.MD5;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
 import view.CircleImageView;
@@ -45,6 +51,9 @@ public class ChangeActivity extends BaseActivity {
     TextView back;
     private User u;
 
+    private static CurrentUserDao userDao;
+
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -52,10 +61,13 @@ public class ChangeActivity extends BaseActivity {
             if (msg.what == 1) {
                 DialogUtils.hidden();
                 if (u != null) {
+                    userDao.deleteAll();
                     ToastUtils.showToast(ChangeActivity.this, R.mipmap.music_icon, "修改成功,请重新登录");
                     Intent intent = new Intent(ChangeActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
+                } else {
+                    ToastUtils.showToast(ChangeActivity.this, R.mipmap.music_warning, "修改失败,用户名已存在");
                 }
             } else if (msg.what == 0) {
                 DialogUtils.hidden();
@@ -68,6 +80,7 @@ public class ChangeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change);
+        initDbHelp();
         ButterKnife.bind(this);
 
         u = (User) getIntent().getBundleExtra("user").getSerializable("user");
@@ -92,7 +105,8 @@ public class ChangeActivity extends BaseActivity {
                     if (old_password.getText().toString().equals(new_password.getText().toString())) {
                         ToastUtils.showToast(ChangeActivity.this, R.mipmap.music_icon, "新密码不能和原密码相同");
                     } else {
-                        if (old_password.getText().toString().equals(u.getPassword())) {
+                        String md5Pwd = new MD5().getMD5ofStr(old_password.getText().toString());
+                        if (md5Pwd.equals(u.getPassword())) {
                             //更改用户密码
                             if (NetWorkUtils.checkNetworkState(ChangeActivity.this)) {
                                 String update_url = Constant.BASE_URL + "/user/changePwd";
@@ -147,5 +161,13 @@ public class ChangeActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initDbHelp() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "recluse-db", null);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        DaoSession daoSession = daoMaster.newSession();
+        userDao = daoSession.getCurrentUserDao();
     }
 }

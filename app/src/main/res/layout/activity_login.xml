@@ -40,7 +40,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="50"
+        android:layout_weight="30"
         android:orientation="horizontal">
 
         <EditText
@@ -63,7 +63,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="50"
+        android:layout_weight="30"
         android:orientation="horizontal">
 
         <EditText
@@ -95,7 +95,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_weight="230"
+            android:layout_weight="180"
             android:background="@drawable/login_btn"
             android:text="@string/login"
             android:textColor="@color/white"
@@ -132,26 +132,26 @@
 
                 <TextView
                     android:id="@+id/qq_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="10dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
                     android:background="@mipmap/qq" />
 
                 <TextView
                     android:id="@+id/weixin_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="10dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
                     android:background="@mipmap/weixin" />
 
                 <TextView
                     android:id="@+id/weibo_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="10dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:background="@mipmap/weibo" />
             </LinearLayout>
         </RelativeLayout>

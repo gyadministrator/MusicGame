@@ -1,5 +1,6 @@
 package fragment;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -78,6 +79,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     //用来播放的变量
     private static int num = 1;
     private static final String TAG = "IndexFragment";
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -312,7 +314,6 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {
-                Log.e(TAG, json);
                 parseQueryJson(json);
                 handler.sendEmptyMessage(5);
             }

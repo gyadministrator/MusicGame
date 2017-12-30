@@ -51,8 +51,6 @@ public class ChangeActivity extends BaseActivity {
     TextView back;
     private User u;
 
-    private static CurrentUserDao userDao;
-
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
@@ -61,7 +59,6 @@ public class ChangeActivity extends BaseActivity {
             if (msg.what == 1) {
                 DialogUtils.hidden();
                 if (u != null) {
-                    userDao.deleteAll();
                     ToastUtils.showToast(ChangeActivity.this, R.mipmap.music_icon, "修改成功,请重新登录");
                     Intent intent = new Intent(ChangeActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -80,7 +77,6 @@ public class ChangeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change);
-        initDbHelp();
         ButterKnife.bind(this);
 
         u = (User) getIntent().getBundleExtra("user").getSerializable("user");
@@ -161,13 +157,5 @@ public class ChangeActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    private void initDbHelp() {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "recluse-db", null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        DaoSession daoSession = daoMaster.newSession();
-        userDao = daoSession.getCurrentUserDao();
     }
 }

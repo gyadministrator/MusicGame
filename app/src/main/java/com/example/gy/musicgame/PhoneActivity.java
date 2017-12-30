@@ -80,7 +80,7 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void afterTextChanged(Editable s) {
                 next.setEnabled(true);
-                next.setBackgroundColor(Color.GREEN);
+                next.setBackgroundColor(Color.rgb(31, 186, 243));
             }
         });
     }
@@ -150,7 +150,6 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         ToastUtils.showToast(PhoneActivity.this, R.mipmap.music_icon, "验证码已经发送");
                     } else {
-                        ToastUtils.showToast(PhoneActivity.this, R.mipmap.music_warning, "验证码验证不成功");
                         ((Throwable) data).printStackTrace();
                     }
                 }

@@ -100,7 +100,6 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View v) {
                 if (user.getText().toString().equals("") || password.getText().toString().equals("")) {
                     ToastUtils.showToast(LoginActivity.this, R.mipmap.music_icon, "请输入信息");
-                    return;
                 } else {
                     if (NetWorkUtils.checkNetworkState(LoginActivity.this)) {
                         Map<String, Object> params = new HashMap<>();

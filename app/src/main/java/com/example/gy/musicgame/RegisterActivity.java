@@ -68,7 +68,7 @@ public class RegisterActivity extends BaseActivity {
                 DialogUtils.hidden();
                 if (!"用户名已存在".equals(message)) {
                     register.setEnabled(true);
-                    register.setBackgroundColor(Color.GREEN);
+                    register.setBackgroundColor(Color.rgb(31, 186, 243));
                 }
                 ToastUtils.showToast(RegisterActivity.this, R.mipmap.music_icon, message);
             }

@@ -85,9 +85,10 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginRight="15sp"
+            android:background="#1FBAF3"
             android:gravity="center_vertical"
             android:text="@string/getCode"
-            android:textColor="@color/blue"
+            android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>
 

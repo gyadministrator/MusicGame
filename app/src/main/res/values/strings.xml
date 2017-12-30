@@ -57,4 +57,14 @@
     <string name="code">验证码</string>
     <string name="btn_next">下一步</string>
     <string name="getCode">获取短信验证码</string>
+    <string name="xinge">新歌</string>
+    <string name="rege">热歌</string>
+    <string name="yaogun">摇滚</string>
+    <string name="jueshi">爵士</string>
+    <string name="liuxing">流行</string>
+    <string name="oumei">欧美</string>
+    <string name="lao">老歌</string>
+    <string name="qinge">情歌</string>
+    <string name="yinshi">影视</string>
+    <string name="wangluo">网络</string>
 </resources>

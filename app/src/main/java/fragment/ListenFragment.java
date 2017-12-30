@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -55,10 +56,28 @@ public class ListenFragment extends BaseFragment implements AdapterView.OnItemCl
     LoadListView listView;
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipe;
-    @BindView(R.id.spinner)
-    Spinner spinner;
     @BindView(R.id.music_search)
     TextView search;
+    @BindView(R.id.xinge)
+    LinearLayout xinge;
+    @BindView(R.id.rege)
+    LinearLayout rege;
+    @BindView(R.id.yaogun)
+    LinearLayout yaogun;
+    @BindView(R.id.jueshi)
+    LinearLayout jueshi;
+    @BindView(R.id.liuxing)
+    LinearLayout liuxing;
+    @BindView(R.id.oumei)
+    LinearLayout oumei;
+    @BindView(R.id.lao)
+    LinearLayout lao;
+    @BindView(R.id.qinge)
+    LinearLayout qinge;
+    @BindView(R.id.yinshi)
+    LinearLayout yinshi;
+    @BindView(R.id.wangluo)
+    LinearLayout wangluo;
     private static final String url = Constant.BASE_URL + "/music/getSongList";
     private static final String TAG = "ListenFragment";
     private static List<RecommendMusic> list = new ArrayList<>();
@@ -113,25 +132,20 @@ public class ListenFragment extends BaseFragment implements AdapterView.OnItemCl
         listView.setOnItemLongClickListener(this);
         listView.setLoadListener(this);
         swipe.setOnRefreshListener(this);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (NetWorkUtils.checkNetworkState(mContext)) {
-                    size = 20;
-                    list.clear();
-                    type = nums[position];
-                    DialogUtils.show(mContext);
-                    sendHttp(url, type, 0);
-                } else {
-                    ToastUtils.showToast(mContext, R.mipmap.music_warning, "无网络连接");
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+        xinge.setOnClickListener(this);
+        rege.setOnClickListener(this);
+        yaogun.setOnClickListener(this);
+        jueshi.setOnClickListener(this);
+        liuxing.setOnClickListener(this);
+        oumei.setOnClickListener(this);
+        lao.setOnClickListener(this);
+        qinge.setOnClickListener(this);
+        yinshi.setOnClickListener(this);
+        wangluo.setOnClickListener(this);
 
-            }
-        });
+        itemClick(0);
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +153,18 @@ public class ListenFragment extends BaseFragment implements AdapterView.OnItemCl
                 startActivity(intent);
             }
         });
+    }
+
+    private void itemClick(int position) {
+        if (NetWorkUtils.checkNetworkState(mContext)) {
+            size = 20;
+            list.clear();
+            type = nums[position];
+            DialogUtils.show(mContext);
+            sendHttp(url, type, 0);
+        } else {
+            ToastUtils.showToast(mContext, R.mipmap.music_warning, "无网络连接");
+        }
     }
 
     private void getPlayUrls(final int currentNum, final int what) {
@@ -276,6 +302,36 @@ public class ListenFragment extends BaseFragment implements AdapterView.OnItemCl
                 break;
             case R.id.cancel:
                 MoreDialog.hidden();
+                break;
+            case R.id.xinge:
+                itemClick(0);
+                break;
+            case R.id.rege:
+                itemClick(1);
+                break;
+            case R.id.yaogun:
+                itemClick(2);
+                break;
+            case R.id.jueshi:
+                itemClick(3);
+                break;
+            case R.id.liuxing:
+                itemClick(4);
+                break;
+            case R.id.oumei:
+                itemClick(5);
+                break;
+            case R.id.lao:
+                itemClick(6);
+                break;
+            case R.id.qinge:
+                itemClick(7);
+                break;
+            case R.id.yinshi:
+                itemClick(8);
+                break;
+            case R.id.wangluo:
+                itemClick(9);
                 break;
         }
     }

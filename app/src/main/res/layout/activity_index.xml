@@ -6,9 +6,10 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/lin"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#FFFFFF"
+        android:layout_height="wrap_content"
+        android:background="#73D661"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
@@ -18,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/edit_shape"
             android:hint="@string/type"
@@ -29,6 +31,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
+            android:layout_margin="6dp"
             android:layout_marginLeft="10dp"
             android:background="@mipmap/music_search" />
     </LinearLayout>

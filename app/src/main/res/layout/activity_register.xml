@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/login"
     android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
 
@@ -25,6 +26,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="25dp"
             android:text="@string/userandpwd"
+            android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView
@@ -53,7 +55,9 @@
             android:layout_weight="230"
             android:hint="@string/nichen"
             android:inputType="text"
-            android:textColorHighlight="#34cf9e" />
+            android:textColor="#1FBAF3"
+            android:textColorHighlight="#34cf9e"
+            android:textColorHint="#1FBAF3" />
     </LinearLayout>
 
     <TextView
@@ -76,7 +80,9 @@
             android:layout_weight="230"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textColorHighlight="#34cf9e" />
+            android:textColor="#1FBAF3"
+            android:textColorHighlight="#34cf9e"
+            android:textColorHint="#1FBAF3" />
     </LinearLayout>
 
     <LinearLayout
@@ -94,7 +100,9 @@
             android:layout_weight="230"
             android:hint="@string/repassword"
             android:inputType="textPassword"
-            android:textColorHighlight="#34cf9e" />
+            android:textColor="#1FBAF3"
+            android:textColorHighlight="#34cf9e"
+            android:textColorHint="#1FBAF3" />
     </LinearLayout>
 
     <TextView
@@ -139,6 +147,7 @@
             android:layout_weight="230"
             android:gravity="center"
             android:text="@string/back_login"
+            android:textColor="#1FBAF3"
             android:textSize="16sp" />
     </LinearLayout>
 

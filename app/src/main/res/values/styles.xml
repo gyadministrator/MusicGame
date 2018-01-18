@@ -19,10 +19,11 @@
         <item>爵士</item>
         <item>流行</item>
         <item>欧美金曲榜</item>
-        <item>经典老歌榜</item>
+        <!--<item>经典老歌榜</item>-->
+        <item>网络歌曲榜</item>
         <item>情歌对唱榜</item>
         <item>影视金曲榜</item>
-        <item>网络歌曲榜</item>
+
     </string-array>
     <integer-array name="types_num">
         <item>1</item>
@@ -31,10 +32,11 @@
         <item>12</item>
         <item>16</item>
         <item>21</item>
-        <item>22</item>
+        <!--<item>22</item>-->
+        <item>25</item>
         <item>23</item>
         <item>24</item>
-        <item>25</item>
+        <!--<item>25</item>-->
     </integer-array>
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -47,4 +49,14 @@
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="colorControlActivated">@android:color/white</item>
     </style>
+
+    <declare-styleable name="GifView">
+        <attr name="gif" format="reference" />
+        <attr name="paused" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CustomTheme">
+        <attr name="gifViewStyle" format="reference" />
+    </declare-styleable>
+
+    <style name="Widget_GifView" />
 </resources>

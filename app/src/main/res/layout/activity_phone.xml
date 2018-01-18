@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/login"
     android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
 
@@ -25,6 +26,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="25dp"
             android:text="填写手机号"
+            android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView
@@ -53,7 +55,9 @@
             android:layout_weight="230"
             android:hint="@string/phone"
             android:inputType="phone"
-            android:textColorHighlight="#34cf9e" />
+            android:textColor="#1FBAF3"
+            android:textColorHighlight="#34cf9e"
+            android:textColorHint="#1FBAF3" />
     </LinearLayout>
 
     <TextView
@@ -69,24 +73,25 @@
 
         <EditText
             android:id="@+id/code"
-            android:layout_width="0dp"
+            android:layout_width="220dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="0dp"
-            android:layout_weight="230"
             android:hint="@string/code"
             android:inputType="number"
             android:maxLength="10"
-            android:textColorHighlight="#34cf9e" />
+            android:textColor="#1FBAF3"
+            android:textColorHighlight="#34cf9e"
+            android:textColorHint="#1FBAF3" />
 
         <Button
             android:id="@+id/getCode"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_height="36dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginRight="15sp"
             android:background="#1FBAF3"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="@string/getCode"
             android:textColor="@color/white"
             android:textSize="14sp" />
@@ -133,6 +138,7 @@
             android:layout_weight="230"
             android:gravity="center"
             android:text="@string/back_login"
+            android:textColor="#1FBAF3"
             android:textSize="16sp" />
     </LinearLayout>
 

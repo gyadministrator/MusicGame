@@ -35,7 +35,8 @@
         <activity android:name=".AboutActivity" />
         <activity android:name=".ChangeActivity" />
         <activity android:name=".SingerInfoActivity" />
-        <activity android:name=".PhoneActivity"/>
+        <activity android:name=".PhoneActivity" />
+        <activity android:name=".ListenMainActivity" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -62,6 +63,7 @@ import utils.DataCleanManager;
 import utils.DialogUtils;
 import utils.FileUtils;
 import utils.HttpUtils;
+import utils.ImmersedStatusbarUtils;
 import utils.MethodsCompat;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
@@ -106,7 +108,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
     TextView refresh_tv;
     @BindView(R.id.modify)
     TextView modify;
+    @BindView(R.id.lin)
+    LinearLayout lin;
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -159,6 +164,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
     @Override
     protected void initData() {
         super.initData();
+
+        /*设置沉侵式导航栏*/
+        //ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
         //计算缓存
         caculateCacheSize();
         Intent intent = getActivity().getIntent();
@@ -208,6 +216,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                 int i = getVerCode();
                 if (NetWorkUtils.checkNetworkState(mContext)) {
                     int versionCode = ApkUtils.apkInfo(UpdateManager.apkUrl, mContext);
+                    Log.e(TAG, "onClick: " + versionCode);
+                    Log.e(TAG, "onClick: " + i);
                     if (versionCode > i) {
                         // 这里来检测版本是否需要更新
                         UpdateManager mUpdateManager = new UpdateManager(mContext);
@@ -401,6 +411,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
         }.start();
     }
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {

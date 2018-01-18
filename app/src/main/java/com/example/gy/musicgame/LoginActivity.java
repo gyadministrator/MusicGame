@@ -8,8 +8,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -34,6 +37,7 @@ import utils.HttpUtils;
 import utils.NetWorkUtils;
 import utils.PhoneUtils;
 import utils.ToastUtils;
+import view.GifView;
 
 public class LoginActivity extends BaseActivity {
     @BindView(R.id.tex_register)
@@ -44,6 +48,10 @@ public class LoginActivity extends BaseActivity {
     EditText password;
     @BindView(R.id.login)
     Button login;
+    /*@BindView(R.id.gif)
+    GifView gif;*/
+    @BindView(R.id.login_main)
+    LinearLayout login_main;
     private static CurrentUserDao userDao;
     private static final String TAG = "LoginActivity";
     private static final String URL = Constant.BASE_URL + "/user/login";
@@ -82,12 +90,17 @@ public class LoginActivity extends BaseActivity {
         Log.e(TAG, "saveUser:插入成功 ");
     }
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         initDbHelp();
         ButterKnife.bind(this);
+        // 设置背景gif图片资源
+        //gif.setMovieResource(R.raw.bg);
+        //login_main.setAnimation(new AnimationSet());
         tex_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

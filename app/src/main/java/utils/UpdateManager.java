@@ -4,6 +4,7 @@ package utils;
  * Created by Administrator on 2017/10/21.
  */
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -60,6 +61,7 @@ public class UpdateManager {
     private Thread downLoadThread;
 
     private boolean interceptFlag = false;
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {

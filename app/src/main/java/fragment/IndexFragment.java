@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 import utils.Constant;
 import utils.DialogUtils;
 import utils.HttpUtils;
+import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
@@ -67,6 +68,8 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     Button ok;
     @BindView(R.id.answer_linear)
     LinearLayout answer_linear;
+    @BindView(R.id.lin)
+    LinearLayout lin;
     private static final String URL = Constant.BASE_URL + "/music/GetSearchSong";
     private static Map<String, Object> map = new HashMap<>();
     private List<SearchSong> list = new ArrayList<>();
@@ -296,6 +299,9 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     @Override
     protected void initData() {
         super.initData();
+
+        /*设置沉侵式导航栏*/
+        //ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
         if (NetWorkUtils.checkNetworkState(mContext)) {
             //重新获取用户最新数据
             user = (User) getActivity().getIntent().getBundleExtra("user").getSerializable("user");

@@ -48,7 +48,7 @@ public class StartActivity extends BaseActivity {
             super.handleMessage(msg);
             if (msg.what == 1) {
                 String url = parseJson(msg.obj.toString());
-                Picasso.with(StartActivity.this).load(url).resize(1200, 1550).into(imageView);
+                Picasso.with(StartActivity.this).load(url).resize(4200, 6000).into(imageView);
             } else if (msg.what == 0) {
                 ToastUtils.showToast(StartActivity.this, R.mipmap.music_icon, "发生了错误");
             }

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/login"
     android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
+
+    <!-- <view.GifView
+         android:id="@+id/gif"
+         android:layout_width="match_parent"
+         android:layout_height="500dp"
+         android:layout_gravity="center_horizontal"
+         android:enabled="false" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +33,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="25sp"
             android:text="@string/login"
+            android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView
@@ -52,7 +62,9 @@
             android:layout_weight="230"
             android:hint="@string/user"
             android:inputType="text"
-            android:textColorHighlight="#34cf9e" />
+            android:textColor="#1FBAF3"
+            android:textColorHighlight="#34cf9e"
+            android:textColorHint="#1FBAF3" />
     </LinearLayout>
 
     <TextView
@@ -75,7 +87,9 @@
             android:layout_weight="230"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textColorHighlight="#34cf9e" />
+            android:textColor="#1FBAF3"
+            android:textColorHighlight="#34cf9e"
+            android:textColorHint="#1FBAF3" />
     </LinearLayout>
 
     <TextView
@@ -106,56 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
-        android:layout_weight="100">
-
-        <!--<RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/other_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/other_user"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/other_user"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="100dp"
-                android:layout_marginTop="6sp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/qq_login"
-                    android:layout_width="10dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@mipmap/qq" />
-
-                <TextView
-                    android:id="@+id/weixin_login"
-                    android:layout_width="10dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@mipmap/weixin" />
-
-                <TextView
-                    android:id="@+id/weibo_login"
-                    android:layout_width="10dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@mipmap/weibo" />
-            </LinearLayout>
-        </RelativeLayout>-->
-    </LinearLayout>
+        android:layout_weight="100" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -170,6 +135,7 @@
             android:layout_weight="230"
             android:gravity="center"
             android:text="@string/quick_register"
+            android:textColor="#1FBAF3"
             android:textSize="16sp" />
     </LinearLayout>
 

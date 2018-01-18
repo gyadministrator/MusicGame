@@ -61,6 +61,7 @@ import utils.BitmapOption;
 import utils.Constant;
 import utils.DataCleanManager;
 import utils.DialogUtils;
+import utils.ExitDialogUtils;
 import utils.FileUtils;
 import utils.HttpUtils;
 import utils.ImmersedStatusbarUtils;
@@ -257,19 +258,22 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
             case R.id.exit_tv:
                 logout();
                 break;
+            case R.id.cancel:
+                ExitDialogUtils.hidden();
+                break;
+            case R.id.sure:
+                Intent intent2 = new Intent(mContext, LoginActivity.class);
+                startActivity(intent2);
+                getActivity().finish();
+                ExitDialogUtils.hidden();
+                break;
         }
     }
 
     private void logout() {
-        getConfirmDialog(getActivity(), "你真的需要退出吗?", new DialogInterface.OnClickListener
-                () {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent1 = new Intent(mContext, LoginActivity.class);
-                startActivity(intent1);
-                getActivity().finish();
-            }
-        }).show();
+        ExitDialogUtils.show(mContext);
+        ExitDialogUtils.cancel.setOnClickListener(this);
+        ExitDialogUtils.sure.setOnClickListener(this);
     }
 
     private void send(String url, Map<String, Object> map) {
@@ -302,22 +306,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
     }
 
     private void onClickCleanCache() {
-        getConfirmDialog(getActivity(), "是否清空缓存?", new DialogInterface.OnClickListener
-                () {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                clearAppCache();
-                clean_tv.setText("0KB");
-            }
-        }).show();
-    }
-
-    public static AlertDialog.Builder getConfirmDialog(Context context, String message, DialogInterface.OnClickListener onClickListener) {
-        AlertDialog.Builder builder = getDialog(context);
-        builder.setMessage(Html.fromHtml(message));
-        builder.setPositiveButton("确定", onClickListener);
-        builder.setNegativeButton("取消", null);
-        return builder;
+        clearAppCache();
+        clean_tv.setText("0KB");
     }
 
     public static AlertDialog.Builder getDialog(Context context) {

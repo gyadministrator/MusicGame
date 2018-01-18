@@ -68,4 +68,6 @@
     <string name="yinshi">影视</string>
     <string name="wangluo">网络</string>
     <string name="getData">正在获取数据...</string>
+    <string name="msg">你确定需要退出登录吗?</string>
+    <string name="msg_title">温馨提示</string>
 </resources>

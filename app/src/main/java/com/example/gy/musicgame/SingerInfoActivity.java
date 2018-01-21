@@ -1,5 +1,6 @@
 package com.example.gy.musicgame;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -55,10 +56,13 @@ public class SingerInfoActivity extends AppCompatActivity {
     LinearLayout main_linear;
     @BindView(R.id.reload)
     Button reload;
+    @BindView(R.id.back_listen)
+    TextView back_listen;
 
     private Singer singer;
     private static final String url = Constant.BASE_URL + "/music/GetSongerInfo";
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -106,6 +110,13 @@ public class SingerInfoActivity extends AppCompatActivity {
             main_linear.setVisibility(View.GONE);
             ToastUtils.showToast(this, R.mipmap.music_warning, "无网络连接");
         }
+
+        back_listen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         reload.setOnClickListener(new View.OnClickListener() {
             @Override

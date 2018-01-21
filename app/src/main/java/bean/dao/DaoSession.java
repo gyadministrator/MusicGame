@@ -16,7 +16,7 @@ import bean.dao.CurrentUserDao;
 
 /**
  * {@inheritDoc}
- * 
+ *
  * @see org.greenrobot.greendao.AbstractDaoSession
  */
 public class DaoSession extends AbstractDaoSession {
@@ -36,7 +36,7 @@ public class DaoSession extends AbstractDaoSession {
 
         registerDao(CurrentUser.class, currentUserDao);
     }
-    
+
     public void clear() {
         currentUserDaoConfig.clearIdentityScope();
     }

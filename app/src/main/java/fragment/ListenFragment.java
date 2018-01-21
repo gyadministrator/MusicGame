@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -12,8 +14,10 @@ import android.widget.TextView;
 import com.example.gy.musicgame.ListenMainActivity;
 import com.example.gy.musicgame.R;
 import com.example.gy.musicgame.SearchMusicActivity;
+import com.example.gy.musicgame.SingerInfoActivity;
 import com.google.gson.Gson;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,8 +71,9 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
 
     private int[] nums;
     private String[] types;
-
+    private static final String TAG = "ListenFragment";
     List<String> images = new ArrayList<>();
+    List<RecommendMusic> list = new ArrayList<>();
     private static final String url = Constant.BASE_URL + "/music/getSongList";
 
     @SuppressLint("HandlerLeak")
@@ -79,6 +84,16 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
             super.handleMessage(msg);
             if (msg.what == 1) {
                 initBanner();
+
+                banner.setOnBannerListener(new OnBannerListener() {
+                    @Override
+                    public void OnBannerClick(int position) {
+                        Intent intent = new Intent(mContext, SingerInfoActivity.class);
+                        String tinguid = list.get(position).getTing_uid();
+                        intent.putExtra("tinguid", tinguid);
+                        startActivity(intent);
+                    }
+                });
             } else {
                 ToastUtils.showToast(mContext, R.mipmap.music_warning, "获取网络图片错误...");
             }
@@ -163,6 +178,8 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
                 Gson gson = new Gson();
                 RecommendMusic recommendMusic = gson.fromJson(song.get(i).toString(), RecommendMusic.class);
                 images.add(recommendMusic.getPic_small());
+
+                list.add(recommendMusic);
             }
         } catch (JSONException e) {
             e.printStackTrace();

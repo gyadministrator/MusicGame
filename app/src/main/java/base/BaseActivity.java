@@ -1,5 +1,6 @@
 package base;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Process;
@@ -30,7 +31,7 @@ public class BaseActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivityController.removeActivity(this);
-        MusicUtils.destoryMedia();
+        //MusicUtils.destoryMedia();
     }
 
     @Override

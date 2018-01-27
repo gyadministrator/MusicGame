@@ -7,20 +7,26 @@
     <LinearLayout
         android:id="@+id/lin"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#73D661"
+        android:layout_height="wrap_content"
+        android:background="#999999"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <TextView
-            android:id="@+id/title_txt"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:text="@string/me"
-            android:textSize="20sp" />
+            android:layout_height="60dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_txt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/me"
+                android:textSize="20sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <ScrollView
@@ -35,7 +41,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="#FFFFFF"
+                android:background="@color/grey_300_96p"
                 android:orientation="horizontal">
 
                 <view.CircleImageView
@@ -81,12 +87,17 @@
                     android:background="@mipmap/refresh" />
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+
             <LinearLayout
                 android:id="@+id/money_tv"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
-                android:background="#FFFFFF"
+                android:background="@color/grey_300_96p"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
@@ -135,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="#FFFFFF"
+                android:background="@color/grey_300_96p"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
@@ -174,7 +185,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="#FFFFFF"
+                android:background="@color/grey_300_96p"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
@@ -223,7 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="#FFFFFF"
+                android:background="@color/grey_300_96p"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
@@ -250,15 +261,19 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="0.5"
                     android:background="@mipmap/user_enter" />
-
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
 
             <LinearLayout
                 android:id="@+id/exit_tv"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="#FFFFFF"
+                android:background="@color/grey_300_96p"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
@@ -286,8 +301,12 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="0.5"
                     android:background="@mipmap/user_enter" />
-
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

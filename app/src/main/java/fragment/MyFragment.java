@@ -167,7 +167,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
         super.initData();
 
         /*设置沉侵式导航栏*/
-        //ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
+        ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
         //计算缓存
         caculateCacheSize();
         Intent intent = getActivity().getIntent();

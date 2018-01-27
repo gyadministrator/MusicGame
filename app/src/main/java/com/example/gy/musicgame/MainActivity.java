@@ -1,8 +1,11 @@
 package com.example.gy.musicgame;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -16,6 +19,7 @@ import butterknife.ButterKnife;
 import fragment.IndexFragment;
 import fragment.ListenFragment;
 import fragment.MyFragment;
+import utils.ToastUtils;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.music_index)
@@ -26,6 +30,8 @@ public class MainActivity extends BaseActivity {
     RadioButton music_me;
     @BindView(R.id.rg)
     RadioGroup rg;
+    @BindView(R.id.now_play)
+    FloatingActionButton now_play;
     private List<BaseFragment> fragments = new ArrayList<>();
     private int position;
     private Fragment mContent;
@@ -37,6 +43,14 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         initFragment();
         setListener();
+
+        now_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RecentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initFragment() {

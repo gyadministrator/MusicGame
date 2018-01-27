@@ -28,7 +28,7 @@
     <string name="back_login">已有账号? 直接登录</string>
     <string name="register">注册</string>
     <string name="repassword">再次输入密码</string>
-    <string name="version">当前版本1.5</string>
+    <string name="version">当前版本1.6</string>
     <string name="_0kb">0KB</string>
     <string name="zero">0</string>
     <string name="label_cancel">取消</string>
@@ -49,7 +49,7 @@
     <string name="find">查看歌手信息</string>
     <string name="download">下载歌曲</string>
     <string name="reload">重新加载</string>
-    <string name="copyright_2017">copyright@2017</string>
+    <string name="copyright_2017">copyright@2017-2018</string>
     <string name="other_user">------第三方账号登录------</string>
     <string name="nichen">用户名</string>
     <string name="userandpwd">填写用户名和密码</string>
@@ -75,4 +75,13 @@
     <string name="contact">联系QQ:1984629668</string>
     <string name="singer_name">歌名</string>
     <string name="singer">歌手</string>
+    <string name="music_hint">搜索...</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="play_recored">播放记录</string>
+    <string name="no_play">哎呀,你当前没有任何播放记录。</string>
 </resources>

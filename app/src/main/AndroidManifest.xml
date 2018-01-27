@@ -37,6 +37,11 @@
         <activity android:name=".SingerInfoActivity" />
         <activity android:name=".PhoneActivity" />
         <activity android:name=".ListenMainActivity" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".RecentActivity"></activity>
     </application>
 
 </manifest>

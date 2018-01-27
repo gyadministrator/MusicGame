@@ -301,7 +301,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
         super.initData();
 
         /*设置沉侵式导航栏*/
-        //ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
+        ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
         if (NetWorkUtils.checkNetworkState(mContext)) {
             //重新获取用户最新数据
             user = (User) getActivity().getIntent().getBundleExtra("user").getSerializable("user");

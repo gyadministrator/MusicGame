@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.gy.musicgame.ListenMainActivity;
@@ -68,7 +69,8 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     Banner banner;
     @BindView(R.id.lin)
     LinearLayout lin;
-
+    @BindView(R.id.progress)
+    ProgressBar progress;
     private int[] nums;
     private String[] types;
     private static final String TAG = "ListenFragment";
@@ -83,6 +85,8 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1) {
+                progress.setVisibility(View.GONE);
+                banner.setVisibility(View.VISIBLE);
                 initBanner();
 
                 banner.setOnBannerListener(new OnBannerListener() {
@@ -112,7 +116,7 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
         super.initData();
 
         /*设置沉侵式导航栏*/
-        //ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
+        ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
         nums = mContext.getResources().getIntArray(R.array.types_num);
         types = mContext.getResources().getStringArray(R.array.types);
 
@@ -177,8 +181,7 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
             for (int i = 0; i < song.length(); i++) {
                 Gson gson = new Gson();
                 RecommendMusic recommendMusic = gson.fromJson(song.get(i).toString(), RecommendMusic.class);
-                images.add(recommendMusic.getPic_small());
-
+                images.add(recommendMusic.getPic_big());
                 list.add(recommendMusic);
             }
         } catch (JSONException e) {

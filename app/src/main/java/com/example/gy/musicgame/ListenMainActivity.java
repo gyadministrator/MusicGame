@@ -252,7 +252,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     public void onRefresh() {
         if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
-            list.clear();
             sendHttp(url, type, 0, 1);
         } else {
             swipe.setRefreshing(false);

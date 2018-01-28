@@ -35,9 +35,9 @@
         android:id="@+id/rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#999999"
+        android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="6dp">
 
         <RadioButton
             android:id="@+id/music_index"

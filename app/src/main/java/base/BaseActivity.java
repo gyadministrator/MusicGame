@@ -39,7 +39,7 @@ public class BaseActivity extends FragmentActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK && getClass().getName().equals(MainActivity.class.getName())) {
             if (!flag) {
                 flag = true;
-                ToastUtils.showToast(this, R.mipmap.music_msg, "再按一次返回键回到桌面");
+                ToastUtils.showToast(this, R.mipmap.music_warning, "再按一次返回键回到桌面");
                 new Handler().postDelayed(r, 2000);
                 return true;
             } else {

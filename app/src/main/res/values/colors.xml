@@ -21,6 +21,6 @@
     <color name="grey_300_96p">#F5E0E0E0</color>
     <color name="grey_900">#212121</color>
     <color name="grey_900_96p">#F5212121</color>
-    <color name="txt_color">#7D7D7D</color>
-    <color name="txt_color_pressed">#d4237a</color>
+    <color name="txt_color">#9dbdb2</color>
+    <color name="txt_color_pressed">#d81e06</color>
 </resources>

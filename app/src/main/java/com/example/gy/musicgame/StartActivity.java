@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -16,7 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +65,7 @@ public class StartActivity extends BaseActivity {
         } else {
             ToastUtils.showToast(this, R.mipmap.music_warning, "无网络连接");
         }
-        QueryBuilder qb = userDao.queryBuilder();
+        QueryBuilder<CurrentUser> qb = userDao.queryBuilder();
         List<CurrentUser> list = qb.where(CurrentUserDao.Properties.Id.eq(0)).list();
         if (list.size() == 0) {
             start(LoginActivity.class, list);

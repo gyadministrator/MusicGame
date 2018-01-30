@@ -32,12 +32,14 @@ import java.util.Map;
 import adapter.MusicListAdapter;
 import base.BaseActivity;
 import bean.RecommendMusic;
+import bean.dao.RecommendMusicDao;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.Constant;
 import utils.DownloadUtil;
 import utils.HttpUtils;
 import utils.MoreDialog;
+import utils.MusicDaoUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
@@ -86,6 +88,8 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     private static String tinguid;
     private static int mProgress;
 
+    private static RecommendMusicDao musicDao = null;
+
 
     private static final String TAG = "ListenMainActivity";
     @SuppressLint("HandlerLeak")
@@ -131,6 +135,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listen_main);
+        musicDao = MusicDaoUtils.initDbHelp(this);
         ButterKnife.bind(this);
 
         listView.setLoadListener(this);
@@ -231,7 +236,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //view.setBackgroundColor(Color.rgb(81, 189, 207));
         item_position = position + 1;
         RecommendMusic recommendMusic = list.get(position);
         if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
@@ -244,6 +248,16 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
             play.setEnabled(true);
             music_next.setEnabled(true);
             getPlayUrls(position, 3);
+            /*
+            * 加入这条音乐到数据库中
+            * */
+            /*
+            * 查询是否存在这条音乐
+            * */
+            List<RecommendMusic> music = MusicDaoUtils.queryOneMusic(musicDao, recommendMusic);
+            if (music.size() == 0) {
+                MusicDaoUtils.addMusic(recommendMusic, musicDao);
+            }
         } else {
             ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
         }
@@ -323,7 +337,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 break;
             case R.id.music_next:
                 //下一首
-                if (item_position > list.size()) {
+                if (item_position + 1 > list.size()) {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是最后一首了");
                 } else {
                     RecommendMusic recommendMusic = list.get(item_position);

@@ -1,9 +1,14 @@
 package bean;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * Created by Administrator on 2017/10/14.
  */
 
+@Entity
 public class RecommendMusic {
 
     /**
@@ -55,6 +60,16 @@ public class RecommendMusic {
      * mv_provider : 0000000000
      * artist_name : 二珂
      */
+    @Id(autoincrement = true)
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     private String artist_id;
     private String language;
@@ -103,6 +118,68 @@ public class RecommendMusic {
     private String resource_type_ext;
     private String mv_provider;
     private String artist_name;
+
+    @Generated(hash = 894657568)
+    public RecommendMusic(Long id, String artist_id, String language, String pic_big, String pic_small, String country, String area, String publishtime,
+                          String album_no, String lrclink, String copy_type, String hot, String all_artist_ting_uid, String resource_type, String is_new,
+                          String rank_change, String rank, String all_artist_id, String style, String del_status, String relate_status, String toneid, String all_rate,
+                          int file_duration, int has_mv_mobile, String versions, String bitrate_fee, String biaoshi, String info, String has_filmtv,
+                          String si_proxycompany, String song_id, String title, String ting_uid, String author, String album_id, String album_title,
+                          int is_first_publish, int havehigh, int charge, int has_mv, int learn, String song_source, String piao_id, String korean_bb_song,
+                          String resource_type_ext, String mv_provider, String artist_name) {
+        this.id = id;
+        this.artist_id = artist_id;
+        this.language = language;
+        this.pic_big = pic_big;
+        this.pic_small = pic_small;
+        this.country = country;
+        this.area = area;
+        this.publishtime = publishtime;
+        this.album_no = album_no;
+        this.lrclink = lrclink;
+        this.copy_type = copy_type;
+        this.hot = hot;
+        this.all_artist_ting_uid = all_artist_ting_uid;
+        this.resource_type = resource_type;
+        this.is_new = is_new;
+        this.rank_change = rank_change;
+        this.rank = rank;
+        this.all_artist_id = all_artist_id;
+        this.style = style;
+        this.del_status = del_status;
+        this.relate_status = relate_status;
+        this.toneid = toneid;
+        this.all_rate = all_rate;
+        this.file_duration = file_duration;
+        this.has_mv_mobile = has_mv_mobile;
+        this.versions = versions;
+        this.bitrate_fee = bitrate_fee;
+        this.biaoshi = biaoshi;
+        this.info = info;
+        this.has_filmtv = has_filmtv;
+        this.si_proxycompany = si_proxycompany;
+        this.song_id = song_id;
+        this.title = title;
+        this.ting_uid = ting_uid;
+        this.author = author;
+        this.album_id = album_id;
+        this.album_title = album_title;
+        this.is_first_publish = is_first_publish;
+        this.havehigh = havehigh;
+        this.charge = charge;
+        this.has_mv = has_mv;
+        this.learn = learn;
+        this.song_source = song_source;
+        this.piao_id = piao_id;
+        this.korean_bb_song = korean_bb_song;
+        this.resource_type_ext = resource_type_ext;
+        this.mv_provider = mv_provider;
+        this.artist_name = artist_name;
+    }
+
+    @Generated(hash = 1361061680)
+    public RecommendMusic() {
+    }
 
     @Override
     public String toString() {
@@ -531,5 +608,9 @@ public class RecommendMusic {
 
     public void setArtist_name(String artist_name) {
         this.artist_name = artist_name;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

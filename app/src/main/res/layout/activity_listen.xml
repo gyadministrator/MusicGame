@@ -59,12 +59,27 @@
                 android:layout_height="150dp"
                 android:visibility="gone" />
 
-            <ProgressBar
-                android:id="@+id/progress"
-                style="?android:attr/progressBarStyleSmall"
+            <LinearLayout
+                android:id="@+id/progress_lin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp" />
+                android:layout_height="150dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

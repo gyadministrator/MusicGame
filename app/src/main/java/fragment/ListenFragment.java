@@ -69,8 +69,8 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     Banner banner;
     @BindView(R.id.lin)
     LinearLayout lin;
-    @BindView(R.id.progress)
-    ProgressBar progress;
+    @BindView(R.id.progress_lin)
+    LinearLayout progress;
     private int[] nums;
     private String[] types;
     private static final String TAG = "ListenFragment";

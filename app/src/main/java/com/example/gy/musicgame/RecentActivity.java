@@ -81,10 +81,14 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 adapter.notifyDataSetChanged();
                 listView.setVisibility(View.GONE);
                 ToastUtils.showToast(RecentActivity.this, R.mipmap.music_warning, "清空成功");
+                MusicUtils.destoryMedia();
+
+                music_img.setImageResource(R.mipmap.music_icon);
+                singer_name.setText("歌名");
+                singer.setText("歌手");
+                play.setBackgroundResource(R.mipmap.music_play);
             } else if (msg.what == 2) {
                 MusicUtils.play(playUrls.get(0));
-            } else if (msg.what == 3) {
-
             }
         }
     };

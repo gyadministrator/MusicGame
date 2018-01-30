@@ -41,7 +41,8 @@
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".RecentActivity"></activity>
+        <activity android:name=".RecentActivity" />
+        <activity android:name=".MusicLyricActivity"></activity>
     </application>
 
 </manifest>

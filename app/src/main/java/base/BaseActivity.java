@@ -10,9 +10,7 @@ import android.view.KeyEvent;
 
 import com.example.gy.musicgame.MainActivity;
 import com.example.gy.musicgame.R;
-
 import utils.ActivityController;
-import utils.MusicUtils;
 import utils.ToastUtils;
 
 /**
@@ -31,7 +29,6 @@ public class BaseActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivityController.removeActivity(this);
-        //MusicUtils.destoryMedia();
     }
 
     @Override

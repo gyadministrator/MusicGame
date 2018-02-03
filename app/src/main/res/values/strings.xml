@@ -49,7 +49,7 @@
     <string name="find">查看歌手信息</string>
     <string name="download">下载歌曲</string>
     <string name="reload">重新加载</string>
-    <string name="copyright_2017">copyright@2017-2018</string>
+    <string name="copyright_2017">copyright©2017-2018</string>
     <string name="other_user">------第三方账号登录------</string>
     <string name="nichen">用户名</string>
     <string name="userandpwd">填写用户名和密码</string>
@@ -85,4 +85,28 @@
     <string name="play_recored">播放记录</string>
     <string name="no_play">哎呀,你当前没有任何播放记录。</string>
     <string name="remove_all">清空</string>
+    <string name="lyric_singer">------歌手------</string>
+    <string name="lyric_name">歌名</string>
+    <string name="default_time">00:00</string>
+    <string name="no_music">无音乐</string>
+
+    <string name="setting_key_mobile_network_play">mobile_network_play</string>
+    <string name="setting_key_mobile_network_download">mobile_network_download</string>
+    <string name="setting_key_sound_effect">sound_effect</string>
+    <string name="setting_key_filter_size">filter_size</string>
+    <string name="setting_key_filter_time">filter_time</string>
+
+
+    <string name="tips">温馨提示</string>
+    <string name="play_tips">当前处于移动网络，确定打开移动网络播放开关吗？</string>
+    <string name="play_tips_sure">立即打开</string>
+    <string name="download_tips">当前处于移动网络，下载将消耗较多流量，是否继续下载？</string>
+    <string name="download_tips_sure">继续下载</string>
+    <string name="share_music">我用%1$s分享了歌曲《%2$s》%3$s</string>
+    <string name="unable_to_share">暂时无法分享</string>
+    <string name="share">分享</string>
+    <string name="download_success">%s下载完成</string>
+    <string name="copyright">Copyright © 2018&#045;%d SWUST</string>
+    <string name="no_permission">没有%1$s权限，无法%2$s！</string>
+    <string name="unknown">未知</string>
 </resources>

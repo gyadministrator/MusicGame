@@ -1,6 +1,7 @@
 package com.example.gy.musicgame;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -70,6 +71,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
     private int pageNum = 0;
     private int allPage;
     private static final String TAG = "RecentActivity";
+    private static RecommendMusic temp;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -89,6 +91,10 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 play.setBackgroundResource(R.mipmap.music_play);
             } else if (msg.what == 2) {
                 MusicUtils.play(playUrls.get(0));
+                Picasso.with(RecentActivity.this).load(temp.getPic_small()).into(music_img);
+                singer_name.setText(temp.getTitle());
+                singer.setText(temp.getAuthor());
+                play.setBackgroundResource(R.mipmap.music_stop);
             }
         }
     };
@@ -107,6 +113,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
         delete.setOnClickListener(this);
         play.setOnClickListener(this);
         music_next.setOnClickListener(this);
+        music_img.setOnClickListener(this);
         /*查询记录
         * */
         allPage = MusicDaoUtils.getPage(MusicDaoUtils.queryAllMusic(musicDao));
@@ -164,20 +171,28 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 if (item_position + 1 > list.size()) {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是最后一首了");
                 } else {
-                    RecommendMusic recommendMusic = list.get(item_position);
+                    temp = list.get(item_position);
                     if (NetWorkUtils.checkNetworkState(this)) {
-                        Picasso.with(this).load(recommendMusic.getPic_small()).into(music_img);
-                        singer_name.setText(recommendMusic.getTitle());
-                        singer.setText(recommendMusic.getAuthor());
-
-                        play.setBackgroundResource(R.mipmap.music_stop);
-
                         getPlayUrls(item_position, 2);
 
                         item_position++;
                     } else {
                         ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放下一首");
                     }
+                }
+                break;
+            case R.id.music_img:
+                if (item_position == 0) {
+                    ToastUtils.showToast(this, R.mipmap.music_warning, "请选择播放的音乐");
+                } else {
+                    Intent intent = new Intent(this, MusicLyricActivity.class);
+                    RecommendMusic music = list.get(item_position - 1);
+                    intent.putExtra("name", music.getTitle());
+                    intent.putExtra("singer", music.getAuthor());
+                    intent.putExtra("img", music.getPic_big());
+                    intent.putExtra("link", music.getLrclink());
+                    intent.putExtra("total", music.getFile_duration());
+                    startActivity(intent);
                 }
                 break;
             default:
@@ -199,14 +214,8 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         item_position = position + 1;
-        RecommendMusic recommendMusic = list.get(position);
+        temp = list.get(position);
         if (NetWorkUtils.checkNetworkState(this)) {
-            Picasso.with(this).load(recommendMusic.getPic_small()).into(music_img);
-            singer_name.setText(recommendMusic.getTitle());
-            singer.setText(recommendMusic.getAuthor());
-
-            play.setBackgroundResource(R.mipmap.music_stop);
-
             play.setEnabled(true);
             music_next.setEnabled(true);
             getPlayUrls(position, 2);

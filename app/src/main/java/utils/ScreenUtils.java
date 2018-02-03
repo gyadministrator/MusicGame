@@ -4,17 +4,45 @@ import android.content.Context;
 import android.view.WindowManager;
 
 /**
- * Created by Administrator on 2017/9/6.
+ * 工具类
+ * Created by hzwangchenyan on 2016/1/6.
  */
-
 public class ScreenUtils {
-    public static int width;
-    public static int height;
+    private static Context sContext;
 
-    public static void getScreen(Context context) {
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        width = wm.getDefaultDisplay().getWidth();
-        height = wm.getDefaultDisplay().getHeight();
+    public static void init(Context context) {
+        sContext = context.getApplicationContext();
+    }
+
+    public static int getScreenWidth() {
+        WindowManager wm = (WindowManager) sContext.getSystemService(Context.WINDOW_SERVICE);
+        return wm.getDefaultDisplay().getWidth();
+    }
+
+    /**
+     * 获取状态栏高度
+     */
+    public static int getSystemBarHeight() {
+        int result = 0;
+        int resourceId = sContext.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = sContext.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    public static int dp2px(float dpValue) {
+        final float scale = sContext.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static int px2dp(float pxValue) {
+        final float scale = sContext.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    public static int sp2px(float spValue) {
+        final float fontScale = sContext.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
     }
 }

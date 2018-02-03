@@ -100,4 +100,11 @@ public class MusicUtils {
             mediaPlayer = null;
         }
     }
+
+    /**
+     * 判断是否在播放
+     */
+    public static boolean playState() {
+        return mediaPlayer.isPlaying();
+    }
 }

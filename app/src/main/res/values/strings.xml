@@ -28,7 +28,7 @@
     <string name="back_login">已有账号? 直接登录</string>
     <string name="register">注册</string>
     <string name="repassword">再次输入密码</string>
-    <string name="version">当前版本1.6</string>
+    <string name="version">当前版本1.7</string>
     <string name="_0kb">0KB</string>
     <string name="zero">0</string>
     <string name="label_cancel">取消</string>
@@ -49,7 +49,7 @@
     <string name="find">查看歌手信息</string>
     <string name="download">下载歌曲</string>
     <string name="reload">重新加载</string>
-    <string name="copyright_2017">copyright©2017-2018</string>
+    <string name="copyright_2017">Copyright©2017-2018</string>
     <string name="other_user">------第三方账号登录------</string>
     <string name="nichen">用户名</string>
     <string name="userandpwd">填写用户名和密码</string>
@@ -106,7 +106,7 @@
     <string name="unable_to_share">暂时无法分享</string>
     <string name="share">分享</string>
     <string name="download_success">%s下载完成</string>
-    <string name="copyright">Copyright © 2018&#045;%d SWUST</string>
+    <string name="copyright">Copyright © 2017&#045;%d SWUST</string>
     <string name="no_permission">没有%1$s权限，无法%2$s！</string>
     <string name="unknown">未知</string>
 </resources>

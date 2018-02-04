@@ -395,7 +395,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 }
                 break;
             case R.id.music_img:
-                if (item_position == 0) {
+                /*if (item_position == 0) {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "请选择要播放的音乐");
                 } else {
                     Intent intent1 = new Intent(this, MusicLyricActivity.class);
@@ -406,7 +406,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                     intent1.putExtra("link", music.getLrclink());
                     intent1.putExtra("total", music.getFile_duration());
                     startActivity(intent1);
-                }
+                }*/
                 break;
             default:
                 break;

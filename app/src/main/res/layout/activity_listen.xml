@@ -11,13 +11,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/lin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="#999999"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
@@ -56,13 +56,13 @@
             <com.youth.banner.Banner
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="180dp"
                 android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/progress_lin"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="180dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -83,17 +83,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
+                android:layout_weight="11"
                 android:gravity="center"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_margin="6dp"
-                    android:layout_weight="1"
+                    android:layout_weight="10"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -170,11 +170,16 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_margin="6dp"
-                    android:layout_weight="1"
+                    android:layout_weight="10"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -248,11 +253,16 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_margin="6dp"
-                    android:layout_weight="1"
+                    android:layout_weight="10"
                     android:orientation="horizontal">
 
                     <LinearLayout

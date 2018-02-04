@@ -28,6 +28,7 @@ import bean.dao.RecommendMusicDao;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.Constant;
+import utils.CurrentMusicUtils;
 import utils.HttpUtils;
 import utils.MusicDaoUtils;
 import utils.MusicUtils;
@@ -67,6 +68,8 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
 
     private MusicListAdapter adapter;
     private RecommendMusicDao musicDao;
+    private static boolean b = false;
+    private RecommendMusic recommendMusic;
     private List<RecommendMusic> list = new ArrayList<>();
     private int pageNum = 0;
     private int allPage;
@@ -106,6 +109,8 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
         musicDao = MusicDaoUtils.initDbHelp(this);
         ButterKnife.bind(this);
 
+        initPlayBar();
+
         listView.setLoadListener(this);
         listView.setOnItemClickListener(this);
 
@@ -119,6 +124,28 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
         allPage = MusicDaoUtils.getPage(MusicDaoUtils.queryAllMusic(musicDao));
         queryRecored(pageNum);
     }
+
+    private void initPlayBar() {
+        if (NetWorkUtils.checkNetworkState(this)) {
+            recommendMusic = CurrentMusicUtils.getRecommendMusic();
+            if (recommendMusic != null) {
+                Picasso.with(RecentActivity.this).load(recommendMusic.getPic_small()).into(music_img);
+                singer_name.setText(recommendMusic.getTitle());
+                singer.setText(recommendMusic.getAuthor());
+                play.setEnabled(true);
+                music_next.setEnabled(true);
+                list.add(recommendMusic);
+
+                if (MusicUtils.playState()) {
+                    play.setBackgroundResource(R.mipmap.music_stop);
+                }
+                b = true;
+            }
+        } else {
+            ToastUtils.showToast(this, R.mipmap.music_warning, "无网络连接");
+        }
+    }
+
 
     @Override
     protected void onStart() {
@@ -182,7 +209,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 }
                 break;
             case R.id.music_img:
-                if (item_position == 0) {
+                /*if (item_position == 0) {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "请选择播放的音乐");
                 } else {
                     Intent intent = new Intent(this, MusicLyricActivity.class);
@@ -193,7 +220,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                     intent.putExtra("link", music.getLrclink());
                     intent.putExtra("total", music.getFile_duration());
                     startActivity(intent);
-                }
+                }*/
                 break;
             default:
                 break;
@@ -219,6 +246,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
             play.setEnabled(true);
             music_next.setEnabled(true);
             getPlayUrls(position, 2);
+            CurrentMusicUtils.setRecommendMusic(temp);
         } else {
             ToastUtils.showToast(this, R.mipmap.music_warning, "无网络连接");
         }

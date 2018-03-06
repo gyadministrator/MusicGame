@@ -19,13 +19,13 @@
             <com.youth.banner.Banner
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="130dp"
                 android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/progress_lin"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="130dp"
                 android:orientation="vertical">
 
                 <TextView

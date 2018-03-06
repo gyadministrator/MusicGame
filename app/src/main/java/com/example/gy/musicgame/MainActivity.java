@@ -10,10 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.awesome.api.AwesomeBManager;
-import com.awesome.api.AwesomeIManager;
-import com.awesome.api.listener.AwesomeIListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +38,6 @@ public class MainActivity extends BaseActivity {
     private Fragment mContent;
 
     private LinearLayout banneLlayout;
-    private AwesomeIManager coverManager;
 
 
     private final String APPKEY="cd7a3678e92f33f1affad511486f68da";
@@ -57,9 +52,6 @@ public class MainActivity extends BaseActivity {
 
         banneLlayout = (LinearLayout) findViewById(R.id.ll);
 
-        initBanner();
-        initCover();
-
         now_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,17 +60,6 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-
-    private void initCover(){
-        coverManager = AwesomeIManager.getInstance();
-        coverManager.init(this,APPKEY);
-        coverManager.show(this,null);
-    }
-    private void initBanner() {
-        AwesomeBManager.getInstance().init(this, APPKEY);
-        AwesomeBManager.getInstance().loadBannerAD(this, banneLlayout);
-    }
-
     private void initFragment() {
         fragments.add(new IndexFragment());
         fragments.add(new ListenFragment());

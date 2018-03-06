@@ -6,8 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.awesome.api.AwesomeBManager;
+import com.awesome.api.AwesomeIManager;
+import com.awesome.api.listener.AwesomeIListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,12 @@ public class MainActivity extends BaseActivity {
     private int position;
     private Fragment mContent;
 
+    private LinearLayout banneLlayout;
+    private AwesomeIManager coverManager;
+
+
+    private final String APPKEY="cd7a3678e92f33f1affad511486f68da";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +55,11 @@ public class MainActivity extends BaseActivity {
         initFragment();
         setListener();
 
+        banneLlayout = (LinearLayout) findViewById(R.id.ll);
+
+        initBanner();
+        initCover();
+
         now_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +67,16 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void initCover(){
+        coverManager = AwesomeIManager.getInstance();
+        coverManager.init(this,APPKEY);
+        coverManager.show(this,null);
+    }
+    private void initBanner() {
+        AwesomeBManager.getInstance().init(this, APPKEY);
+        AwesomeBManager.getInstance().loadBannerAD(this, banneLlayout);
     }
 
     private void initFragment() {

@@ -9,7 +9,7 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 
 @Entity
-public class RecommendMusic{
+public class RecommendMusic {
 
     /**
      * artist_id : 310838090

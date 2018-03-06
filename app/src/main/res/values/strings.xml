@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">猜歌游戏</string>
+    <string name="app_name">爱猜歌</string>
     <string name="cancel">取消</string>
     <string name="key_word">请输入关键词查询音乐</string>
     <string name="loading">正在加载...</string>

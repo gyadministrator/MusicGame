@@ -66,6 +66,7 @@ import utils.FileUtils;
 import utils.HttpUtils;
 import utils.ImmersedStatusbarUtils;
 import utils.MethodsCompat;
+import utils.MusicUtils;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
 import utils.UpdateManager;
@@ -274,6 +275,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
         ExitDialogUtils.show(mContext);
         ExitDialogUtils.cancel.setOnClickListener(this);
         ExitDialogUtils.sure.setOnClickListener(this);
+
+        MusicUtils.destoryMedia();
     }
 
     private void send(String url, Map<String, Object> map) {
@@ -308,11 +311,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
     private void onClickCleanCache() {
         clearAppCache();
         clean_tv.setText("0KB");
-    }
-
-    public static AlertDialog.Builder getDialog(Context context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        return builder;
     }
 
     /**

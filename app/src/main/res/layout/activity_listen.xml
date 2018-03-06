@@ -7,62 +7,25 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/lin"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#999999"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <LinearLayout
-                    android:id="@+id/title_linear"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:orientation="horizontal"
-                    android:padding="10dp"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/title_txt"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:maxLines="3"
-                        android:text="@string/listen"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/music_search"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@mipmap/music_search" />
-                </LinearLayout>
-            </LinearLayout>
+            <include layout="@layout/include_listen_title" />
 
             <com.youth.banner.Banner
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="120dp"
                 android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/progress_lin"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="120dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -85,10 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:layout_weight="11"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -173,7 +136,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2" />
+                    android:layout_weight="1" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -256,7 +219,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2" />
+                    android:layout_weight="1" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

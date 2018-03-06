@@ -2,7 +2,7 @@
     <string name="app_name">爱猜歌</string>
     <string name="cancel">取消</string>
     <string name="key_word">请输入关键词查询音乐</string>
-    <string name="loading">正在加载...</string>
+    <string name="loading">正在请求数据中...</string>
     <string name="me">我的</string>
     <string name="no_msg">暂时没有消息</string>
     <string name="type">挑战类型:例如悲伤</string>
@@ -28,7 +28,7 @@
     <string name="back_login">已有账号? 直接登录</string>
     <string name="register">注册</string>
     <string name="repassword">再次输入密码</string>
-    <string name="version">当前版本1.7</string>
+    <string name="version">当前版本1.8</string>
     <string name="_0kb">0KB</string>
     <string name="zero">0</string>
     <string name="label_cancel">取消</string>

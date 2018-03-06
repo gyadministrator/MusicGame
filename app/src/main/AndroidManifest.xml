@@ -40,7 +40,6 @@
         <activity android:name=".PhoneActivity" />
         <activity android:name=".ListenMainActivity" />
         <activity android:name=".RecentActivity" />
-        <activity android:name=".MusicLyricActivity" />
     </application>
 
 </manifest>

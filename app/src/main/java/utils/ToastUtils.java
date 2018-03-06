@@ -20,7 +20,7 @@ public class ToastUtils extends Toast {
         super(context);
     }
 
-    public static Toast makeText(Context context, int imageId, String msg, int duration) {
+    private static Toast makeText(Context context, int imageId, String msg, int duration) {
         Toast toast = new Toast(context);
         View view = LayoutInflater.from(context).inflate(R.layout.activity_toast, null);
         TextView toast_image = (TextView) view.findViewById(R.id.toast_image);
@@ -29,7 +29,7 @@ public class ToastUtils extends Toast {
         toast_text.setText(msg);
         toast.setView(view);
         toast.setDuration(duration);
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, 0);
         return toast;
     }
 

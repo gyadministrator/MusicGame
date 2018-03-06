@@ -8,7 +8,7 @@
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#999999"
+        android:background="#D64A27"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
@@ -25,6 +25,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/me"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
@@ -41,7 +42,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="@color/grey_300_96p"
+                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <view.CircleImageView
@@ -97,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
-                android:background="@color/grey_300_96p"
+                android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
@@ -146,7 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/grey_300_96p"
+                android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
@@ -185,7 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/grey_300_96p"
+                android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
@@ -234,7 +235,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/grey_300_96p"
+                android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
@@ -273,7 +274,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/grey_300_96p"
+                android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 

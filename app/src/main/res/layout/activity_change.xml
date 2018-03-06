@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="60"
-        android:background="#999999"
+        android:background="#D64A27"
         android:orientation="horizontal">
 
         <TextView
@@ -28,6 +28,7 @@
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:text="@string/chang_pwd"
+            android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </LinearLayout>
 

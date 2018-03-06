@@ -7,7 +7,7 @@
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#999999"
+        android:background="#D64A27"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
@@ -28,6 +28,7 @@
                 android:gravity="center"
                 android:maxLines="3"
                 android:text="@string/listen"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
 
             <TextView

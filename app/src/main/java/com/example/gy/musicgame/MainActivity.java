@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
     private LinearLayout banneLlayout;
 
 
-    private final String APPKEY="cd7a3678e92f33f1affad511486f68da";
+    private final String APPKEY = "cd7a3678e92f33f1affad511486f68da";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
     private void initFragment() {
         fragments.add(new IndexFragment());
         fragments.add(new ListenFragment());

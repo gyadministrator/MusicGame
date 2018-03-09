@@ -2,11 +2,10 @@ package fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +44,7 @@ import java.util.Properties;
 import java.util.UUID;
 
 import base.BaseFragment;
+import bean.Apk;
 import bean.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +54,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import utils.ApkUtils;
 import utils.AppConfig;
 import utils.BitmapOption;
 import utils.Constant;
@@ -112,6 +110,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
     TextView modify;
     @BindView(R.id.lin)
     LinearLayout lin;
+    private String url = Constant.BASE_URL + "/apk/apkInfo";
+
+    private Apk apkInfo;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -144,6 +145,20 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                             Picasso.with(mContext).load(user.getImage()).into(user_image);
                         }
                     }
+                }
+            } else if (msg.what == 8) {
+                int i = getVerCode();
+                if (apkInfo != null) {
+                    if (apkInfo.getVersioncode() > i) {
+                        // 这里来检测版本是否需要更新
+                        Log.e(TAG, "handleMessage: " + apkInfo.getContent());
+                        UpdateManager mUpdateManager = new UpdateManager(mContext);
+                        mUpdateManager.checkUpdateInfo(apkInfo.getUrl(), apkInfo.getContent());
+                    } else {
+                        ToastUtils.showToast(mContext, R.mipmap.music_icon, "当前是最新版本");
+                    }
+                } else {
+                    ToastUtils.showToast(mContext, R.mipmap.music_icon, "没有获取到更新信息...");
                 }
             }
         }
@@ -214,20 +229,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                 startActivity(intent);
                 break;
             case R.id.update_tv:
-                DialogUtils.show(mContext);
-                int i = getVerCode();
                 if (NetWorkUtils.checkNetworkState(mContext)) {
-                    int versionCode = ApkUtils.apkInfo(UpdateManager.apkUrl, mContext);
-                    Log.e(TAG, "onClick: " + versionCode);
-                    Log.e(TAG, "onClick: " + i);
-                    if (versionCode > i) {
-                        // 这里来检测版本是否需要更新
-                        UpdateManager mUpdateManager = new UpdateManager(mContext);
-                        mUpdateManager.checkUpdateInfo();
-                    } else {
-                        DialogUtils.hidden();
-                        ToastUtils.showToast(mContext, R.mipmap.music_icon, "当前是最新版本");
-                    }
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("name", getAppName(mContext));
+                    getAppInfo(url, params);
                 } else {
                     ToastUtils.showToast(mContext, R.mipmap.music_warning, "无网络连接");
                 }
@@ -267,16 +272,60 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                 startActivity(intent2);
                 getActivity().finish();
                 ExitDialogUtils.hidden();
+                MusicUtils.destoryMedia();
                 break;
         }
+    }
+
+    private void getAppInfo(String url, Map<String, Object> params) {
+        HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
+            @Override
+            public void onSuccess(String json) {
+                parseCheckJson(json);
+                mHandler.sendEmptyMessage(8);
+            }
+
+            @Override
+            public void onFail(String error) {
+                mHandler.sendEmptyMessage(0);
+            }
+        });
+        httpUtils.sendGetHttp(url, params);
+    }
+
+    private void parseCheckJson(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject response = jsonObject.optJSONObject("response");
+            Gson gson = new Gson();
+            if (response.optJSONObject("apkInfo") != null) {
+                apkInfo = gson.fromJson(response.optJSONObject("apkInfo").toString(), Apk.class);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取应用程序名称
+     */
+    private String getAppName(Context context) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(
+                    context.getPackageName(), 0);
+            int labelRes = packageInfo.applicationInfo.labelRes;
+            return context.getResources().getString(labelRes);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void logout() {
         ExitDialogUtils.show(mContext);
         ExitDialogUtils.cancel.setOnClickListener(this);
         ExitDialogUtils.sure.setOnClickListener(this);
-
-        MusicUtils.destoryMedia();
     }
 
     private void send(String url, Map<String, Object> map) {
@@ -284,7 +333,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {
-                Log.e(TAG, json);
                 parseJson(json);
                 mHandler.sendEmptyMessage(1);
             }

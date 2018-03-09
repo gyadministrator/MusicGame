@@ -6,8 +6,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.SyncStateContract;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,12 +17,22 @@ import android.widget.TextView;
 
 import com.mob.MobSDK;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import utils.Constant;
+import utils.DialogUtils;
+import utils.HttpUtils;
 import utils.MobUtils;
+import utils.NetWorkUtils;
 import utils.PhoneUtils;
 import utils.ToastUtils;
 
@@ -38,6 +50,9 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
 
     int i = 30; // 设置短信验证提示时间为30s
 
+    private String url = Constant.BASE_URL + "/user/queryUserByPhone";
+
+    int codeNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,26 +106,9 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.getCode:
                 if (PhoneUtils.checkPhone(phone.getText().toString())) {
-                    SMSSDK.getVerificationCode("86", phone.getText().toString()); // 调用sdk发送短信验证
-                    getCode.setClickable(false);// 设置按钮不可点击 显示倒计时
-                    getCode.setText("重新发送(" + i + ")");
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (i = 30; i > 0; i--) {
-                                handler.sendEmptyMessage(-9);
-                                if (i <= 0) {
-                                    break;
-                                }
-                                try {
-                                    Thread.sleep(1000);// 线程休眠实现读秒功能
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            handler.sendEmptyMessage(-8);// 在30秒后重新显示为获取验证码
-                        }
-                    }).start();
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("phone", phone.getText().toString());
+                    sendCheckuser(url, params);
                 } else {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "手机号格式不合法");
                 }
@@ -125,9 +123,66 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    private void getCode() {
+        SMSSDK.getVerificationCode("86", phone.getText().toString()); // 调用sdk发送短信验证
+        getCode.setClickable(false);// 设置按钮不可点击 显示倒计时
+        getCode.setText("重新发送(" + i + ")");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (i = 30; i > 0; i--) {
+                    handler.sendEmptyMessage(-9);
+                    if (i <= 0) {
+                        break;
+                    }
+                    try {
+                        Thread.sleep(1000);// 线程休眠实现读秒功能
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                handler.sendEmptyMessage(-8);// 在30秒后重新显示为获取验证码
+            }
+        }).start();
+    }
+
+    private void sendCheckuser(String url, Map<String, Object> params) {
+        DialogUtils.show(this);
+        HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
+            @Override
+            public void onSuccess(String json) {
+                parseCheckJson(json);
+                handler.sendEmptyMessage(3);
+            }
+
+            @Override
+            public void onFail(String error) {
+                handler.sendEmptyMessage(0);
+            }
+        });
+        httpUtils.sendGetHttp(url, params);
+    }
+
+    private void parseCheckJson(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            codeNum = jsonObject.optInt("code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
+            if (msg.what == 3) {
+                DialogUtils.hidden();
+                if (codeNum == 200) {
+                    ToastUtils.showToast(PhoneActivity.this, R.mipmap.music_warning, "此手机已经被注册了");
+                } else {
+                    getCode();
+                }
+            }
             if (msg.what == -9) {
                 getCode.setText("重新发送(" + i + ")");
             } else if (msg.what == -8) {

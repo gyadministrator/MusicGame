@@ -34,10 +34,10 @@ public class UpdateManager {
     private Context mContext;
 
     // 提示语
-    private String updateMsg = "检查到新版本";
+    //private String updateMsg = "检查到新版本";
 
     // 返回你需要安装的安装包url
-    public static String apkUrl = Constant.BASE_URL + "/apk/music_game.apk";
+    //public static String apkUrl = Constant.BASE_URL + "/apk/music_game.apk";
     private Dialog noticeDialog;
 
     private Dialog downloadDialog;
@@ -59,6 +59,8 @@ public class UpdateManager {
     private TextView progress_tv;
 
     private Thread downLoadThread;
+
+    private Runnable mdownApkRunnable;
 
     private boolean interceptFlag = false;
     @SuppressLint("HandlerLeak")
@@ -88,20 +90,20 @@ public class UpdateManager {
     }
 
     // 外部接口让主Activity调用
-    public void checkUpdateInfo() {
-        showNoticeDialog();
+    public void checkUpdateInfo(String apkPath,String updateMsg) {
+        showNoticeDialog(apkPath,updateMsg);
     }
 
-    private void showNoticeDialog() {
+    private void showNoticeDialog(final String apkPath,String updateMsg) {
         DialogUtils.hidden();
         AlertDialog.Builder builder = new Builder(mContext);
-        builder.setTitle("软件版本更新");
+        builder.setTitle("发现新版本");
         builder.setMessage(updateMsg);
         builder.setPositiveButton("下载", new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                showDownloadDialog();
+                showDownloadDialog(apkPath);
             }
         });
         builder.setNegativeButton("以后再说", new OnClickListener() {
@@ -114,7 +116,7 @@ public class UpdateManager {
         noticeDialog.show();
     }
 
-    private void showDownloadDialog() {
+    private void showDownloadDialog(String apkPath) {
         AlertDialog.Builder builder = new Builder(mContext);
         builder.setTitle("软件版本更新");
 
@@ -133,62 +135,66 @@ public class UpdateManager {
         downloadDialog = builder.create();
         downloadDialog.show();
 
-        downloadApk();
+        downloadApk(apkPath);
     }
 
-    private Runnable mdownApkRunnable = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                URL url = new URL(apkUrl);
+    private void downloadApp(final String apkUrl) {
+        mdownApkRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(apkUrl);
 
-                HttpURLConnection conn = (HttpURLConnection) url
-                        .openConnection();
-                conn.connect();
-                int length = conn.getContentLength();
-                InputStream is = conn.getInputStream();
+                    HttpURLConnection conn = (HttpURLConnection) url
+                            .openConnection();
+                    conn.connect();
+                    int length = conn.getContentLength();
+                    InputStream is = conn.getInputStream();
 
-                File file = new File(savePath);
-                if (!file.exists()) {
-                    file.mkdir();
-                }
-                String apkFile = saveFileName;
-                File ApkFile = new File(apkFile);
-                FileOutputStream fos = new FileOutputStream(ApkFile);
-
-                int count = 0;
-                byte buf[] = new byte[1024];
-
-                do {
-                    int numread = is.read(buf);
-                    count += numread;
-                    progress = (int) (((float) count / length) * 100);
-                    // 更新进度
-                    mHandler.sendEmptyMessage(DOWN_UPDATE);
-                    if (numread <= 0) {
-                        // 下载完成通知安装
-                        mHandler.sendEmptyMessage(DOWN_OVER);
-                        break;
+                    File file = new File(savePath);
+                    if (!file.exists()) {
+                        file.mkdir();
                     }
-                    fos.write(buf, 0, numread);
-                } while (!interceptFlag);// 点击取消就停止下载.
+                    String apkFile = saveFileName;
+                    File ApkFile = new File(apkFile);
+                    FileOutputStream fos = new FileOutputStream(ApkFile);
 
-                fos.close();
-                is.close();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    int count = 0;
+                    byte buf[] = new byte[1024];
+
+                    do {
+                        int numread = is.read(buf);
+                        count += numread;
+                        progress = (int) (((float) count / length) * 100);
+                        // 更新进度
+                        mHandler.sendEmptyMessage(DOWN_UPDATE);
+                        if (numread <= 0) {
+                            // 下载完成通知安装
+                            mHandler.sendEmptyMessage(DOWN_OVER);
+                            break;
+                        }
+                        fos.write(buf, 0, numread);
+                    } while (!interceptFlag);// 点击取消就停止下载.
+
+                    fos.close();
+                    is.close();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
+        };
 
-        }
-    };
+    }
 
     /**
      * 下载apk
      */
 
-    private void downloadApk() {
+    private void downloadApk(String apkPath) {
+        downloadApp(apkPath);
         downLoadThread = new Thread(mdownApkRunnable);
         downLoadThread.start();
     }

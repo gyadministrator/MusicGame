@@ -17,6 +17,8 @@ import base.BaseActivity;
 import base.BaseFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.waps.AppConnect;
+import cn.waps.AppListener;
 import fragment.IndexFragment;
 import fragment.ListenFragment;
 import fragment.MyFragment;
@@ -37,11 +39,6 @@ public class MainActivity extends BaseActivity {
     private int position;
     private Fragment mContent;
 
-    private LinearLayout banneLlayout;
-
-
-    private final String APPKEY = "cd7a3678e92f33f1affad511486f68da";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +47,17 @@ public class MainActivity extends BaseActivity {
         initFragment();
         setListener();
 
-        banneLlayout = (LinearLayout) findViewById(R.id.ll);
+        AppConnect.getInstance(this).initPopAd(this);
+        AppConnect.getInstance(this).showPopAd(this, new AppListener() {
+            @Override
+            public void onPopClose() {
+                super.onPopClose();
+            }
+        });
+
+
+        //设置广告
+        setAds();
 
         now_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +66,24 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void setAds() {
+        final LinearLayout adlayout = (LinearLayout) findViewById(R.id.AdLinearLayout);
+        AppConnect.getInstance(this).setBannerAdNoDataListener(new AppListener() {
+            @Override
+            public void onBannerNoData() {
+                super.onBannerNoData();
+                adlayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onBannerClose() {
+                super.onBannerClose();
+                adlayout.setVisibility(View.GONE);
+            }
+        });
+        AppConnect.getInstance(this).showBannerAd(this, adlayout);
     }
 
     private void initFragment() {

@@ -24,8 +24,7 @@
 -dontwarn cn.sharesdk.**
 -dontwarn **.R$*
 
--keep class com.awesome.** { *; }
--dontwarn com.awesome.**
--keepattributes Signature
--keep class sun.misc.Unsafe { *; }
+-keep public class cn.waps.** {*;}
+-keep public interface cn.waps.** {*;}
+-dontwarn cn.waps.**
 

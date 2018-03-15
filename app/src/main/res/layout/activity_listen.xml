@@ -67,8 +67,8 @@
                         android:padding="6dp">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="@mipmap/xin"
@@ -92,8 +92,8 @@
                         android:padding="6dp">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="@mipmap/re" />
@@ -116,8 +116,8 @@
                         android:padding="6dp">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="@mipmap/yao" />
@@ -153,8 +153,8 @@
                         android:padding="6dp">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="@mipmap/jue" />
@@ -176,8 +176,8 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="65dp"
+                            android:layout_width="40dp"
+                            android:layout_height="45dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="@mipmap/liu" />
@@ -199,8 +199,8 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="65dp"
+                            android:layout_width="40dp"
+                            android:layout_height="45dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="@mipmap/ou" />
@@ -235,8 +235,8 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="@mipmap/wang" />
@@ -258,8 +258,8 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="@mipmap/qin" />
@@ -281,8 +281,8 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="@mipmap/ying" />

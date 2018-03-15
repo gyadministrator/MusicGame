@@ -8,6 +8,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import butterknife.ButterKnife;
 import utils.Constant;
 import utils.CurrentMusicUtils;
 import utils.HttpUtils;
+import utils.ImmersedStatusbarUtils;
 import utils.MusicDaoUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
@@ -60,6 +62,8 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
     TextView play;
     @BindView(R.id.music_next)
     TextView music_next;
+    @BindView(R.id.lin)
+    LinearLayout lin;
 
     private static int item_position;
 
@@ -108,6 +112,8 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_recent);
         musicDao = MusicDaoUtils.initDbHelp(this);
         ButterKnife.bind(this);
+        /*设置沉侵式导航栏*/
+        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
 
         initPlayBar();
 

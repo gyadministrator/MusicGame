@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ import utils.Constant;
 import utils.CurrentMusicUtils;
 import utils.DownloadUtil;
 import utils.HttpUtils;
+import utils.ImmersedStatusbarUtils;
 import utils.MoreDialog;
 import utils.MusicDaoUtils;
 import utils.MusicUtils;
@@ -74,6 +76,8 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     TextView play;
     @BindView(R.id.music_next)
     TextView music_next;
+    @BindView(R.id.lin)
+    LinearLayout lin;
     private static boolean flag = true;
     private static int item_position;
     private static final String url = Constant.BASE_URL + "/music/getSongList";
@@ -85,7 +89,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     private static String title;
     private static int size = 20;
     private static String tinguid;
-    private static int mProgress;
 
     private static RecommendMusic temp;
 
@@ -126,9 +129,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 play.setBackgroundResource(R.mipmap.music_stop);
             } else if (msg.what == 4) {
                 ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_icon, "下载完成");
-            } else if (msg.what == 5) {
-                final ProgressBar progressBar = new ProgressBar(ListenMainActivity.this);
-                progressBar.setProgress(mProgress);
             } else if (msg.what == 6) {
                 ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "下载失败");
             } else if (msg.what == 7) {
@@ -148,6 +148,9 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_listen_main);
         musicDao = MusicDaoUtils.initDbHelp(this);
         ButterKnife.bind(this);
+
+        /*设置沉侵式导航栏*/
+        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
 
         listView.setLoadListener(this);
         listView.setOnItemClickListener(this);
@@ -326,31 +329,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 ListenMainActivity.this.startActivity(intent);
                 MoreDialog.hidden();
                 break;
-            case R.id.download:
-                //下载歌曲
-                if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
-                    DownloadUtil.get().download(playUrls.get(0), Environment.getExternalStorageDirectory().getAbsolutePath(), new DownloadUtil.OnDownloadListener() {
-                        @Override
-                        public void onDownloadSuccess() {
-                            handler.sendEmptyMessage(4);
-                        }
-
-                        @Override
-                        public void onDownloading(int progress) {
-                            handler.sendEmptyMessage(5);
-                            mProgress = progress;
-                        }
-
-                        @Override
-                        public void onDownloadFailed() {
-                            handler.sendEmptyMessage(6);
-                        }
-                    });
-                } else {
-                    ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
-                }
-                MoreDialog.hidden();
-                break;
             case R.id.cancel:
                 MoreDialog.hidden();
                 break;
@@ -394,20 +372,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                     }
                 }
                 break;
-            case R.id.music_img:
-                /*if (item_position == 0) {
-                    ToastUtils.showToast(this, R.mipmap.music_warning, "请选择要播放的音乐");
-                } else {
-                    Intent intent1 = new Intent(this, MusicLyricActivity.class);
-                    RecommendMusic music = list.get(item_position - 1);
-                    intent1.putExtra("name", music.getTitle());
-                    intent1.putExtra("singer", music.getAuthor());
-                    intent1.putExtra("img", music.getPic_big());
-                    intent1.putExtra("link", music.getLrclink());
-                    intent1.putExtra("total", music.getFile_duration());
-                    startActivity(intent1);
-                }*/
-                break;
             default:
                 break;
         }
@@ -423,7 +387,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         }
         MoreDialog.show(ListenMainActivity.this);
         MoreDialog.find.setOnClickListener(this);
-        MoreDialog.download.setOnClickListener(this);
         MoreDialog.cancel.setOnClickListener(this);
         return true;
     }

@@ -108,7 +108,6 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
                 //播放音乐
                 if (NetWorkUtils.checkNetworkState(mContext)) {
                     for (int i = 0; i < playUrls.size(); i++) {
-                        Log.e(TAG, playUrls.get(i));
                         MusicUtils.play(playUrls.get(i));
                     }
                 } else {

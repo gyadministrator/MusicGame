@@ -87,7 +87,6 @@ public class LoginActivity extends BaseActivity {
     private void saveUser(User u) {
         userDao.deleteAll();
         userDao.insert(new CurrentUser(0, u.getUsername(), u.getPassword()));
-        Log.e(TAG, "saveUser:插入成功 ");
     }
 
     @SuppressLint("ResourceType")

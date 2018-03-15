@@ -90,11 +90,11 @@ public class UpdateManager {
     }
 
     // 外部接口让主Activity调用
-    public void checkUpdateInfo(String apkPath,String updateMsg) {
-        showNoticeDialog(apkPath,updateMsg);
+    public void checkUpdateInfo(String apkPath, String updateMsg) {
+        showNoticeDialog(apkPath, updateMsg);
     }
 
-    private void showNoticeDialog(final String apkPath,String updateMsg) {
+    private void showNoticeDialog(final String apkPath, String updateMsg) {
         DialogUtils.hidden();
         AlertDialog.Builder builder = new Builder(mContext);
         builder.setTitle("发现新版本");

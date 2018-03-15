@@ -7,12 +7,6 @@
     android:orientation="vertical"
     tools:context="com.example.gy.musicgame.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
-
     <FrameLayout
         android:id="@+id/main_container"
         android:layout_width="match_parent"
@@ -31,11 +25,12 @@
             app:backgroundTint="@color/colorAccent" />
     </FrameLayout>
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/AdLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/white"
-        tools:ignore="Suspicious0dp" />
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" />
 
     <RadioGroup
         android:id="@+id/rg"
@@ -43,7 +38,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="6dp">
+        android:padding="3dp">
 
         <RadioButton
             android:id="@+id/music_index"

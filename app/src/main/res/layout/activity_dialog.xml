@@ -27,6 +27,6 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:text="@string/loading"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
     </RelativeLayout>
 </RelativeLayout>

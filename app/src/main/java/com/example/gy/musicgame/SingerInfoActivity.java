@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 import utils.Constant;
 import utils.DialogUtils;
 import utils.HttpUtils;
+import utils.ImmersedStatusbarUtils;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
 import view.CircleImageView;
@@ -58,6 +59,8 @@ public class SingerInfoActivity extends AppCompatActivity {
     Button reload;
     @BindView(R.id.back_listen)
     TextView back_listen;
+    @BindView(R.id.lin)
+    LinearLayout lin;
 
     private Singer singer;
     private static final String url = Constant.BASE_URL + "/music/GetSongerInfo";
@@ -97,6 +100,9 @@ public class SingerInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singer_info);
         ButterKnife.bind(this);
+
+        /*设置沉侵式导航栏*/
+        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
 
         final String tinguid = getIntent().getStringExtra("tinguid");
         if (NetWorkUtils.checkNetworkState(this)) {

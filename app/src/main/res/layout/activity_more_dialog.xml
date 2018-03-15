@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="200dp"
+    android:layout_width="200dp"
+    android:layout_height="120dp"
     android:background="@drawable/more"
     android:orientation="vertical">
 
@@ -38,29 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/white" />
-
-        <LinearLayout
-            android:id="@+id/download"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:background="@mipmap/download"
-                android:gravity="center_vertical" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:text="@string/download"
-                android:textSize="18sp" />
-        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"

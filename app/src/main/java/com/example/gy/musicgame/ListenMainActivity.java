@@ -113,11 +113,8 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                     list.remove(recommendMusic);
                     adapter = new MusicListAdapter(list, ListenMainActivity.this);
                     listView.setAdapter(adapter);
-                    swipe.setRefreshing(false);
                 }
-                swipe.setRefreshing(false);
             } else if (msg.what == 0) {
-                swipe.setRefreshing(false);
                 loading.setVisibility(View.GONE);
                 msg_t.setText("呀,发生了错误啦,下拉刷新试试...");
                 ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_icon, "发生了错误");
@@ -135,9 +132,21 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 content.setVisibility(View.GONE);
                 adapter = new MusicListAdapter(list, ListenMainActivity.this);
                 listView.setAdapter(adapter);
-                listView.loadComplete(list.size());
+                listView.loadComplete(size + 20);
             } else if (msg.what == 8) {
                 MusicUtils.play(playUrls.get(0));
+            }
+            if (msg.what == 9) {
+                if (list.size() == 0) {
+                    loading.setVisibility(View.GONE);
+                    msg_t.setText("没有获取到数据...");
+                } else {
+                    content.setVisibility(View.GONE);
+                    list.remove(recommendMusic);
+                    adapter = new MusicListAdapter(list, ListenMainActivity.this);
+                    listView.setAdapter(adapter);
+                }
+                swipe.setRefreshing(false);
             }
         }
     };
@@ -300,7 +309,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     public void onRefresh() {
         if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
-            sendHttp(url, type, 0, 1);
+            sendHttp(url, type, 0, 9);
         } else {
             swipe.setRefreshing(false);
             ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
@@ -310,8 +319,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     public void onLoad() {
         if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
-            size = size + 10;
-            sendHttp(url, type, offset, 7);
+            sendHttp(url, type, ++offset, 7);
         } else {
             ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
         }

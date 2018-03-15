@@ -71,7 +71,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="10dp"
                 android:text="@string/getData"
-                android:textSize="20sp" />
+                android:textSize="14sp" />
         </RelativeLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
@@ -82,7 +82,7 @@
             <view.LoadListView
                 android:id="@+id/music_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:divider="@color/white"
                 android:dividerHeight="1dp" />
         </android.support.v4.widget.SwipeRefreshLayout>

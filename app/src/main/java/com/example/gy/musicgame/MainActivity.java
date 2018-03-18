@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import cn.waps.AppConnect;
 import cn.waps.AppListener;
 import fragment.IndexFragment;
+import fragment.InfoFragment;
 import fragment.ListenFragment;
 import fragment.MyFragment;
 import utils.ToastUtils;
@@ -89,6 +90,7 @@ public class MainActivity extends BaseActivity {
     private void initFragment() {
         fragments.add(new IndexFragment());
         fragments.add(new ListenFragment());
+        fragments.add(new InfoFragment());
         fragments.add(new MyFragment());
     }
 
@@ -108,8 +110,11 @@ public class MainActivity extends BaseActivity {
                 case R.id.music_listen:
                     position = 1;
                     break;
-                case R.id.music_me:
+                case R.id.music_info:
                     position = 2;
+                    break;
+                case R.id.music_me:
+                    position = 3;
                     break;
                 default:
                     position = 0;

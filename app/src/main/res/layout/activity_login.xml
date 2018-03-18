@@ -4,42 +4,31 @@
     android:id="@+id/login_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/login"
     android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
 
-    <!-- <view.GifView
-         android:id="@+id/gif"
-         android:layout_width="match_parent"
-         android:layout_height="500dp"
-         android:layout_gravity="center_horizontal"
-         android:enabled="false" />-->
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="76"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="120" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="80"
-            android:gravity="center_vertical"
-            android:paddingLeft="25sp"
-            android:text="@string/login"
-            android:textColor="#1FBAF3"
-            android:textSize="16sp" />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@mipmap/music_icon"
+            android:gravity="center_horizontal" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="120" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView
@@ -110,7 +99,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_weight="180"
-            android:background="#1FBAF3"
+            android:background="@drawable/login_btn"
             android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="16sp" />
@@ -129,6 +118,11 @@
         android:orientation="horizontal">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
             android:id="@+id/tex_register"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -137,6 +131,11 @@
             android:text="@string/quick_register"
             android:textColor="#1FBAF3"
             android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView

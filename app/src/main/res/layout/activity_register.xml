@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/login"
     android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
 
@@ -14,25 +13,23 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="40" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="80"
             android:gravity="center_vertical"
-            android:paddingLeft="25dp"
             android:text="@string/userandpwd"
             android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="40" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView
@@ -43,7 +40,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30"
+        android:layout_weight="40"
         android:orientation="horizontal">
 
         <EditText
@@ -68,7 +65,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30"
+        android:layout_weight="40"
         android:orientation="horizontal">
 
         <EditText
@@ -88,7 +85,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30"
+        android:layout_weight="40"
         android:orientation="horizontal">
 
         <EditText
@@ -123,6 +120,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_weight="180"
+            android:background="@drawable/phone_btn"
             android:enabled="false"
             android:text="@string/register"
             android:textColor="@color/white"
@@ -141,14 +139,23 @@
         android:orientation="horizontal">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
             android:id="@+id/back_login"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="230"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="@string/back_login"
             android:textColor="#1FBAF3"
             android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView

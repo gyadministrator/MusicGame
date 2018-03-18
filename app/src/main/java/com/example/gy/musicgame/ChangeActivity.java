@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -31,6 +32,7 @@ import butterknife.ButterKnife;
 import utils.Constant;
 import utils.DialogUtils;
 import utils.HttpUtils;
+import utils.ImmersedStatusbarUtils;
 import utils.MD5;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
@@ -50,6 +52,8 @@ public class ChangeActivity extends BaseActivity {
     @BindView(R.id.back)
     TextView back;
     private User u;
+    @BindView(R.id.lin)
+    LinearLayout lin;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -78,6 +82,9 @@ public class ChangeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change);
         ButterKnife.bind(this);
+
+        /*设置沉侵式导航栏*/
+        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
 
         u = (User) getIntent().getBundleExtra("user").getSerializable("user");
         user.setText(u.getUsername());

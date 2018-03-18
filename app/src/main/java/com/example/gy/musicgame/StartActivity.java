@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.HttpUtils;
 import utils.NetWorkUtils;
+import utils.ScreenUtils;
 import utils.ToastUtils;
 
 public class StartActivity extends BaseActivity {
@@ -46,7 +47,8 @@ public class StartActivity extends BaseActivity {
             super.handleMessage(msg);
             if (msg.what == 1) {
                 String url = parseJson(msg.obj.toString());
-                Picasso.with(StartActivity.this).load(url).resize(4200, 6000).into(imageView);
+                Map<String, Object> map = ScreenUtils.getAndroiodScreenProperty(StartActivity.this);
+                Picasso.with(StartActivity.this).load(url).resize((int) map.get("width") * 5 + (int) map.get("width") / 2 + (int) map.get("width") / 10, (int) map.get("height") * 4 + (int) map.get("height") / 2 + (int) map.get("height") / 4).into(imageView);
             } else if (msg.what == 0) {
                 ToastUtils.showToast(StartActivity.this, R.mipmap.music_icon, "发生了错误");
             }

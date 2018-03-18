@@ -7,10 +7,9 @@
     tools:context="com.example.gy.musicgame.LoginActivity">
 
     <LinearLayout
-        android:id="@+id/textView"
+        android:id="@+id/lin"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="60"
+        android:layout_height="80dp"
         android:background="#D64A27"
         android:orientation="horizontal">
 

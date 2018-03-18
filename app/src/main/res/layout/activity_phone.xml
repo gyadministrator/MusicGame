@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/login"
     android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
 
@@ -14,25 +13,24 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="60" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_weight="80"
-            android:gravity="center_vertical"
-            android:paddingLeft="25dp"
-            android:text="填写手机号"
+            android:gravity="center"
+            android:text="@string/phone_txt"
             android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="60" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView
@@ -90,7 +88,7 @@
             android:layout_height="36dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginRight="15sp"
-            android:background="#1FBAF3"
+            android:background="@drawable/login_btn"
             android:gravity="center"
             android:text="@string/getCode"
             android:textColor="@color/white"
@@ -115,6 +113,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_weight="230"
+            android:background="@drawable/phone_btn"
             android:enabled="false"
             android:text="@string/btn_next"
             android:textSize="16sp" />
@@ -132,6 +131,11 @@
         android:orientation="horizontal">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
             android:id="@+id/back_login"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -140,6 +144,11 @@
             android:text="@string/back_login"
             android:textColor="#1FBAF3"
             android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView

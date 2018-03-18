@@ -95,7 +95,7 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void afterTextChanged(Editable s) {
                 next.setEnabled(true);
-                next.setBackgroundColor(Color.rgb(31, 186, 243));
+                next.setBackgroundColor(Color.rgb(216, 30, 6));
             }
         });
     }

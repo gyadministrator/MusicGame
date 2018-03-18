@@ -63,6 +63,17 @@
             android:textColor="@drawable/bottom_txt_selector" />
 
         <RadioButton
+            android:id="@+id/music_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@android:color/transparent"
+            android:drawableTop="@drawable/music_info_selector"
+            android:gravity="center"
+            android:text="@string/info"
+            android:textColor="@drawable/bottom_txt_selector" />
+
+        <RadioButton
             android:id="@+id/music_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

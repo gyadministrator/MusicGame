@@ -68,10 +68,13 @@ public class InfoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             super.handleMessage(msg);
             if (msg.what == 1) {
                 DialogUtils.hidden();
-                Log.e("size", "handleMessage: " + infoList.toString());
-                adapter = new InfoAdapter(mContext, infoList);
-                listView.setAdapter(adapter);
-                rel_no_msg.setVisibility(View.GONE);
+                if (infoList.size() == 0) {
+                    rel_no_msg.setVisibility(View.VISIBLE);
+                } else {
+                    adapter = new InfoAdapter(mContext, infoList);
+                    listView.setAdapter(adapter);
+                    rel_no_msg.setVisibility(View.GONE);
+                }
             } else if (msg.what == 0) {
                 rel_no_msg.setVisibility(View.VISIBLE);
                 DialogUtils.hidden();
@@ -79,9 +82,13 @@ public class InfoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
             if (msg.what == 2) {
                 DialogUtils.hidden();
-                adapter = new InfoAdapter(mContext, infoList);
-                listView.setAdapter(adapter);
-                rel_no_msg.setVisibility(View.GONE);
+                if (infoList.size() == 0) {
+                    rel_no_msg.setVisibility(View.VISIBLE);
+                } else {
+                    adapter = new InfoAdapter(mContext, infoList);
+                    listView.setAdapter(adapter);
+                    rel_no_msg.setVisibility(View.GONE);
+                }
                 swipeRefreshLayout.setRefreshing(false);
             }
         }

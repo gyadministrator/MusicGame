@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.gy.musicgame.AboutActivity;
 import com.example.gy.musicgame.ChangeActivity;
+import com.example.gy.musicgame.DevelopActivity;
 import com.example.gy.musicgame.LoginActivity;
 import com.example.gy.musicgame.R;
 import com.google.gson.Gson;
@@ -110,6 +111,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
     TextView modify;
     @BindView(R.id.lin)
     LinearLayout lin;
+    @BindView(R.id.about_me_tv)
+    LinearLayout about_me_tv;
     private String url = Constant.BASE_URL + "/apk/apkInfo";
 
     private Apk apkInfo;
@@ -204,6 +207,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
         user_image.setOnClickListener(this);
         modify.setOnClickListener(this);
         exit_tv.setOnClickListener(this);
+        about_me_tv.setOnClickListener(this);
     }
 
     @Override
@@ -273,6 +277,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                 getActivity().finish();
                 ExitDialogUtils.hidden();
                 MusicUtils.destoryMedia();
+                break;
+            case R.id.about_me_tv:
+                Intent intent3 = new Intent(mContext, DevelopActivity.class);
+                startActivity(intent3);
                 break;
         }
     }

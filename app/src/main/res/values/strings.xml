@@ -111,4 +111,5 @@
     <string name="unknown">未知</string>
     <string name="phone_txt">填写注册手机号</string>
     <string name="info_detail">消息详情</string>
+    <string name="zan">赞助开发者</string>
 </resources>

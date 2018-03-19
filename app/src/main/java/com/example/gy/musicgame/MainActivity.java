@@ -17,13 +17,10 @@ import base.BaseActivity;
 import base.BaseFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.waps.AppConnect;
-import cn.waps.AppListener;
 import fragment.IndexFragment;
 import fragment.InfoFragment;
 import fragment.ListenFragment;
 import fragment.MyFragment;
-import utils.ToastUtils;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.music_index)
@@ -48,18 +45,6 @@ public class MainActivity extends BaseActivity {
         initFragment();
         setListener();
 
-        AppConnect.getInstance(this).initPopAd(this);
-        AppConnect.getInstance(this).showPopAd(this, new AppListener() {
-            @Override
-            public void onPopClose() {
-                super.onPopClose();
-            }
-        });
-
-
-        //设置广告
-        setAds();
-
         now_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,24 +52,6 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void setAds() {
-        final LinearLayout adlayout = (LinearLayout) findViewById(R.id.AdLinearLayout);
-        AppConnect.getInstance(this).setBannerAdNoDataListener(new AppListener() {
-            @Override
-            public void onBannerNoData() {
-                super.onBannerNoData();
-                adlayout.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onBannerClose() {
-                super.onBannerClose();
-                adlayout.setVisibility(View.GONE);
-            }
-        });
-        AppConnect.getInstance(this).showBannerAd(this, adlayout);
     }
 
     private void initFragment() {

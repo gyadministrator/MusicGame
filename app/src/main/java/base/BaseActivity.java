@@ -10,7 +10,6 @@ import android.view.KeyEvent;
 import com.example.gy.musicgame.MainActivity;
 import com.example.gy.musicgame.R;
 
-import cn.waps.AppConnect;
 import utils.ActivityController;
 import utils.ToastUtils;
 
@@ -18,23 +17,18 @@ import utils.ToastUtils;
  * Created by 高运 on 2017/5/14.
  */
 public class BaseActivity extends FragmentActivity {
-    private static final String APPID = "b28e885edec42f9b8463bd47380f719f";
-    private static final String APPPID = "goapk";
     private boolean flag = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityController.addActivity(this);
-
-        AppConnect.getInstance(APPID, APPPID, this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ActivityController.removeActivity(this);
-        AppConnect.getInstance(this).close();
     }
 
     @Override

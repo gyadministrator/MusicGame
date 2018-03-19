@@ -24,7 +24,3 @@
 -dontwarn cn.sharesdk.**
 -dontwarn **.R$*
 
--keep public class cn.waps.** {*;}
--keep public interface cn.waps.** {*;}
--dontwarn cn.waps.**
-

@@ -51,7 +51,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".InfoDetailActivity"></activity>
+        <activity android:name=".InfoDetailActivity" />
+        <activity android:name=".DevelopActivity"></activity>
     </application>
 
 </manifest>

@@ -39,6 +39,7 @@ import utils.HttpUtils;
 import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
+import utils.ToastMoneyUtils;
 import utils.ToastUtils;
 
 /**
@@ -172,7 +173,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
                     }
                     msg.setText("恭喜你,答对了");
                     time_tv.setText("");
-                    ToastUtils.showToast(mContext, R.mipmap.money, "获得奖励+10");
+                    ToastMoneyUtils.showToast(mContext, R.mipmap.money, "获得奖励+10");
                     user = (User) getActivity().getIntent().getBundleExtra("user").getSerializable("user");
                     if (NetWorkUtils.checkNetworkState(mContext)) {
                         String url = Constant.BASE_URL + "/user/changeStar";

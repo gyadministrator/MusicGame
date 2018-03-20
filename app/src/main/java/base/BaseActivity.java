@@ -9,7 +9,7 @@ import android.view.KeyEvent;
 
 import com.example.gy.musicgame.MainActivity;
 import com.example.gy.musicgame.R;
-
+import abc.abc.abc.nm.sp.SpotManager;
 import utils.ActivityController;
 import utils.ToastUtils;
 
@@ -42,6 +42,7 @@ public class BaseActivity extends FragmentActivity {
             } else {
                 ActivityController.removeAllActivity();
                 Process.killProcess(Process.myPid());
+                SpotManager.getInstance(this).onAppExit();
             }
         }
         return super.onKeyDown(keyCode, event);

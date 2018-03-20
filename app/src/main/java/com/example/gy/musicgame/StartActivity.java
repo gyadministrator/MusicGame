@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import abc.abc.abc.nm.sp.SplashViewSettings;
+import abc.abc.abc.nm.sp.SpotManager;
+import abc.abc.abc.nm.sp.SpotRequestListener;
 import base.BaseActivity;
 import bean.CurrentUser;
 import bean.User;
@@ -62,20 +65,20 @@ public class StartActivity extends BaseActivity {
         initDbHelp();
         ButterKnife.bind(this);
 
+        QueryBuilder<CurrentUser> qb = userDao.queryBuilder();
+        List<CurrentUser> list = qb.where(CurrentUserDao.Properties.Id.eq(0)).list();
+
         if (NetWorkUtils.checkNetworkState(this)) {
             send();
         } else {
             ToastUtils.showToast(this, R.mipmap.music_warning, "无网络连接");
         }
-        QueryBuilder<CurrentUser> qb = userDao.queryBuilder();
-        List<CurrentUser> list = qb.where(CurrentUserDao.Properties.Id.eq(0)).list();
         if (list.size() == 0) {
             start(LoginActivity.class, list);
         } else {
             start(MainActivity.class, list);
         }
     }
-
     private void initDbHelp() {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "recluse-db", null);
         SQLiteDatabase db = helper.getWritableDatabase();

@@ -13,6 +13,9 @@ import android.widget.RadioGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import abc.abc.abc.nm.cm.ErrorCode;
+import abc.abc.abc.nm.sp.SpotListener;
+import abc.abc.abc.nm.sp.SpotManager;
 import base.BaseActivity;
 import base.BaseFragment;
 import butterknife.BindView;
@@ -44,6 +47,8 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         initFragment();
         setListener();
+
+        setupSpotAd();
 
         now_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +117,94 @@ public class MainActivity extends BaseActivity {
 
     private Fragment getFragment() {
         return fragments.get(position);
+    }
+
+
+    //插屏广告
+
+    /**
+     * 设置插屏广告
+     */
+    private void setupSpotAd() {
+        SpotManager.getInstance(this).setImageType(SpotManager.IMAGE_TYPE_VERTICAL);
+        // 高级动画
+        SpotManager.getInstance(this)
+                .setAnimationType(SpotManager.ANIMATION_TYPE_ADVANCED);
+        // 展示插屏广告
+        SpotManager.getInstance(this).showSpot(this, new SpotListener() {
+            @Override
+            public void onShowSuccess() {
+                //logInfo("插屏展示成功");
+            }
+
+            @Override
+            public void onShowFailed(int errorCode) {
+                //logError("插屏展示失败");
+                switch (errorCode) {
+                    case ErrorCode.NON_NETWORK:
+                        //showShortToast("网络异常");
+                        break;
+                    case ErrorCode.NON_AD:
+                        //showShortToast("暂无插屏广告");
+                        break;
+                    case ErrorCode.RESOURCE_NOT_READY:
+                        //showShortToast("插屏资源还没准备好");
+                        break;
+                    case ErrorCode.SHOW_INTERVAL_LIMITED:
+                        //showShortToast("请勿频繁展示");
+                        break;
+                    case ErrorCode.WIDGET_NOT_IN_VISIBILITY_STATE:
+                        //showShortToast("请设置插屏为可见状态");
+                        break;
+                    default:
+                        //showShortToast("请稍后再试");
+                        break;
+                }
+            }
+
+            @Override
+            public void onSpotClosed() {
+                //logDebug("插屏被关闭");
+            }
+
+            @Override
+            public void onSpotClicked(boolean isWebPage) {
+                //logDebug("插屏被点击");
+                //logInfo("是否是网页广告？%s", isWebPage ? "是" : "不是");
+            }
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        // 点击后退关闭插屏广告
+        if (SpotManager.getInstance(this).isSpotShowing()) {
+            SpotManager.getInstance(this).hideSpot();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 插屏广告
+        SpotManager.getInstance(this).onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // 插屏广告
+        SpotManager.getInstance(this).onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 插屏广告
+        SpotManager.getInstance(this).onDestroy();
     }
 
 }

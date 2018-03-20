@@ -24,3 +24,5 @@
 -dontwarn cn.sharesdk.**
 -dontwarn **.R$*
 
+-keep public class com.mi.adtracker.MiAdTracker{ *; }
+

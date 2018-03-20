@@ -112,4 +112,5 @@
     <string name="phone_txt">填写注册手机号</string>
     <string name="info_detail">消息详情</string>
     <string name="zan">赞助开发者</string>
+    <string name="click_to_skip">"点击跳过"</string>
 </resources>

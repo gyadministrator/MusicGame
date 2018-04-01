@@ -1,11 +1,15 @@
 package com.example.gy.musicgame;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,6 +17,8 @@ import android.widget.RadioGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import abc.abc.abc.nm.bn.BannerManager;
+import abc.abc.abc.nm.bn.BannerViewListener;
 import abc.abc.abc.nm.cm.ErrorCode;
 import abc.abc.abc.nm.sp.SpotListener;
 import abc.abc.abc.nm.sp.SpotManager;
@@ -39,6 +45,7 @@ public class MainActivity extends BaseActivity {
     private List<BaseFragment> fragments = new ArrayList<>();
     private int position;
     private Fragment mContent;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,7 @@ public class MainActivity extends BaseActivity {
 
         setupSpotAd();
 
+
         now_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +66,6 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-
     private void initFragment() {
         fragments.add(new IndexFragment());
         fragments.add(new ListenFragment());
@@ -118,9 +125,6 @@ public class MainActivity extends BaseActivity {
     private Fragment getFragment() {
         return fragments.get(position);
     }
-
-
-    //插屏广告
 
     /**
      * 设置插屏广告
@@ -205,6 +209,8 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         // 插屏广告
         SpotManager.getInstance(this).onDestroy();
+        // 展示广告条窗口的 onDestroy() 回调方法中调用
+        BannerManager.getInstance(this).onDestroy();
     }
 
 }

@@ -2,14 +2,17 @@ package fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.gy.musicgame.ListenMainActivity;
@@ -29,6 +32,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import abc.abc.abc.nm.cm.ErrorCode;
+import abc.abc.abc.nm.vdo.VideoAdListener;
+import abc.abc.abc.nm.vdo.VideoAdManager;
+import abc.abc.abc.nm.vdo.VideoAdSettings;
+import abc.abc.abc.nm.vdo.VideoInfoViewBuilder;
 import base.BaseFragment;
 import bean.RecommendMusic;
 import butterknife.BindView;
@@ -78,6 +86,7 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     List<RecommendMusic> list = new ArrayList<>();
     private static final String url = Constant.BASE_URL + "/music/getSongList";
 
+
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(
     ) {
@@ -115,16 +124,12 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     protected void initData() {
         super.initData();
 
+        getBanner();
+
         /*设置沉侵式导航栏*/
         ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
         nums = mContext.getResources().getIntArray(R.array.types_num);
         types = mContext.getResources().getStringArray(R.array.types);
-
-        if (NetWorkUtils.checkNetworkState(mContext)) {
-            sendHttp(url, 1, 0);
-        } else {
-            ToastUtils.showToast(mContext, R.mipmap.music_warning, "貌似没有网哎...");
-        }
 
         xinge.setOnClickListener(this);
         rege.setOnClickListener(this);
@@ -143,6 +148,14 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
                 startActivity(intent);
             }
         });
+    }
+
+    private void getBanner() {
+        if (NetWorkUtils.checkNetworkState(mContext)) {
+            sendHttp(url, 1, 0);
+        } else {
+            ToastUtils.showToast(mContext, R.mipmap.music_warning, "貌似没有网哎...");
+        }
     }
 
     private void initBanner() {
@@ -220,6 +233,8 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
                 startListenActivity(nums[8], types[8]);
                 break;
         }
+
+
     }
 
     /*跳转*/
@@ -230,3 +245,5 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
         startActivity(intent);
     }
 }
+
+

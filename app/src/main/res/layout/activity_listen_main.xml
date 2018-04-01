@@ -74,19 +74,40 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe"
+        <!--无网络时-->
+        <RelativeLayout
+            android:id="@+id/rel_net"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
-            <view.LoadListView
-                android:id="@+id/music_list"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/msg_tv"
+                style="?android:progressBarStyleSmall"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:divider="@color/white"
-                android:dividerHeight="1dp" />
-        </android.support.v4.widget.SwipeRefreshLayout>
+                android:layout_centerInParent="true"
+                android:text="@string/no_net" />
+
+            <Button
+                android:id="@+id/reload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/msg_tv"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/reload"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <view.LoadListView
+            android:id="@+id/music_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/white"
+            android:dividerHeight="1dp" />
     </LinearLayout>
 
-    <include layout="@layout/activity_play_bar" />
+    <include
+        layout="@layout/activity_play_bar" />
 </LinearLayout>

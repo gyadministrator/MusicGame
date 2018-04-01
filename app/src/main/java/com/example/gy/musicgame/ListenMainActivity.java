@@ -2,6 +2,7 @@ package com.example.gy.musicgame;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -10,7 +11,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -23,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +36,7 @@ import java.util.Map;
 
 import adapter.MusicListAdapter;
 import base.BaseActivity;
+import bean.Music;
 import bean.RecommendMusic;
 import bean.dao.RecommendMusicDao;
 import butterknife.BindView;
@@ -51,19 +58,19 @@ import view.LoadListView;
  * Created by Administrator on 2018/1/15.
  */
 
-public class ListenMainActivity extends BaseActivity implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, LoadListView.ILoadListener, View.OnClickListener, AdapterView.OnItemLongClickListener {
+public class ListenMainActivity extends BaseActivity implements AdapterView.OnItemClickListener, LoadListView.ILoadListener, View.OnClickListener, AdapterView.OnItemLongClickListener {
     @BindView(R.id.music_list)
     LoadListView listView;
-    @BindView(R.id.swipe)
-    SwipeRefreshLayout swipe;
+    @BindView(R.id.reload)
+    Button reload;
+    @BindView(R.id.rel_net)
+    RelativeLayout rel_net;
     @BindView(R.id.back_listen)
     TextView back_listen;
     @BindView(R.id.title_txt)
     TextView title_txt;
     @BindView(R.id.content)
     RelativeLayout content;
-    @BindView(R.id.msg)
-    TextView msg_t;
     @BindView(R.id.loading)
     ProgressBar loading;
     @BindView(R.id.music_img)
@@ -87,7 +94,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     private static int offset = 0;
     private static int type;
     private static String title;
-    private static int size = 20;
+    private static int size = 30;
     private static String tinguid;
 
     private static RecommendMusic temp;
@@ -96,9 +103,12 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
 
     private static RecommendMusicDao musicDao = null;
     private RecommendMusic recommendMusic;
+    private List<Music> musicList = new ArrayList<>();
 
 
     private static final String TAG = "ListenMainActivity";
+
+    private MyThread myThread;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -107,16 +117,16 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
             if (msg.what == 1) {
                 if (list.size() == 0) {
                     loading.setVisibility(View.GONE);
-                    msg_t.setText("没有获取到数据...");
+                    rel_net.setVisibility(View.VISIBLE);
                 } else {
+                    rel_net.setVisibility(View.GONE);
                     content.setVisibility(View.GONE);
-                    list.remove(recommendMusic);
                     adapter = new MusicListAdapter(list, ListenMainActivity.this);
                     listView.setAdapter(adapter);
                 }
             } else if (msg.what == 0) {
                 loading.setVisibility(View.GONE);
-                msg_t.setText("呀,发生了错误啦,下拉刷新试试...");
+                rel_net.setVisibility(View.VISIBLE);
                 ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_icon, "发生了错误");
             } else if (msg.what == 3) {
                 MusicUtils.play(playUrls.get(0));
@@ -124,29 +134,42 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 singer_name.setText(temp.getTitle());
                 singer.setText(temp.getAuthor());
                 play.setBackgroundResource(R.mipmap.music_stop);
+
+                //动画
+                Animation animation = AnimationUtils.loadAnimation(ListenMainActivity.this, R.anim.rotate_anim);
+                LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
+                animation.setInterpolator(lin);
+                music_img.startAnimation(animation);
+
+                if (!MusicUtils.mediaPlayer.isPlaying()) {
+                    music_img.clearAnimation();
+                }
+
+                //开启线程播放下一曲
+                myThread = new MyThread(temp.getFile_duration() * 1000);
+                myThread.start();
             } else if (msg.what == 4) {
                 ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_icon, "下载完成");
             } else if (msg.what == 6) {
                 ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "下载失败");
             } else if (msg.what == 7) {
                 content.setVisibility(View.GONE);
-                adapter = new MusicListAdapter(list, ListenMainActivity.this);
-                listView.setAdapter(adapter);
-                listView.loadComplete(size + 20);
+                adapter.notifyDataSetChanged();
+                size += 20;
+                listView.loadComplete(size - 1);
             } else if (msg.what == 8) {
                 MusicUtils.play(playUrls.get(0));
             }
             if (msg.what == 9) {
                 if (list.size() == 0) {
                     loading.setVisibility(View.GONE);
-                    msg_t.setText("没有获取到数据...");
+                    rel_net.setVisibility(View.VISIBLE);
                 } else {
                     content.setVisibility(View.GONE);
                     list.remove(recommendMusic);
                     adapter = new MusicListAdapter(list, ListenMainActivity.this);
                     listView.setAdapter(adapter);
                 }
-                swipe.setRefreshing(false);
             }
         }
     };
@@ -164,13 +187,12 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         listView.setLoadListener(this);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
-        swipe.setOnRefreshListener(this);
         loading.setVisibility(View.VISIBLE);
 
         play.setOnClickListener(this);
         music_next.setOnClickListener(this);
 
-        music_img.setOnClickListener(this);
+        reload.setOnClickListener(this);
 
         setTitle();
         initPlayBar();
@@ -179,7 +201,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
             sendHttp(url, type, offset, 1);
         } else {
             loading.setVisibility(View.GONE);
-            msg_t.setText("貌似没有网哎...");
+            rel_net.setVisibility(View.VISIBLE);
         }
     }
 
@@ -216,6 +238,9 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     }
 
     private void getPlayUrls(final int currentNum, final int what) {
+        if (myThread != null) {
+            myThread.interrupt();
+        }
         String songid = list.get(currentNum).getSong_id();
         Map<String, Object> map = new HashMap<>();
         map.put("songid", songid);
@@ -274,7 +299,9 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
             for (int i = 0; i < song.length(); i++) {
                 Gson gson = new Gson();
                 RecommendMusic recommendMusic = gson.fromJson(song.get(i).toString(), RecommendMusic.class);
+                Music music = gson.fromJson(song.get(i).toString(), Music.class);
                 list.add(recommendMusic);
+                musicList.add(music);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -283,6 +310,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        music_img.setOnClickListener(this);
         item_position = position + 1;
         temp = list.get(position);
         b = false;
@@ -291,27 +319,17 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
             music_next.setEnabled(true);
             getPlayUrls(position, 3);
             /*
-            * 加入这条音乐到数据库中
-            * */
+             * 加入这条音乐到数据库中
+             * */
             /*
-            * 查询是否存在这条音乐
-            * */
+             * 查询是否存在这条音乐
+             * */
             CurrentMusicUtils.setRecommendMusic(temp);
             List<RecommendMusic> music = MusicDaoUtils.queryOneMusic(musicDao, temp);
             if (music.size() == 0) {
                 MusicDaoUtils.addMusic(temp, musicDao);
             }
         } else {
-            ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-        if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
-            sendHttp(url, type, 0, 9);
-        } else {
-            swipe.setRefreshing(false);
             ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
         }
     }
@@ -364,24 +382,45 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 break;
             case R.id.music_next:
                 //下一首
-                if (b) {
-                    ToastUtils.showToast(this, R.mipmap.music_warning, "没有下一曲");
-                } else {
-                    if (item_position + 1 > list.size()) {
-                        ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是最后一首了");
-                    } else {
-                        temp = list.get(item_position);
-                        if (NetWorkUtils.checkNetworkState(this)) {
-                            getPlayUrls(item_position, 3);
-                            item_position++;
-                        } else {
-                            ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放下一首");
-                        }
-                    }
-                }
+                next();
                 break;
+            case R.id.reload:
+                if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
+                    sendHttp(url, type, 0, 9);
+                } else {
+                    ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
+                }
+            case R.id.music_img:
+                Intent intent1 = new Intent(this, LrcActivity.class);
+                RecommendMusic music = list.get(item_position - 1);
+                intent1.putExtra("name", music.getTitle());
+                intent1.putExtra("singer", music.getAuthor());
+                intent1.putExtra("url", music.getPic_big());
+                intent1.putExtra("songid", music.getSong_id());
+                intent1.putExtra("duration", music.getFile_duration());
+                intent1.putExtra("position", item_position - 1);
+                intent1.putExtra("list",(Serializable) musicList);
+                startActivity(intent1);
             default:
                 break;
+        }
+    }
+
+    private void next() {
+        if (b) {
+            ToastUtils.showToast(this, R.mipmap.music_warning, "没有下一曲");
+        } else {
+            if (item_position + 1 > list.size()) {
+                ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是最后一首了");
+            } else {
+                temp = list.get(item_position);
+                if (NetWorkUtils.checkNetworkState(this)) {
+                    getPlayUrls(item_position, 3);
+                    item_position++;
+                } else {
+                    ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放下一首");
+                }
+            }
         }
     }
 
@@ -403,5 +442,24 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     protected void onDestroy() {
         super.onDestroy();
         list.clear();
+    }
+
+    class MyThread extends Thread {
+        private int time;
+
+        MyThread(int time) {
+            this.time = time;
+        }
+
+        @Override
+        public void run() {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    next();
+                }
+            }, time);
+            super.run();
+        }
     }
 }

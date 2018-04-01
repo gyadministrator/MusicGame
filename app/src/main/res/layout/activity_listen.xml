@@ -18,13 +18,13 @@
             <com.youth.banner.Banner
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="140dp"
                 android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/progress_lin"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="140dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -57,6 +57,7 @@
                     android:layout_height="0dp"
                     android:layout_margin="6dp"
                     android:layout_weight="10"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout

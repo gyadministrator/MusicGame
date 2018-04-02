@@ -141,6 +141,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
                 time_tv.setText("");
                 index_img.clearAnimation();
                 if (!b) {
+                    MusicUtils.stop();
                     ToastUtils.showToast(mContext, R.mipmap.music_icon, "结束了挑战");
                     b = true;
                 }

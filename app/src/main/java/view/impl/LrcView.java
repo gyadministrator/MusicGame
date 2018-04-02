@@ -60,7 +60,7 @@ public class LrcView extends View implements ILrcView {
     /**
      * 不高亮歌词的字体颜色为白色
      */
-    private int mNormalRowColor = Color.WHITE;
+    private int mNormalRowColor = Color.GREEN;
 
     /**
      * 拖动歌词时，在当前高亮歌词下面的一条直线的字体颜色

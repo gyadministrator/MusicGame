@@ -120,9 +120,9 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
 
         initPlayBar();
 
-        for (int i=0;i<list.size();i++){
-            RecommendMusic music=list.get(i);
-            Music music1=new Music();
+        for (int i = 0; i < list.size(); i++) {
+            RecommendMusic music = list.get(i);
+            Music music1 = new Music();
             music1.setTitle(music.getTitle());
             music1.setAuthor(music.getAuthor());
             music1.setPic_big(music.getPic_big());
@@ -230,16 +230,13 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 }
                 break;
             case R.id.music_img:
-                if (item_position == 0) {
-                    ToastUtils.showToast(this, R.mipmap.music_warning, "请选择播放的音乐");
-                } else {
+                if (recommendMusic != null) {
                     Intent intent1 = new Intent(this, LrcActivity.class);
-                    RecommendMusic music = list.get(item_position - 1);
-                    intent1.putExtra("name", music.getTitle());
-                    intent1.putExtra("singer", music.getAuthor());
-                    intent1.putExtra("url", music.getPic_big());
-                    intent1.putExtra("songid", music.getSong_id());
-                    intent1.putExtra("duration", music.getFile_duration());
+                    intent1.putExtra("name", recommendMusic.getTitle());
+                    intent1.putExtra("singer", recommendMusic.getAuthor());
+                    intent1.putExtra("url", recommendMusic.getPic_big());
+                    intent1.putExtra("songid", recommendMusic.getSong_id());
+                    intent1.putExtra("duration", recommendMusic.getFile_duration());
                     intent1.putExtra("position", item_position - 1);
                     intent1.putExtra("list", (Serializable) musicList);
                     startActivity(intent1);

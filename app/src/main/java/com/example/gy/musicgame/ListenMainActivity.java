@@ -107,8 +107,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
 
 
     private static final String TAG = "ListenMainActivity";
-
-    private MyThread myThread;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -134,20 +132,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 singer_name.setText(temp.getTitle());
                 singer.setText(temp.getAuthor());
                 play.setBackgroundResource(R.mipmap.music_stop);
-
-                //动画
-                Animation animation = AnimationUtils.loadAnimation(ListenMainActivity.this, R.anim.rotate_anim);
-                LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
-                animation.setInterpolator(lin);
-                music_img.startAnimation(animation);
-
-                if (!MusicUtils.mediaPlayer.isPlaying()) {
-                    music_img.clearAnimation();
-                }
-
-                //开启线程播放下一曲
-                myThread = new MyThread(temp.getFile_duration() * 1000);
-                myThread.start();
             } else if (msg.what == 4) {
                 ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_icon, "下载完成");
             } else if (msg.what == 6) {
@@ -238,9 +222,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     }
 
     private void getPlayUrls(final int currentNum, final int what) {
-        if (myThread != null) {
-            myThread.interrupt();
-        }
         String songid = list.get(currentNum).getSong_id();
         Map<String, Object> map = new HashMap<>();
         map.put("songid", songid);
@@ -442,24 +423,5 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     protected void onDestroy() {
         super.onDestroy();
         list.clear();
-    }
-
-    class MyThread extends Thread {
-        private int time;
-
-        MyThread(int time) {
-            this.time = time;
-        }
-
-        @Override
-        public void run() {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    next();
-                }
-            }, time);
-            super.run();
-        }
     }
 }

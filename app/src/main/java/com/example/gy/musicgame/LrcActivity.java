@@ -56,26 +56,18 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
     TextView lrc_song_name;
     @BindView(R.id.lrc_singer)
     TextView lrc_singer;
-    @BindView(R.id.lrc_img)
-    CircleImageView lrc_img;
     @BindView(R.id.lin)
     LinearLayout lin;
     @BindView(R.id.lin_bg)
     LinearLayout lin_bg;
     @BindView(R.id.lrcView)
     ILrcView mLrcView;
-    @BindView(R.id.seekBar)
-    SeekBar seekBar;
     @BindView(R.id.lrc_pre)
     TextView lrc_pre;
     @BindView(R.id.lrc_play)
     TextView lrc_play;
     @BindView(R.id.lrc_next)
     TextView lrc_next;
-    @BindView(R.id.lrc_start)
-    TextView lrc_start;
-    @BindView(R.id.lrc_end)
-    TextView lrc_end;
 
     private String url = Constant.BASE_URL + "/music/GetLrc";
     //更新歌词的频率，每秒更新一次
@@ -97,13 +89,8 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
 
     private static boolean b = false;
 
-    private MyThread myThread;
 
     private static final String TAG = "LrcActivity";
-
-    private boolean isChanging;
-
-    private Thread thread;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -122,35 +109,16 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
             } else if (msg.what == 3) {
                 sendHttp(url, temp.getSong_id());
                 MusicUtils.play(playUrls.get(0));
-                Picasso.with(LrcActivity.this).load(temp.getPic_small()).into(lrc_img);
                 lrc_song_name.setText(temp.getTitle());
                 lrc_singer.setText(temp.getAuthor());
                 lrc_play.setBackgroundResource(R.mipmap.music_stop);
 
-                //动画
-                Animation animation = AnimationUtils.loadAnimation(LrcActivity.this, R.anim.rotate_anim);
-                LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
-                animation.setInterpolator(lin);
-                lrc_img.startAnimation(animation);
-                //开启线程播放下一曲
-                myThread = new MyThread(temp.getFile_duration() * 1000);
-                myThread.start();
             } else if (msg.what == 4) {
                 sendHttp(url, temp.getSong_id());
                 MusicUtils.play(playUrls.get(0));
-                Picasso.with(LrcActivity.this).load(temp.getPic_small()).into(lrc_img);
                 lrc_song_name.setText(temp.getTitle());
                 lrc_singer.setText(temp.getAuthor());
                 lrc_play.setBackgroundResource(R.mipmap.music_stop);
-
-                //动画
-                Animation animation = AnimationUtils.loadAnimation(LrcActivity.this, R.anim.rotate_anim);
-                LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
-                animation.setInterpolator(lin);
-                lrc_img.startAnimation(animation);
-                //开启线程播放下一曲
-                myThread = new MyThread(temp.getFile_duration() * 1000);
-                myThread.start();
             }
         }
     };
@@ -165,53 +133,30 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
         lrc_play.setOnClickListener(this);
         lrc_next.setOnClickListener(this);
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                MusicUtils.mediaPlayer.seekTo(i);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                isChanging = true;
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                MusicUtils.mediaPlayer.seekTo(seekBar.getProgress());
-                isChanging = false;
-                thread = new Thread(new SeekBarThread());
-                thread.start();
-            }
-        });
 
         /*设置沉侵式导航栏*/
         ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
 
         intent = getIntent();
         duration = intent.getIntExtra("duration", 0);
-        //开启线程播放下一曲
-        myThread = new MyThread(duration * 1000);
-        myThread.start();
+
+        LoadImgToBackground(this, intent.getStringExtra("url"), lin_bg);
         item_position = intent.getIntExtra("position", 0);
         list = (List<Music>) intent.getSerializableExtra("list");
         lrc_song_name.setText(intent.getStringExtra("name"));
         lrc_singer.setText("---" + intent.getStringExtra("singer") + "---");
 
-        setTime(duration * 1000);
-        new SeekBarThread().start();
         if (NetWorkUtils.checkNetworkState(this)) {
             sendHttp(url, intent.getStringExtra("songid"));
-            Picasso.with(this).load(intent.getStringExtra("url")).placeholder(R.mipmap.music_icon).into(lrc_img);
-            //动画
-            Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_anim);
-            LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
-            animation.setInterpolator(lin);
-            lrc_img.startAnimation(animation);
         } else {
             ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络了...");
         }
 
+        initLrc();
+
+    }
+
+    private void initLrc() {
         if (mTimer == null) {
             mTimer = new Timer();
             mTask = new LrcTask();
@@ -234,7 +179,6 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         });
-
     }
 
     /**
@@ -247,19 +191,18 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private void setTime(int time) {
-        lrc_start.setText(showTime(0));
-        lrc_end.setText(showTime(time));
-    }
-
-    @SuppressLint("DefaultLocale")
-    private String showTime(int time) {
-        time /= 1000;
-        int minute = time / 60;
-        int hour = minute / 60;
-        int second = time % 60;
-        minute %= 60;
-        return String.format("%02d:%02d", minute, second);
+    //设置背景
+    private static void LoadImgToBackground(Activity activity, Object img, final View view) {
+        Glide
+                .with(activity)
+                .load(img)
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<?
+                            super GlideDrawable> glideAnimation) {
+                        view.setBackgroundDrawable(resource);
+                    }
+                });
     }
 
     private void sendHttp(String url, String songid) {
@@ -293,11 +236,6 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lrc_pre:
-                MusicUtils.stop();
-                new SeekBarThread().start();
-                if (myThread != null) {
-                    myThread.interrupt();
-                }
                 pre();
                 break;
             case R.id.lrc_play:
@@ -313,11 +251,6 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.lrc_next:
-                new SeekBarThread().start();
-                MusicUtils.stop();
-                if (myThread != null) {
-                    myThread.interrupt();
-                }
                 next();
                 break;
             default:
@@ -336,6 +269,8 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                 if (NetWorkUtils.checkNetworkState(this)) {
                     getPlayUrls(item_position - 1, 3);
                     item_position--;
+                    initLrc();
+                    LoadImgToBackground(this, temp.getPic_big(), lin_bg);
                 } else {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放上一首");
                 }
@@ -361,20 +296,6 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
             }
         }
     }
-
-    class SeekBarThread extends Thread {
-        @Override
-        public void run() {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    seekBar.setProgress(MusicUtils.mediaPlayer.getCurrentPosition());
-                }
-            }, 1000);
-            super.run();
-        }
-    }
-
 
     private void getPlayUrls(final int currentNum, final int what) {
         String songid = list.get(currentNum).getSong_id();
@@ -409,7 +330,6 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void next() {
-        lrc_img.clearAnimation();
         if (b) {
             ToastUtils.showToast(this, R.mipmap.music_warning, "没有下一曲");
         } else {
@@ -417,33 +337,15 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                 ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是最后一首了");
             } else {
                 temp = list.get(item_position + 1);
-                setTime(temp.getFile_duration()*1000);
                 if (NetWorkUtils.checkNetworkState(this)) {
                     getPlayUrls(item_position + 1, 4);
                     item_position++;
+                    initLrc();
+                    LoadImgToBackground(this, temp.getPic_big(), lin_bg);
                 } else {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放下一首");
                 }
             }
-        }
-    }
-
-    class MyThread extends Thread {
-        private int time;
-
-        MyThread(int time) {
-            this.time = time;
-        }
-
-        @Override
-        public void run() {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    next();
-                }
-            }, time);
-            super.run();
         }
     }
 }

@@ -10,6 +10,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -41,6 +44,7 @@ import utils.MusicUtils;
 import utils.NetWorkUtils;
 import utils.ToastMoneyUtils;
 import utils.ToastUtils;
+import view.CircleImageView;
 
 /**
  * Created by Administrator on 2017/9/12.
@@ -71,6 +75,8 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     LinearLayout answer_linear;
     @BindView(R.id.lin)
     LinearLayout lin;
+    @BindView(R.id.index_img)
+    CircleImageView index_img;
     private static final String URL = Constant.BASE_URL + "/music/GetSearchSong";
     private static Map<String, Object> map = new HashMap<>();
     private List<SearchSong> list = new ArrayList<>();
@@ -82,6 +88,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     private static int star;
     //用来播放的变量
     private static int num = 1;
+    private boolean b = false;
     private static final String TAG = "IndexFragment";
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -132,9 +139,11 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
             if (timer != null) {
                 timer.cancel();
                 time_tv.setText("");
-                MusicUtils.stop();
-                answer_linear.setVisibility(View.GONE);
-                ToastUtils.showToast(mContext, R.mipmap.music_icon, "取消了挑战");
+                index_img.clearAnimation();
+                if (!b) {
+                    ToastUtils.showToast(mContext, R.mipmap.music_icon, "结束了挑战");
+                    b = true;
+                }
             }
         }
     }
@@ -217,7 +226,16 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
         });
     }
 
+    private void setAnim(View view) {
+        //动画
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.rotate_anim);
+        LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
+        animation.setInterpolator(lin);
+        view.startAnimation(animation);
+    }
+
     private void initTime() {
+        setAnim(index_img);
         /** 倒计时60秒，一次1秒 */
         if (timer != null) {
             timer.cancel();
@@ -225,7 +243,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
         answer_linear.setVisibility(View.VISIBLE);
         answer();
         time = 30;
-        time_tv.setTextColor(Color.WHITE);
+        time_tv.setTextColor(Color.GREEN);
         timer = new CountDownTimer(time * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -235,6 +253,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onFinish() {
+                index_img.clearAnimation();
                 time_tv.setTextColor(Color.RED);
                 time_tv.setText("时间结束了");
                 //判断是否正确

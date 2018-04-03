@@ -1,7 +1,9 @@
 package base;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.os.Process;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -9,9 +11,14 @@ import android.view.KeyEvent;
 
 import com.example.gy.musicgame.MainActivity;
 import com.example.gy.musicgame.R;
+
 import abc.abc.abc.nm.sp.SpotManager;
-import abc.abc.abc.os.OffersManager;
+import bean.Music;
+import bean.RecommendMusic;
 import utils.ActivityController;
+import utils.CurrentMusicUtils;
+import utils.MusicUtils;
+import utils.NotificationUtils;
 import utils.ToastUtils;
 
 /**
@@ -19,6 +26,15 @@ import utils.ToastUtils;
  */
 public class BaseActivity extends FragmentActivity {
     private boolean flag = false;
+    private myThread myThread;
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,8 +57,23 @@ public class BaseActivity extends FragmentActivity {
                 new Handler().postDelayed(r, 2000);
                 return true;
             } else {
-                ActivityController.removeAllActivity();
-                Process.killProcess(Process.myPid());
+                RecommendMusic recommendMusic = CurrentMusicUtils.getRecommendMusic();
+                Music music = new Music();
+                if (myThread != null) {
+                    myThread.interrupt();
+                }
+                if (recommendMusic != null) {
+                    music.setTitle(recommendMusic.getTitle());
+                    music.setAuthor(recommendMusic.getAuthor());
+                    music.setPic_big(recommendMusic.getPic_big());
+                    music.setFile_duration(recommendMusic.getFile_duration());
+                    NotificationUtils.showNotification(this, music);
+
+                    //开启线程监听
+                    myThread = new myThread(music.getFile_duration());
+                    myThread.start();
+                    //ActivityController.removeAllActivity();
+                }
                 SpotManager.getInstance(this).onAppExit();
             }
         }
@@ -55,5 +86,25 @@ public class BaseActivity extends FragmentActivity {
             flag = false;
         }
     };
+
+    class myThread extends Thread {
+        private int time;
+
+        myThread(int time) {
+            this.time = time;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    NotificationUtils.closeNotification();
+                    Process.killProcess(Process.myPid());
+                }
+            }, time * 1000);
+        }
+    }
 
 }

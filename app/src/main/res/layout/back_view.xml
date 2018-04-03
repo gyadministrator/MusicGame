@@ -29,9 +29,9 @@
 
         <TextView
             android:id="@+id/back_music_singer"
-            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="歌手" />
     </LinearLayout>
 
@@ -42,13 +42,6 @@
         android:layout_gravity="center"
         android:layout_marginRight="15dp"
         android:background="@mipmap/music_stop" />
-
-    <TextView
-        android:id="@+id/back_music_next"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:background="@mipmap/music_next" />
 
     <TextView
         android:id="@+id/back_music_close"

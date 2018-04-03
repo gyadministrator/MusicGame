@@ -395,7 +395,6 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {
-                Log.e(TAG, json);
                 parseJson(json);
                 //准备播放
                 handler.sendEmptyMessage(1);

@@ -103,9 +103,9 @@
         <view.LoadListView
             android:id="@+id/music_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@color/white"
-            android:dividerHeight="1dp" />
+            android:layout_height="match_parent"
+            android:paddingTop="6dp"
+            android:divider="@color/white" />
     </LinearLayout>
 
     <include layout="@layout/activity_play_bar" />

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -133,7 +134,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 content.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
                 size += 20;
-                listView.loadComplete(size - 1);
+                listView.loadComplete(list.size() - 20);
             } else if (msg.what == 8) {
                 MusicUtils.play(playUrls.get(0));
             }

@@ -64,7 +64,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#999999" />
+        android:background="@color/grey_300" />
 
     <view.LoadListView
         android:id="@+id/list"

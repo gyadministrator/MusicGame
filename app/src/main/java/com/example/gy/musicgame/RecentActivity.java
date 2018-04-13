@@ -105,6 +105,11 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 singer_name.setText(temp.getTitle());
                 singer.setText(temp.getAuthor());
                 play.setBackgroundResource(R.mipmap.music_stop);
+            } else if (msg.what == 3) {
+                adapter = new MusicListAdapter(list, RecentActivity.this);
+                adapter.notifyDataSetChanged();
+                listView.setAdapter(adapter);
+                total.setText("共" + list.size() + "首");
             }
         }
     };
@@ -170,6 +175,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onStart() {
         super.onStart();
+        list.clear();
         queryRecored(pageNum);
         initPlayBar();
     }
@@ -182,9 +188,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
         } else {
             listView.setVisibility(View.VISIBLE);
             loading_rel.setVisibility(View.GONE);
-            adapter = new MusicListAdapter(list, this);
-            listView.setAdapter(adapter);
-            total.setText("共" + list.size() + "首");
+            handler.sendEmptyMessage(3);
         }
     }
 

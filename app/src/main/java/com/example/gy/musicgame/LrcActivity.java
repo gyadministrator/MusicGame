@@ -9,12 +9,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +38,7 @@ import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
+import view.CircleImageView;
 import view.ILrcBuilder;
 import view.ILrcView;
 import view.ILrcViewListener;
@@ -58,6 +62,14 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
     TextView lrc_play;
     @BindView(R.id.lrc_next)
     TextView lrc_next;
+    @BindView(R.id.lrc_img)
+    CircleImageView lrc_img;
+    @BindView(R.id.music_start)
+    TextView music_start;
+    @BindView(R.id.music_end)
+    TextView music_end;
+    @BindView(R.id.seekBar)
+    SeekBar seekBar;
 
     private String url = Constant.BASE_URL + "/music/GetLrc";
     //更新歌词的频率，每秒更新一次
@@ -134,9 +146,10 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
         item_position = intent.getIntExtra("position", 0);
         list = (List<Music>) intent.getSerializableExtra("list");
         lrc_song_name.setText(intent.getStringExtra("name"));
-        lrc_singer.setText("---" + intent.getStringExtra("singer") + "---");
+        lrc_singer.setText("---------" + intent.getStringExtra("singer") + "---------");
 
         if (NetWorkUtils.checkNetworkState(this)) {
+            Picasso.with(this).load(intent.getStringExtra("url")).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
             sendHttp(url, intent.getStringExtra("songid"));
         } else {
             ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络了...");

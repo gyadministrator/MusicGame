@@ -1,16 +1,11 @@
 package com.example.gy.musicgame;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -18,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import abc.abc.abc.nm.bn.BannerManager;
-import abc.abc.abc.nm.bn.BannerViewListener;
 import abc.abc.abc.nm.cm.ErrorCode;
 import abc.abc.abc.nm.sp.SpotListener;
 import abc.abc.abc.nm.sp.SpotManager;
@@ -66,6 +60,7 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
     private void initFragment() {
         fragments.add(new IndexFragment());
         fragments.add(new ListenFragment());

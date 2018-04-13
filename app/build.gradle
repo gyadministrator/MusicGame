@@ -8,8 +8,8 @@ android {
         applicationId "com.example.gy.musicgame"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 13
-        versionName "2.2"
+        versionCode 14
+        versionName "2.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -41,6 +41,7 @@ dependencies {
     // 那么这里应该这样配置 compile name: 'YoumiSdk_v7.2.1_2017-05-04', ext: 'aar'
     compile name: 'YoumiSdk_v7.5.1_2018-01-16', ext: 'aar'
     implementation project(':azadlib_2.2')
+    implementation 'com.alibaba:fastjson:1.2.47'
 }
 
 android {
@@ -62,7 +63,6 @@ dependencies {
     /*greenDao框架*/
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:design:26.1.0'
-    compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'com.squareup.picasso:picasso:2.5.2'

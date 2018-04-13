@@ -22,13 +22,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.example.gy.musicgame.AboutActivity;
 import com.example.gy.musicgame.ChangeActivity;
 import com.example.gy.musicgame.DevelopActivity;
 import com.example.gy.musicgame.LoginActivity;
 import com.example.gy.musicgame.R;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -305,9 +305,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONObject response = jsonObject.optJSONObject("response");
-            Gson gson = new Gson();
             if (response.optJSONObject("apkInfo") != null) {
-                apkInfo = gson.fromJson(response.optJSONObject("apkInfo").toString(), Apk.class);
+                apkInfo = JSON.parseObject(response.optJSONObject("apkInfo").toString(), Apk.class);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -357,8 +356,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONObject response = jsonObject.optJSONObject("response");
-            Gson gson = new Gson();
-            user = gson.fromJson(response.optJSONObject("user").toString(), User.class);
+            user = JSON.parseObject(response.optJSONObject("user").toString(), User.class);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -661,8 +659,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
             int code = jsonObject.optInt("code");
             if (code == 100) {
                 JSONObject response = jsonObject.optJSONObject("response");
-                Gson gson = new Gson();
-                user = gson.fromJson(response.optJSONObject("user").toString(), User.class);
+                user = JSON.parseObject(response.optJSONObject("user").toString(), User.class);
             }
         } catch (JSONException e) {
             e.printStackTrace();

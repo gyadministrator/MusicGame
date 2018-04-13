@@ -108,6 +108,5 @@
             android:dividerHeight="1dp" />
     </LinearLayout>
 
-    <include
-        layout="@layout/activity_play_bar" />
+    <include layout="@layout/activity_play_bar" />
 </LinearLayout>

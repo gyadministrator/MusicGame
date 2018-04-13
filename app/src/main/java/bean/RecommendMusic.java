@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 
 @Entity
-public class RecommendMusic{
+public class RecommendMusic {
 
     /**
      * artist_id : 310838090

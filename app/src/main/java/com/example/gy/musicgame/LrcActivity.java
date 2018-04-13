@@ -7,23 +7,14 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +35,6 @@ import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
-import view.CircleImageView;
 import view.ILrcBuilder;
 import view.ILrcView;
 import view.ILrcViewListener;
@@ -140,7 +130,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
         intent = getIntent();
         duration = intent.getIntExtra("duration", 0);
 
-        LoadImgToBackground(this, intent.getStringExtra("url"), lin_bg);
+        //LoadImgToBackground(this, intent.getStringExtra("url"), lin_bg);
         item_position = intent.getIntExtra("position", 0);
         list = (List<Music>) intent.getSerializableExtra("list");
         lrc_song_name.setText(intent.getStringExtra("name"));

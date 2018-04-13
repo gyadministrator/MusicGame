@@ -2,24 +2,19 @@ package fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.example.gy.musicgame.ListenMainActivity;
 import com.example.gy.musicgame.R;
 import com.example.gy.musicgame.SearchMusicActivity;
 import com.example.gy.musicgame.SingerInfoActivity;
-import com.google.gson.Gson;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -31,12 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import abc.abc.abc.nm.cm.ErrorCode;
-import abc.abc.abc.nm.vdo.VideoAdListener;
-import abc.abc.abc.nm.vdo.VideoAdManager;
-import abc.abc.abc.nm.vdo.VideoAdSettings;
-import abc.abc.abc.nm.vdo.VideoInfoViewBuilder;
 import base.BaseFragment;
 import bean.RecommendMusic;
 import butterknife.BindView;
@@ -192,8 +181,7 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
             JSONObject jsonObject = new JSONObject(json);
             JSONArray song = jsonObject.optJSONArray("song_list");
             for (int i = 0; i < song.length(); i++) {
-                Gson gson = new Gson();
-                RecommendMusic recommendMusic = gson.fromJson(song.get(i).toString(), RecommendMusic.class);
+                RecommendMusic recommendMusic = JSON.parseObject(song.get(i).toString(), RecommendMusic.class);
                 images.add(recommendMusic.getPic_big());
                 list.add(recommendMusic);
             }

@@ -19,8 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.example.gy.musicgame.R;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -356,8 +356,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONObject response = jsonObject.optJSONObject("response");
-            Gson gson = new Gson();
-            user = gson.fromJson(response.optJSONObject("user").toString(), User.class);
+            user = JSON.parseObject(response.optJSONObject("user").toString(), User.class);
             star = user.getStar();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -414,8 +413,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
             JSONArray song = jsonObject.optJSONArray("song");
             if (song != null) {
                 for (int i = 0; i < song.length(); i++) {
-                    Gson gson = new Gson();
-                    SearchSong searchSong = gson.fromJson(song.get(i).toString(), SearchSong.class);
+                    SearchSong searchSong = JSON.parseObject(song.get(i).toString(), SearchSong.class);
                     list.add(searchSong);
                 }
             }

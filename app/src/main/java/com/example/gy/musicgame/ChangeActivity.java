@@ -2,18 +2,16 @@ package com.example.gy.musicgame;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -24,9 +22,6 @@ import java.util.Map;
 
 import base.BaseActivity;
 import bean.User;
-import bean.dao.CurrentUserDao;
-import bean.dao.DaoMaster;
-import bean.dao.DaoSession;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.Constant;
@@ -158,8 +153,7 @@ public class ChangeActivity extends BaseActivity {
             int code = jsonObject.optInt("code");
             if (code == 100) {
                 JSONObject response = jsonObject.optJSONObject("response");
-                Gson gson = new Gson();
-                u = gson.fromJson(response.optJSONObject("user").toString(), User.class);
+                u = JSON.parseObject(response.optJSONObject("user").toString(), User.class);
             }
         } catch (JSONException e) {
             e.printStackTrace();

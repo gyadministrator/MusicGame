@@ -24,6 +24,6 @@ public class GlideImageLoader extends ImageLoader {
          切记不要胡乱强转！
          */
         //Picasso 加载图片简单用法
-        Picasso.with(context).load((String) path).placeholder(R.mipmap.loading_music).resize(150, 150).error(R.mipmap.failure).into(imageView);
+        Picasso.with(context).load((String) path).placeholder(R.mipmap.music_icon).resize(150, 150).error(R.mipmap.failure).into(imageView);
     }
 }

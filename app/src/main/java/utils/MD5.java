@@ -97,10 +97,10 @@ public class MD5 {
         return;
     }
 
-	/*
+    /*
      * F, G, H ,I 是4个基本的MD5函数，在原始的MD5的C实现中，由于它们是
-	 * 简单的位运算，可能出于效率的考虑把它们实现成了宏，在java中，我们把它们 实现成了private方法，名字保持了原来C中的。
-	 */
+     * 简单的位运算，可能出于效率的考虑把它们实现成了宏，在java中，我们把它们 实现成了private方法，名字保持了原来C中的。
+     */
 
     private long F(long x, long y, long z) {
         return (x & y) | ((~x) & z);
@@ -120,11 +120,11 @@ public class MD5 {
         return y ^ (x | (~z));
     }
 
-	/*
+    /*
      * FF,GG,HH和II将调用F,G,H,I进行近一步变换 FF, GG, HH, and II transformations for
-	 * rounds 1, 2, 3, and 4. Rotation is separate from addition to prevent
-	 * recomputation.
-	 */
+     * rounds 1, 2, 3, and 4. Rotation is separate from addition to prevent
+     * recomputation.
+     */
 
     private long FF(long a, long b, long c, long d, long x, long s, long ac) {
         a += F(b, c, d) + x + ac;
@@ -214,10 +214,10 @@ public class MD5 {
 
     }
 
-	/*
+    /*
      * md5Memcpy是一个内部使用的byte数组的块拷贝函数，从input的inpos开始把len长度的
-	 * 字节拷贝到output的outpos位置开始
-	 */
+     * 字节拷贝到output的outpos位置开始
+     */
 
     private void md5Memcpy(byte[] output, byte[] input, int outpos, int inpos,
                            int len) {
@@ -236,7 +236,7 @@ public class MD5 {
 
         Decode(x, block, 64);
 
-		/* Round 1 */
+        /* Round 1 */
         a = FF(a, b, c, d, x[0], S11, 0xd76aa478L); /* 1 */
         d = FF(d, a, b, c, x[1], S12, 0xe8c7b756L); /* 2 */
         c = FF(c, d, a, b, x[2], S13, 0x242070dbL); /* 3 */
@@ -254,7 +254,7 @@ public class MD5 {
         c = FF(c, d, a, b, x[14], S13, 0xa679438eL); /* 15 */
         b = FF(b, c, d, a, x[15], S14, 0x49b40821L); /* 16 */
 
-		/* Round 2 */
+        /* Round 2 */
         a = GG(a, b, c, d, x[1], S21, 0xf61e2562L); /* 17 */
         d = GG(d, a, b, c, x[6], S22, 0xc040b340L); /* 18 */
         c = GG(c, d, a, b, x[11], S23, 0x265e5a51L); /* 19 */
@@ -272,7 +272,7 @@ public class MD5 {
         c = GG(c, d, a, b, x[7], S23, 0x676f02d9L); /* 31 */
         b = GG(b, c, d, a, x[12], S24, 0x8d2a4c8aL); /* 32 */
 
-		/* Round 3 */
+        /* Round 3 */
         a = HH(a, b, c, d, x[5], S31, 0xfffa3942L); /* 33 */
         d = HH(d, a, b, c, x[8], S32, 0x8771f681L); /* 34 */
         c = HH(c, d, a, b, x[11], S33, 0x6d9d6122L); /* 35 */
@@ -290,7 +290,7 @@ public class MD5 {
         c = HH(c, d, a, b, x[15], S33, 0x1fa27cf8L); /* 47 */
         b = HH(b, c, d, a, x[2], S34, 0xc4ac5665L); /* 48 */
 
-		/* Round 4 */
+        /* Round 4 */
         a = II(a, b, c, d, x[0], S41, 0xf4292244L); /* 49 */
         d = II(d, a, b, c, x[7], S42, 0x432aff97L); /* 50 */
         c = II(c, d, a, b, x[14], S43, 0xab9423a7L); /* 51 */
@@ -363,28 +363,4 @@ public class MD5 {
         String s = new String(ob);
         return s;
     }
-
-    public static void main(String args[]) {
-
-        MD5 m = new MD5();
-        if (Array.getLength(args) == 0) { // 如果没有参数，执行标准的Test Suite
-
-            System.out.println("MD5 Test suite:");
-            System.out.println("MD5(\"\"):" + m.getMD5ofStr(""));
-            System.out.println("MD5(\"a\"):" + m.getMD5ofStr("a"));
-            System.out.println("MD5(\"abc\"):" + m.getMD5ofStr("abc"));
-            System.out.println("MD5(\"message digest\"):"
-                    + m.getMD5ofStr("message digest"));
-            System.out.println("MD5(\"abcdefghijklmnopqrstuvwxyz\"):"
-                    + m.getMD5ofStr("abcdefghijklmnopqrstuvwxyz"));
-            System.out
-                    .println("MD5(\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\"):"
-                            + m
-                            .getMD5ofStr("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
-        } else
-            System.out
-                    .println("MD5(" + args[0] + ")=" + m.getMD5ofStr(args[0]));
-
-    }
-
 }

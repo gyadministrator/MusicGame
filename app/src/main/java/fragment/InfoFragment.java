@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +15,6 @@ import android.widget.RelativeLayout;
 
 import com.example.gy.musicgame.InfoDetailActivity;
 import com.example.gy.musicgame.R;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;

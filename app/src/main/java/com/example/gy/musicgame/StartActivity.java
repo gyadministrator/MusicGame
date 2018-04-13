@@ -79,6 +79,7 @@ public class StartActivity extends BaseActivity {
             start(MainActivity.class, list);
         }
     }
+
     private void initDbHelp() {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "recluse-db", null);
         SQLiteDatabase db = helper.getWritableDatabase();

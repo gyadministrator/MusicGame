@@ -115,9 +115,10 @@ public class Music implements Serializable {
     private String artist_name;
 
 
-    public Music(){
+    public Music() {
 
     }
+
     public Music(Long id, String artist_id, String language, String pic_big, String pic_small, String country, String area, String publishtime,
                  String album_no, String lrclink, String copy_type, String hot, String all_artist_ting_uid, String resource_type, String is_new,
                  String rank_change, String rank, String all_artist_id, String style, String del_status, String relate_status, String toneid, String all_rate,

@@ -1,5 +1,6 @@
 package com.example.gy.musicgame;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +46,7 @@ public class SearchMusicActivity extends BaseActivity implements AdapterView.OnI
     private static final String TAG = "SearchMusicActivity";
     private static List<String> playUrls = new ArrayList<>();
     private MusicSearchListAdapter adapter;
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -149,8 +151,7 @@ public class SearchMusicActivity extends BaseActivity implements AdapterView.OnI
             JSONArray song = jsonObject.optJSONArray("song");
             if (song != null) {
                 for (int i = 0; i < song.length(); i++) {
-                    Gson gson = new Gson();
-                    SearchSong searchSong = gson.fromJson(song.get(i).toString(), SearchSong.class);
+                    SearchSong searchSong = JSON.parseObject(song.get(i).toString(), SearchSong.class);
                     list.add(searchSong);
                 }
             }

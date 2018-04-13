@@ -1,19 +1,17 @@
 package com.example.gy.musicgame;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -161,8 +159,7 @@ public class SingerInfoActivity extends AppCompatActivity {
 
     private void parseJson(String json) {
         try {
-            Gson gson = new Gson();
-            singer = gson.fromJson(json, Singer.class);
+            singer = JSON.parseObject(json, Singer.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

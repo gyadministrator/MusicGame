@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@mipmap/play_page_default_bg"
     tools:context="com.example.gy.musicgame.LoginActivity">
 
     <LinearLayout

@@ -14,10 +14,10 @@ public class TimeUtils {
     /**
      * 时间戳转日期
      *
-     * @param ms
+     * @param s
      * @return
      */
-     /*
+    /*
      * 将时间戳转换为时间
      */
     public static String stampToDate(String s) {

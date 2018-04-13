@@ -18,8 +18,8 @@ import bean.dao.RecommendMusicDao;
 
 public class MusicDaoUtils {
     /*
-    * 初始化
-    * */
+     * 初始化
+     * */
     public static RecommendMusicDao initDbHelp(Context context) {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "music", null);
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -29,37 +29,37 @@ public class MusicDaoUtils {
     }
 
     /*
-    * 添加一条音乐
-    * */
+     * 添加一条音乐
+     * */
     public static void addMusic(RecommendMusic recommendMusic, RecommendMusicDao musicDao) {
         musicDao.insert(recommendMusic);
     }
 
     /*
-    * 删除一条音乐
-    * */
+     * 删除一条音乐
+     * */
     public static void deleteMusic(RecommendMusicDao musicDao, RecommendMusic recommendMusic) {
         musicDao.delete(recommendMusic);
     }
 
     /*
-    * 删除所有的音乐
-    * */
+     * 删除所有的音乐
+     * */
     public static void deleteAllMusic(RecommendMusicDao musicDao) {
         musicDao.deleteAll();
     }
 
     /*
-    * 查询所有的音乐
-    * */
+     * 查询所有的音乐
+     * */
     public static List<RecommendMusic> queryAllMusic(RecommendMusicDao musicDao) {
         QueryBuilder<RecommendMusic> qb = musicDao.queryBuilder();
         return qb.list();
     }
 
     /*
-    * 查询是否存在这条音乐
-    * */
+     * 查询是否存在这条音乐
+     * */
     public static List<RecommendMusic> queryOneMusic(RecommendMusicDao musicDao, RecommendMusic recommendMusic) {
         QueryBuilder<RecommendMusic> qb = musicDao.queryBuilder();
         return qb.where(RecommendMusicDao.Properties.Song_id.eq(recommendMusic.getSong_id())).list();

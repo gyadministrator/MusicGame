@@ -6,16 +6,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -162,8 +159,7 @@ public class LoginActivity extends BaseActivity {
             if (code == 100) {
                 JSONObject response = jsonObject.optJSONObject("response");
                 JSONObject user = response.optJSONObject("user");
-                Gson gson = new Gson();
-                u = gson.fromJson(user.toString(), User.class);
+                u = JSON.parseObject(user.toString(), User.class);
             }
         } catch (JSONException e) {
             e.printStackTrace();

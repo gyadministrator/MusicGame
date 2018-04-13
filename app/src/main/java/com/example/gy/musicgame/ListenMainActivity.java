@@ -2,18 +2,11 @@ package com.example.gy.musicgame;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -278,9 +271,8 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
             JSONObject jsonObject = new JSONObject(s);
             JSONArray song = jsonObject.optJSONArray("song_list");
             for (int i = 0; i < song.length(); i++) {
-                Gson gson = new Gson();
-                RecommendMusic recommendMusic = gson.fromJson(song.get(i).toString(), RecommendMusic.class);
-                Music music = gson.fromJson(song.get(i).toString(), Music.class);
+                RecommendMusic recommendMusic = JSON.parseObject(song.get(i).toString(), RecommendMusic.class);
+                Music music = JSON.parseObject(song.get(i).toString(), Music.class);
                 list.add(recommendMusic);
                 musicList.add(music);
             }
@@ -380,7 +372,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 intent1.putExtra("songid", music.getSong_id());
                 intent1.putExtra("duration", music.getFile_duration());
                 intent1.putExtra("position", item_position - 1);
-                intent1.putExtra("list",(Serializable) musicList);
+                intent1.putExtra("list", (Serializable) musicList);
                 startActivity(intent1);
             default:
                 break;

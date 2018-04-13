@@ -47,8 +47,8 @@
 
                 <view.CircleImageView
                     android:id="@+id/user_image"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_width="30dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="0.5"
@@ -133,8 +133,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.5"
-                    android:background="@mipmap/user_enter" />
+                    android:layout_weight="0.5" />
             </LinearLayout>
 
             <TextView
@@ -172,8 +171,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.5"
-                    android:background="@mipmap/user_enter" />
+                    android:layout_weight="0.5" />
             </LinearLayout>
 
             <TextView
@@ -195,7 +193,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="0.5"
-                    android:background="@mipmap/clean" />
+                    android:background="@mipmap/delete" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -221,8 +219,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.5"
-                    android:background="@mipmap/user_enter" />
+                    android:layout_weight="0.5" />
             </LinearLayout>
 
             <TextView
@@ -260,8 +257,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.5"
-                    android:background="@mipmap/user_enter" />
+                    android:layout_weight="0.5" />
             </LinearLayout>
 
             <TextView
@@ -283,7 +279,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="0.5"
-                    android:background="@mipmap/develop" />
+                    android:background="@mipmap/development" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -299,8 +295,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.5"
-                    android:background="@mipmap/user_enter" />
+                    android:layout_weight="0.5" />
             </LinearLayout>
 
             <LinearLayout
@@ -334,8 +329,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.5"
-                    android:background="@mipmap/user_enter" />
+                    android:layout_weight="0.5" />
             </LinearLayout>
 
             <TextView

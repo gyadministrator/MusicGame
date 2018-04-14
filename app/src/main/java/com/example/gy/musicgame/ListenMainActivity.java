@@ -170,6 +170,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 if (typeNames.size() == 0) {
                     ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "你当前还没有歌单");
                 } else {
+                    AddMusicDialogUtils.show(ListenMainActivity.this);
                     AddMusicDialogUtils.add_music_list_rel.setVisibility(View.GONE);
                     AddMusicDialogUtils.listView.setVisibility(View.VISIBLE);
                     typeAdapter = new TypeAdapter(typeNames, ListenMainActivity.this);
@@ -463,7 +464,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 //添加至歌单
                 //获取歌单
                 getTypes();
-                AddMusicDialogUtils.show(this);
                 break;
             default:
                 break;

@@ -110,4 +110,5 @@
     <string name="click_to_skip">"点击跳过"</string>
     <string name="reload">重新加载</string>
     <string name="no_net">哎呀,好像没有网络...</string>
+    <string name="no_list">暂无歌单,点击创建吧。</string>
 </resources>

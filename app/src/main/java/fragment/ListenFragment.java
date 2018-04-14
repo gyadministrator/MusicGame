@@ -1,13 +1,18 @@
 package fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -27,8 +32,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import adapter.TypeAdapter;
 import base.BaseFragment;
 import bean.RecommendMusic;
+import bean.Type;
+import bean.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.AddDialogUtils;
@@ -72,14 +80,31 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     LinearLayout progress;
     @BindView(R.id.add_tv)
     TextView add_tv;
+    @BindView(R.id.no_list)
+    TextView no_list;
+    @BindView(R.id.music_list_progress)
+    ProgressBar music_list_progress;
+    @BindView(R.id.myListView)
+    ListView myListView;
+    @BindView(R.id.total)
+    TextView total;
+    private TypeAdapter typeAdapter;
     private int[] nums;
     private String[] types;
+    private List<Type> typeNames = new ArrayList<>();
     private static final String TAG = "ListenFragment";
     List<String> images = new ArrayList<>();
     List<RecommendMusic> list = new ArrayList<>();
     private static final String url = Constant.BASE_URL + "/music/getSongList";
-
+    private String type_url = Constant.BASE_URL + "/type/queryAllType";
     private static String add_title;
+
+    private static Integer userId;
+
+    private Integer addCode;
+
+    private static String add_url = Constant.BASE_URL + "/type/addType";
+
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(
@@ -101,6 +126,25 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
                         startActivity(intent);
                     }
                 });
+            } else if (msg.what == 8) {
+                if (typeNames.size() > 0) {
+                    total.setText(typeNames.size() + "个歌单");
+                    music_list_progress.setVisibility(View.GONE);
+                    no_list.setVisibility(View.GONE);
+                    myListView.setVisibility(View.VISIBLE);
+                    typeAdapter = new TypeAdapter(typeNames, mContext);
+                    myListView.setAdapter(typeAdapter);
+                } else {
+                    music_list_progress.setVisibility(View.GONE);
+                    no_list.setVisibility(View.VISIBLE);
+                }
+            } else if (msg.what == 9) {
+                if (addCode == 100) {
+                    AddDialogUtils.hidden();
+                    typeNames.clear();
+                    getTypes();
+                    ToastUtils.showToast(mContext, R.mipmap.about, "添加歌单成功...");
+                }
             } else {
                 ToastUtils.showToast(mContext, R.mipmap.music_warning, "获取网络图片错误...");
             }
@@ -118,7 +162,13 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     protected void initData() {
         super.initData();
 
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("userId", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt("userId", 0);
+
+        //获取轮播图
         getBanner();
+        //获取歌单
+        getTypes();
 
         /*设置沉侵式导航栏*/
         ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
@@ -171,6 +221,7 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
                 } else {
                     add_title = AddDialogUtils.editText.getText().toString();
                     //添加歌单到数据库中
+                    sendAddHttp(add_url, add_title, userId);
                 }
             }
         });
@@ -179,6 +230,14 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     private void getBanner() {
         if (NetWorkUtils.checkNetworkState(mContext)) {
             sendHttp(url, 1, 0);
+        } else {
+            ToastUtils.showToast(mContext, R.mipmap.music_warning, "貌似没有网哎...");
+        }
+    }
+
+    private void getTypes() {
+        if (NetWorkUtils.checkNetworkState(mContext)) {
+            sendTypeHttp(type_url, userId);
         } else {
             ToastUtils.showToast(mContext, R.mipmap.music_warning, "貌似没有网哎...");
         }
@@ -211,6 +270,70 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
         map.put("size", 6);
         map.put("offset", offset);
         httpUtils.sendGetHttp(url, map);
+    }
+
+    private void sendTypeHttp(String url, Integer userId) {
+        HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
+            @Override
+            public void onSuccess(String json) {
+                parseTypeJson(json);
+                handler.sendEmptyMessage(8);
+            }
+
+            @Override
+            public void onFail(String error) {
+                handler.sendEmptyMessage(0);
+            }
+        });
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        httpUtils.sendGetHttp(url, map);
+    }
+
+    private void sendAddHttp(String url, String title, Integer userId) {
+        HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
+            @Override
+            public void onSuccess(String json) {
+                parseAddJson(json);
+                handler.sendEmptyMessage(9);
+            }
+
+            @Override
+            public void onFail(String error) {
+                handler.sendEmptyMessage(0);
+            }
+        });
+        Map<String, Object> map = new HashMap<>();
+        map.put("title", title);
+        map.put("userId", userId);
+        httpUtils.sendPostHttp(url, map);
+    }
+
+    private void parseAddJson(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            int code = jsonObject.optInt("code");
+            addCode = code;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseTypeJson(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject response = jsonObject.optJSONObject("response");
+            JSONArray list = response.optJSONArray("list");
+            for (int i = 0; i < list.length(); i++) {
+                JSONObject o = (JSONObject) list.get(i);
+                String title = o.optString("title");
+                int id = o.optInt("id");
+                Type type = new Type(id, title);
+                typeNames.add(type);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void parseJson(String json) {

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/include_listen_title" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <include layout="@layout/include_listen_title" />
 
             <com.youth.banner.Banner
                 android:id="@+id/banner"
@@ -33,6 +35,7 @@
                     android:layout_weight="1" />
 
                 <ProgressBar
+                    style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center" />
@@ -42,10 +45,16 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
             </LinearLayout>
-            <!--分类选项-->
-            <include layout="@layout/listen_item" />
-            <!--歌单-->
-            <include layout="@layout/music_list" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--分类选项-->
+                <include layout="@layout/listen_item" />
+                <!--歌单-->
+                <include layout="@layout/music_list" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

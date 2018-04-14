@@ -2,10 +2,12 @@ package com.example.gy.musicgame;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -94,9 +96,6 @@ public class LoginActivity extends BaseActivity {
 
         initDbHelp();
         ButterKnife.bind(this);
-        // 设置背景gif图片资源
-        //gif.setMovieResource(R.raw.bg);
-        //login_main.setAnimation(new AnimationSet());
         tex_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,6 +159,12 @@ public class LoginActivity extends BaseActivity {
                 JSONObject response = jsonObject.optJSONObject("response");
                 JSONObject user = response.optJSONObject("user");
                 u = JSON.parseObject(user.toString(), User.class);
+
+                //记录用户id
+                SharedPreferences sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                SharedPreferences.Editor edit = sharedPreferences.edit();
+                edit.putInt("userId", u.getId());
+                edit.apply();
             }
         } catch (JSONException e) {
             e.printStackTrace();

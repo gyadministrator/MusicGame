@@ -16,10 +16,9 @@
         <item>新歌榜</item>
         <item>热歌榜</item>
         <item>摇滚榜</item>
-        <item>爵士</item>
+        <item>经典老歌榜</item>
         <item>流行</item>
         <item>欧美金曲榜</item>
-        <!--<item>经典老歌榜</item>-->
         <item>网络歌曲榜</item>
         <item>情歌对唱榜</item>
         <item>影视金曲榜</item>
@@ -29,14 +28,12 @@
         <item>1</item>
         <item>2</item>
         <item>11</item>
-        <item>12</item>
+        <item>22</item>
         <item>16</item>
         <item>21</item>
-        <!--<item>22</item>-->
         <item>25</item>
         <item>23</item>
         <item>24</item>
-        <!--<item>25</item>-->
     </integer-array>
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

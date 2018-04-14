@@ -49,8 +49,8 @@
 
         <view.CircleImageView
             android:id="@+id/change_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:background="@mipmap/default_user" />
 
         <TextView

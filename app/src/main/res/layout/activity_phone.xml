@@ -104,7 +104,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40"
+        android:layout_weight="30"
         android:orientation="horizontal">
 
         <Button
@@ -113,7 +113,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_weight="230"
+            android:layout_weight="140"
             android:background="@drawable/phone_btn"
             android:enabled="false"
             android:text="@string/btn_next"

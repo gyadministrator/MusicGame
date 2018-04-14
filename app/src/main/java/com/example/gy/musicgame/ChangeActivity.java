@@ -88,7 +88,7 @@ public class ChangeActivity extends BaseActivity {
             if (u.getImage() == null) {
                 Picasso.with(this).load(Constant.BASE_URL + "/upload/default.png").into(change_user);
             } else {
-                Picasso.with(this).load(u.getImage()).into(change_user);
+                Picasso.with(this).load(u.getImage()).placeholder(R.mipmap.default_user).error(R.mipmap.default_user).resize(120, 120).into(change_user);
             }
         } else {
             ToastUtils.showToast(ChangeActivity.this, R.mipmap.music_warning, "无网络连接");

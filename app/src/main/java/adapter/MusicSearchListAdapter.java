@@ -51,8 +51,8 @@ public class MusicSearchListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.music_search_list_adapter, null);
         }
-        TextView music_title = (TextView) convertView.findViewById(R.id.music_title);
-        TextView music_des = (TextView) convertView.findViewById(R.id.music_des);
+        TextView music_title = convertView.findViewById(R.id.music_title);
+        TextView music_des = convertView.findViewById(R.id.music_des);
         SearchSong searchSong = allValues.get(position);
         music_title.setText(searchSong.getSongname());
         music_des.setText(searchSong.getArtistname());

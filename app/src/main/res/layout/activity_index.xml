@@ -73,8 +73,8 @@
 
         <view.CircleImageView
             android:id="@+id/index_img"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
@@ -90,7 +90,7 @@
         android:id="@+id/answer_linear"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="2">
 
         <include layout="@layout/activity_answer_dialog" />
     </LinearLayout>
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </RelativeLayout>

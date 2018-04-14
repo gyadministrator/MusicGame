@@ -55,13 +55,17 @@ public class MusicListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.music_list_adapter, null);
         }
-        ImageView music_image = (ImageView) convertView.findViewById(R.id.music_image);
-        TextView music_title = (TextView) convertView.findViewById(R.id.music_title);
-        TextView music_des = (TextView) convertView.findViewById(R.id.music_des);
+        ImageView music_image = convertView.findViewById(R.id.music_image);
+        TextView music_title = convertView.findViewById(R.id.music_title);
+        TextView music_des = convertView.findViewById(R.id.music_des);
         RecommendMusic recommendMusic = allValues.get(position);
         Picasso.with(mContext).load(recommendMusic.getPic_big()).into(music_image);
-        music_title.setText(recommendMusic.getTitle());
-        music_des.setText(recommendMusic.getSi_proxycompany());
+        String musicTitle = recommendMusic.getTitle();
+        if (musicTitle.length() > 15) {
+            musicTitle = musicTitle.substring(0, 15) + "...";
+        }
+        music_title.setText(musicTitle);
+        music_des.setText(recommendMusic.getAuthor());
         return convertView;
     }
 }

@@ -29,7 +29,6 @@
             android:layout_below="@+id/msg"
             android:layout_marginTop="15dp"
             android:gravity="center_horizontal"
-            android:text="122121"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
 
@@ -66,7 +65,7 @@
         <Button
             android:id="@+id/ok"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/answer_edit"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"

@@ -155,18 +155,18 @@
                         android:padding="6dp">
 
                         <TextView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
-                            android:background="@mipmap/jue" />
+                            android:background="@mipmap/lao" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
-                            android:text="@string/jueshi"
+                            android:text="@string/lao"
                             android:textSize="22sp" />
                     </LinearLayout>
 

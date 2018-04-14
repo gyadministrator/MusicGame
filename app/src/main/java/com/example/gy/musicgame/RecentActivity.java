@@ -102,7 +102,11 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
             } else if (msg.what == 2) {
                 MusicUtils.play(playUrls.get(0));
                 Picasso.with(RecentActivity.this).load(temp.getPic_small()).into(music_img);
-                singer_name.setText(temp.getTitle());
+                String tempTitle = temp.getTitle();
+                if (tempTitle.length() > 15) {
+                    tempTitle = tempTitle.substring(0, 15);
+                }
+                singer_name.setText(tempTitle);
                 singer.setText(temp.getAuthor());
                 play.setBackgroundResource(R.mipmap.music_stop);
             } else if (msg.what == 3) {

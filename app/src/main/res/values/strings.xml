@@ -18,7 +18,7 @@
     <string name="go">开始吧</string>
     <string name="next">下一首</string>
     <string name="ok">确定</string>
-    <string name="answer">请输入你的答案</string>
+    <string name="answer">请输入你的答案...</string>
     <string name="challenge_next">挑战下一个</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="user">请输入昵称/手机号...</string>

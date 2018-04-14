@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="30dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,18 +16,23 @@
             android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5个歌单" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/default_list"
+            android:textSize="16sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/add"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@mipmap/add" />
+            android:id="@+id/add_tv"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:background="@mipmap/add"
+            android:gravity="center" />
     </LinearLayout>
 
     <TextView
@@ -49,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/no_list" />
+            android:text="@string/no_list"
+            android:textSize="16sp" />
     </RelativeLayout>
 </LinearLayout>

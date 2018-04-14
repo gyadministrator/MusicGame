@@ -4,8 +4,8 @@
     android:id="@+id/login_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@mipmap/play_page_default_bg"
+    android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
 
     <LinearLayout
@@ -51,10 +51,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="230"
             android:hint="@string/user"
-            android:inputType="text"
-            android:textColor="#1FBAF3"
-            android:textColorHighlight="#34cf9e"
-            android:textColorHint="#1FBAF3" />
+            android:inputType="text" />
     </LinearLayout>
 
     <TextView
@@ -76,10 +73,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="230"
             android:hint="@string/password"
-            android:inputType="textPassword"
-            android:textColor="#1FBAF3"
-            android:textColorHighlight="#34cf9e"
-            android:textColorHint="#1FBAF3" />
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <TextView
@@ -130,7 +124,6 @@
             android:layout_weight="230"
             android:gravity="center"
             android:text="@string/quick_register"
-            android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView

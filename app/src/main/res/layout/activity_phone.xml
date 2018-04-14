@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@mipmap/play_page_default_bg"
+    android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
 
     <LinearLayout
@@ -25,7 +25,6 @@
             android:layout_weight="80"
             android:gravity="center"
             android:text="@string/phone_txt"
-            android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView
@@ -53,10 +52,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="230"
             android:hint="@string/phone"
-            android:inputType="phone"
-            android:textColor="#1FBAF3"
-            android:textColorHighlight="#34cf9e"
-            android:textColorHint="#1FBAF3" />
+            android:inputType="phone" />
     </LinearLayout>
 
     <TextView
@@ -78,10 +74,7 @@
             android:layout_marginRight="0dp"
             android:hint="@string/code"
             android:inputType="number"
-            android:maxLength="10"
-            android:textColor="#1FBAF3"
-            android:textColorHighlight="#34cf9e"
-            android:textColorHint="#1FBAF3" />
+            android:maxLength="10" />
 
         <Button
             android:id="@+id/getCode"
@@ -92,7 +85,6 @@
             android:background="@drawable/login_btn"
             android:gravity="center"
             android:text="@string/getCode"
-            android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -143,7 +135,6 @@
             android:layout_weight="230"
             android:gravity="center"
             android:text="@string/back_login"
-            android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView

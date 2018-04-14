@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/grey" />
+            android:background="@color/grey_300" />
 
         <Button
             android:id="@+id/picture_selector_pick_picture_btn"
@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/grey" />
+            android:background="@color/grey_300" />
 
         <Button
             android:id="@+id/picture_selector_cancel_btn"

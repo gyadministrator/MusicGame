@@ -26,10 +26,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import base.BaseFragment;
 import bean.RecommendMusic;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import utils.AddDialogUtils;
 import utils.Constant;
 import utils.GlideImageLoader;
 import utils.HttpUtils;
@@ -68,6 +70,8 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     LinearLayout lin;
     @BindView(R.id.progress_lin)
     LinearLayout progress;
+    @BindView(R.id.add_tv)
+    TextView add_tv;
     private int[] nums;
     private String[] types;
     private static final String TAG = "ListenFragment";
@@ -75,6 +79,7 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     List<RecommendMusic> list = new ArrayList<>();
     private static final String url = Constant.BASE_URL + "/music/getSongList";
 
+    private static String add_title;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(
@@ -135,6 +140,38 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, SearchMusicActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        add_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddDialogUtils.show(mContext);
+
+                //设置事件
+                setAddListEvent();
+            }
+        });
+
+    }
+
+    private void setAddListEvent() {
+        AddDialogUtils.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddDialogUtils.hidden();
+            }
+        });
+
+        AddDialogUtils.ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (AddDialogUtils.editText.getText().toString().equals("")) {
+                    ToastUtils.showToast(mContext, R.mipmap.music_warning, "请输入歌单名");
+                } else {
+                    add_title = AddDialogUtils.editText.getText().toString();
+                    //添加歌单到数据库中
+                }
             }
         });
     }

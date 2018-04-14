@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@mipmap/play_page_default_bg"
+    android:orientation="vertical"
     tools:context="com.example.gy.musicgame.LoginActivity">
 
     <LinearLayout
@@ -24,7 +24,6 @@
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:text="@string/userandpwd"
-            android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView
@@ -52,10 +51,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="230"
             android:hint="@string/nichen"
-            android:inputType="text"
-            android:textColor="#1FBAF3"
-            android:textColorHighlight="#34cf9e"
-            android:textColorHint="#1FBAF3" />
+            android:inputType="text" />
     </LinearLayout>
 
     <TextView
@@ -77,10 +73,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="230"
             android:hint="@string/password"
-            android:inputType="textPassword"
-            android:textColor="#1FBAF3"
-            android:textColorHighlight="#34cf9e"
-            android:textColorHint="#1FBAF3" />
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <LinearLayout
@@ -97,10 +90,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="230"
             android:hint="@string/repassword"
-            android:inputType="textPassword"
-            android:textColor="#1FBAF3"
-            android:textColorHighlight="#34cf9e"
-            android:textColorHint="#1FBAF3" />
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <TextView
@@ -150,7 +140,6 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="@string/back_login"
-            android:textColor="#1FBAF3"
             android:textSize="16sp" />
 
         <TextView

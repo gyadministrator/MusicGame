@@ -1,7 +1,9 @@
 package com.example.gy.musicgame;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,12 +31,15 @@ import java.util.List;
 import java.util.Map;
 
 import adapter.MusicListAdapter;
+import adapter.TypeAdapter;
 import base.BaseActivity;
 import bean.Music;
 import bean.RecommendMusic;
+import bean.Type;
 import bean.dao.RecommendMusicDao;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import utils.AddMusicDialogUtils;
 import utils.Constant;
 import utils.CurrentMusicUtils;
 import utils.DownloadUtil;
@@ -94,10 +99,19 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     private static RecommendMusic temp;
 
     private static boolean b = false;
+    private static RecommendMusic currentLongMusic;
+
+    private Integer addCode;
 
     private static RecommendMusicDao musicDao = null;
     private RecommendMusic recommendMusic;
     private List<Music> musicList = new ArrayList<>();
+    private String type_url = Constant.BASE_URL + "/type/queryAllType";
+    private static Integer userId;
+    private List<Type> typeNames = new ArrayList<>();
+
+    private TypeAdapter typeAdapter;
+    private static String add_list_url = Constant.BASE_URL + "/person/addMusic";
 
 
     private static final String TAG = "ListenMainActivity";
@@ -152,6 +166,42 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                     adapter = new MusicListAdapter(list, ListenMainActivity.this);
                     listView.setAdapter(adapter);
                 }
+            } else if (msg.what == 16) {
+                if (typeNames.size() == 0) {
+                    ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "你当前还没有歌单");
+                } else {
+                    AddMusicDialogUtils.add_music_list_rel.setVisibility(View.GONE);
+                    AddMusicDialogUtils.listView.setVisibility(View.VISIBLE);
+                    typeAdapter = new TypeAdapter(typeNames, ListenMainActivity.this);
+                    AddMusicDialogUtils.show(ListenMainActivity.this);
+                    AddMusicDialogUtils.listView.setAdapter(typeAdapter);
+
+                    AddMusicDialogUtils.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Type type = typeNames.get(i);
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("name", currentLongMusic.getTitle());
+                            map.put("author", currentLongMusic.getAuthor());
+                            map.put("img", currentLongMusic.getPic_big());
+                            map.put("duration", currentLongMusic.getFile_duration());
+                            map.put("typeId", type.getId());
+                            map.put("userId", userId);
+                            map.put("url", playUrls.get(0));
+                            if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
+                                sendAddListHttp(add_list_url, map);
+                            } else {
+                                ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
+                            }
+                        }
+                    });
+                }
+            } else if (msg.what == 20) {
+                if (addCode == 100) {
+                    AddMusicDialogUtils.hidden();
+                    MoreDialog.hidden();
+                    ToastUtils.showToast(ListenMainActivity.this, R.mipmap.about, "添加歌单成功");
+                }
             }
         }
     };
@@ -162,6 +212,9 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_listen_main);
         musicDao = MusicDaoUtils.initDbHelp(this);
         ButterKnife.bind(this);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("userId", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt("userId", 0);
 
         /*设置沉侵式导航栏*/
         ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
@@ -269,6 +322,32 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         map.put("size", size);
         map.put("offset", offset);
         httpUtils.sendGetHttp(url, map);
+    }
+
+    private void sendAddListHttp(String url, Map<String, Object> map) {
+        HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
+            @Override
+            public void onSuccess(String json) {
+                parseAddListJson(json);
+                handler.sendEmptyMessage(20);
+            }
+
+            @Override
+            public void onFail(String error) {
+                handler.sendEmptyMessage(0);
+            }
+        });
+        httpUtils.sendPostHttp(url, map);
+    }
+
+    private void parseAddListJson(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            int code = jsonObject.optInt("code");
+            addCode = code;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void parseJson(String s) {
@@ -379,9 +458,59 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 intent1.putExtra("position", item_position - 1);
                 intent1.putExtra("list", (Serializable) musicList);
                 startActivity(intent1);
+                break;
+            case R.id.add_lin:
+                //添加至歌单
+                //获取歌单
+                getTypes();
+                AddMusicDialogUtils.show(this);
+                break;
             default:
                 break;
         }
+    }
+
+    private void getTypes() {
+        if (NetWorkUtils.checkNetworkState(this)) {
+            sendTypeHttp(type_url, userId);
+        } else {
+            ToastUtils.showToast(this, R.mipmap.music_warning, "貌似没有网哎...");
+        }
+    }
+
+    private void parseTypeJson(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject response = jsonObject.optJSONObject("response");
+            JSONArray list = response.optJSONArray("list");
+            for (int i = 0; i < list.length(); i++) {
+                JSONObject o = (JSONObject) list.get(i);
+                String title = o.optString("title");
+                int id = o.optInt("id");
+                Type type = new Type(id, title);
+                typeNames.add(type);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendTypeHttp(String url, Integer userId) {
+        HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
+            @Override
+            public void onSuccess(String json) {
+                parseTypeJson(json);
+                handler.sendEmptyMessage(16);
+            }
+
+            @Override
+            public void onFail(String error) {
+                handler.sendEmptyMessage(0);
+            }
+        });
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        httpUtils.sendGetHttp(url, map);
     }
 
     private void next() {
@@ -404,7 +533,9 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        tinguid = list.get(position).getTing_uid();
+        typeNames.clear();
+        currentLongMusic = list.get(position);
+        tinguid = currentLongMusic.getTing_uid();
         if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
             getPlayUrls(position, 7);
         } else {
@@ -413,6 +544,13 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         MoreDialog.show(ListenMainActivity.this);
         MoreDialog.find.setOnClickListener(this);
         MoreDialog.cancel.setOnClickListener(this);
+        MoreDialog.add.setOnClickListener(this);
+
+        if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
+            getPlayUrls(position, 15);
+        } else {
+            ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
+        }
         return true;
     }
 

@@ -2,27 +2,28 @@ package utils;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.gy.musicgame.R;
 
 /**
- * Created by Administrator on 2017/10/18.
+ * Created by Administrator on 2017/8/30.
  */
 
-public class MoreDialog {
+public class AddMusicDialogUtils {
     private static Dialog dialog = null;
-    public static LinearLayout find;
-    public static LinearLayout cancel;
-    public static LinearLayout add;
+    public static ListView listView;
+    public static RelativeLayout add_music_list_rel;
 
     public static void show(Context context) {
         if (dialog == null) {
             dialog = new Dialog(context, R.style.dialog);
-            dialog.setContentView(R.layout.activity_more_dialog);
-            find = dialog.findViewById(R.id.find);
-            cancel = dialog.findViewById(R.id.cancel);
-            add = dialog.findViewById(R.id.add_lin);
+            dialog.setContentView(R.layout.add_music_list);
+            //dialog.setCancelable(false);
+
+            listView = dialog.findViewById(R.id.add_music_list);
+            add_music_list_rel = dialog.findViewById(R.id.add_music_list_rel);
         }
         dialog.show();
     }

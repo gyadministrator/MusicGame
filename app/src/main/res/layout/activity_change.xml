@@ -49,7 +49,7 @@
 
         <view.CircleImageView
             android:id="@+id/change_user"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="match_parent"
             android:background="@mipmap/default_user" />
 
@@ -126,7 +126,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="55"
+        android:layout_weight="45"
         android:orientation="horizontal">
 
         <Button

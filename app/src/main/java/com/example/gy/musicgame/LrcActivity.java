@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -21,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +40,7 @@ import utils.HttpUtils;
 import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
+import utils.TimeFormat;
 import utils.ToastUtils;
 import view.CircleImageView;
 import view.ILrcBuilder;
@@ -45,7 +49,7 @@ import view.ILrcViewListener;
 import view.impl.DefaultLrcBuilder;
 import view.impl.LrcRow;
 
-public class LrcActivity extends BaseActivity implements View.OnClickListener {
+public class LrcActivity extends BaseActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
     @BindView(R.id.lrc_song_name)
     TextView lrc_song_name;
     @BindView(R.id.lrc_singer)
@@ -86,7 +90,6 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
 
     private Intent intent = null;
     private String lrcContent = "";
-    private int duration = 0;
     private int item_position = 0;
 
     private static boolean b = false;
@@ -107,7 +110,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                 //将得到的歌词集合传给mLrcView用来展示
                 mLrcView.setLrc(rows);
             } else if (msg.what == 0) {
-                ToastUtils.showToast(LrcActivity.this, R.mipmap.music_warning, "发生了异常");
+                //ToastUtils.showToast(LrcActivity.this, R.mipmap.music_warning, "发生了异常");
             } else if (msg.what == 3) {
                 sendHttp(url, temp.getSong_id());
                 MusicUtils.play(playUrls.get(0));
@@ -121,10 +124,14 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                 lrc_song_name.setText(temp.getTitle());
                 lrc_singer.setText(temp.getAuthor());
                 lrc_play.setBackgroundResource(R.mipmap.music_stop);
+            } else if (msg.what == 20) {
+                seekBar.setProgress(MusicUtils.mediaPlayer.getCurrentPosition());
+                music_start.setText(TimeFormat.ShowTime(MusicUtils.mediaPlayer.getCurrentPosition()));
             }
         }
     };
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,13 +147,11 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
         ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
 
         intent = getIntent();
-        duration = intent.getIntExtra("duration", 0);
 
-        //LoadImgToBackground(this, intent.getStringExtra("url"), lin_bg);
         item_position = intent.getIntExtra("position", 0);
         list = (List<Music>) intent.getSerializableExtra("list");
         lrc_song_name.setText(intent.getStringExtra("name"));
-        lrc_singer.setText("---------" + intent.getStringExtra("singer") + "---------");
+        lrc_singer.setText(intent.getStringExtra("singer"));
 
         if (NetWorkUtils.checkNetworkState(this)) {
             Picasso.with(this).load(intent.getStringExtra("url")).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
@@ -157,6 +162,18 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
 
         initLrc();
 
+        initSeekBar();
+
+    }
+
+    private void initSeekBar() {
+        music_start.setText(TimeFormat.ShowTime(0));
+        music_end.setText(TimeFormat.ShowTime(MusicUtils.mediaPlayer.getDuration()));
+
+        seekBar.setOnSeekBarChangeListener(this);
+        seekBar.setMax(MusicUtils.mediaPlayer.getDuration());
+
+        new SeekBarThread().start();
     }
 
     private void initLrc() {
@@ -251,6 +268,9 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                     MusicUtils.playContinue();
                     lrc_play.setBackgroundResource(R.mipmap.music_stop);
                     b = true;
+
+                    MusicUtils.mediaPlayer.stop();
+                    seekBar.setProgress(0);
                 }
                 break;
             case R.id.lrc_next:
@@ -262,6 +282,8 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void pre() {
+        initSeekBar();
+        stopLrcPlay();
         if (b) {
             ToastUtils.showToast(this, R.mipmap.music_warning, "没有上一曲");
         } else {
@@ -273,12 +295,25 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                     getPlayUrls(item_position - 1, 3);
                     item_position--;
                     initLrc();
-                    LoadImgToBackground(this, temp.getPic_big(), lin_bg);
                 } else {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放上一首");
                 }
             }
         }
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+        music_start.setText(TimeFormat.ShowTime(i));
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        MusicUtils.mediaPlayer.seekTo(seekBar.getProgress());
     }
 
     /**
@@ -296,6 +331,25 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                         mLrcView.seekLrcToTime(timePassed);
                     }
                 });
+            }
+        }
+    }
+
+    // 自定义的线程
+    class SeekBarThread extends Thread {
+
+        @Override
+        public void run() {
+            while (MusicUtils.mediaPlayer.isPlaying()) {
+                // 将SeekBar位置设置到当前播放位置
+                handler.sendEmptyMessage(20);
+                try {
+                    // 每100毫秒更新一次位置
+                    Thread.sleep(1000);
+                    //播放进度
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -333,6 +387,8 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void next() {
+        initSeekBar();
+        stopLrcPlay();
         if (b) {
             ToastUtils.showToast(this, R.mipmap.music_warning, "没有下一曲");
         } else {
@@ -344,7 +400,6 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener {
                     getPlayUrls(item_position + 1, 4);
                     item_position++;
                     initLrc();
-                    LoadImgToBackground(this, temp.getPic_big(), lin_bg);
                 } else {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放下一首");
                 }

@@ -17,7 +17,9 @@ import abc.abc.abc.nm.sp.SpotManager;
 import abc.abc.abc.nm.sp.SpotRequestListener;
 import abc.abc.abc.os.OffersManager;
 import base.BaseActivity;
+import utils.NetWorkUtils;
 import utils.PermissionHelper;
+import utils.ToastUtils;
 
 public class SplashActivity extends BaseActivity {
 
@@ -31,42 +33,48 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        AdManager.getInstance(this).init(APPID, APPSECRET, true);
-
-        SharedPreferences preferences = getSharedPreferences("first", MODE_PRIVATE);
-        boolean b = preferences.getBoolean("b", false);
-        if (!b) {
-            SharedPreferences.Editor edit = preferences.edit();
-            edit.putBoolean("b", true);
-            edit.apply();
+        if (NetWorkUtils.checkNetworkState(this)) {
+            AdManager.getInstance(this).init(APPID, APPSECRET, true);
+            SharedPreferences preferences = getSharedPreferences("first", MODE_PRIVATE);
+            boolean b = preferences.getBoolean("b", false);
+            if (!b) {
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean("b", true);
+                edit.apply();
+                Intent intent = new Intent(this, StartActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                // 当系统为6.0以上时，需要申请权限
+                mPermissionHelper = new PermissionHelper(this);
+                mPermissionHelper.setOnApplyPermissionListener(new PermissionHelper.OnApplyPermissionListener() {
+                    @Override
+                    public void onAfterApplyAllPermission() {
+                        Log.i(TAG, "All of requested permissions has been granted, so run app logic.");
+                        runApp();
+                    }
+                });
+                if (Build.VERSION.SDK_INT < 23) {
+                    // 如果系统版本低于23，直接跑应用的逻辑
+                    Log.d(TAG, "The api level of system is lower than 23, so run app logic directly.");
+                    runApp();
+                } else {
+                    // 如果权限全部申请了，那就直接跑应用逻辑
+                    if (mPermissionHelper.isAllRequestedPermissionGranted()) {
+                        Log.d(TAG, "All of requested permissions has been granted, so run app logic directly.");
+                        runApp();
+                    } else {
+                        // 如果还有权限为申请，而且系统版本大于23，执行申请权限逻辑
+                        Log.i(TAG, "Some of requested permissions hasn't been granted, so apply permissions first.");
+                        mPermissionHelper.applyPermissions();
+                    }
+                }
+            }
+        }else {
+            ToastUtils.showToast(this, R.mipmap.music_warning, "无网络连接");
             Intent intent = new Intent(this, StartActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            // 当系统为6.0以上时，需要申请权限
-            mPermissionHelper = new PermissionHelper(this);
-            mPermissionHelper.setOnApplyPermissionListener(new PermissionHelper.OnApplyPermissionListener() {
-                @Override
-                public void onAfterApplyAllPermission() {
-                    Log.i(TAG, "All of requested permissions has been granted, so run app logic.");
-                    runApp();
-                }
-            });
-            if (Build.VERSION.SDK_INT < 23) {
-                // 如果系统版本低于23，直接跑应用的逻辑
-                Log.d(TAG, "The api level of system is lower than 23, so run app logic directly.");
-                runApp();
-            } else {
-                // 如果权限全部申请了，那就直接跑应用逻辑
-                if (mPermissionHelper.isAllRequestedPermissionGranted()) {
-                    Log.d(TAG, "All of requested permissions has been granted, so run app logic directly.");
-                    runApp();
-                } else {
-                    // 如果还有权限为申请，而且系统版本大于23，执行申请权限逻辑
-                    Log.i(TAG, "Some of requested permissions hasn't been granted, so apply permissions first.");
-                    mPermissionHelper.applyPermissions();
-                }
-            }
         }
     }
 

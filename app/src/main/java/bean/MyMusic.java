@@ -17,6 +17,9 @@ public class MyMusic {
 
     private Integer userId;
 
+    public MyMusic() {
+    }
+
     public MyMusic(Integer id, String name, String author, String img, String url, String duration, Integer typeId, Integer userId) {
         this.id = id;
         this.name = name;

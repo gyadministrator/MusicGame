@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.example.gy.musicgame.ListenMainActivity;
+import com.example.gy.musicgame.MyCollectMusicActivity;
 import com.example.gy.musicgame.R;
 import com.example.gy.musicgame.SearchMusicActivity;
 import com.example.gy.musicgame.SingerInfoActivity;
@@ -134,6 +136,18 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
                     myListView.setVisibility(View.VISIBLE);
                     typeAdapter = new TypeAdapter(typeNames, mContext);
                     myListView.setAdapter(typeAdapter);
+
+                    myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Type type = typeNames.get(i);
+                            Intent intent = new Intent(mContext, MyCollectMusicActivity.class);
+                            intent.putExtra("typeId", type.getId());
+                            intent.putExtra("userId", userId);
+                            intent.putExtra("title", type.getTitle());
+                            startActivity(intent);
+                        }
+                    });
                 } else {
                     music_list_progress.setVisibility(View.GONE);
                     no_list.setVisibility(View.VISIBLE);

@@ -559,4 +559,10 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         super.onDestroy();
         list.clear();
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        list.clear();
+    }
 }

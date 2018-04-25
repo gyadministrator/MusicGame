@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,12 +48,12 @@ public class MyCollectMusicActivity extends BaseActivity implements View.OnClick
     Button reload;
     @BindView(R.id.rel_net)
     RelativeLayout rel_net;
-    @BindView(R.id.loading)
-    ProgressBar loading;
     @BindView(R.id.content)
     RelativeLayout content;
     @BindView(R.id.music_list)
-    MyListView listView;
+    ListView listView;
+    @BindView(R.id.no_data_rel)
+    RelativeLayout no_data_rel;
 
     private static Integer typeId;
     private static Integer userId;
@@ -69,17 +69,20 @@ public class MyCollectMusicActivity extends BaseActivity implements View.OnClick
             super.handleMessage(msg);
             if (msg.what == 1) {
                 if (myMusicList.size() == 0) {
-                    loading.setVisibility(View.GONE);
-                    rel_net.setVisibility(View.VISIBLE);
+                    //没数据
+                    content.setVisibility(View.GONE);
+                    rel_net.setVisibility(View.GONE);
+                    no_data_rel.setVisibility(View.VISIBLE);
                 } else {
                     rel_net.setVisibility(View.GONE);
                     content.setVisibility(View.GONE);
+                    no_data_rel.setVisibility(View.GONE);
                     adapter = new MyMusicListAdapter(myMusicList, MyCollectMusicActivity.this);
                     listView.setAdapter(adapter);
                 }
             } else if (msg.what == 0) {
-                loading.setVisibility(View.GONE);
                 rel_net.setVisibility(View.VISIBLE);
+                content.setVisibility(View.GONE);
                 ToastUtils.showToast(MyCollectMusicActivity.this, R.mipmap.music_icon, "发生了错误");
             }
         }
@@ -107,7 +110,7 @@ public class MyCollectMusicActivity extends BaseActivity implements View.OnClick
         if (NetWorkUtils.checkNetworkState(this)) {
             sendHttp(url, userId, typeId);
         } else {
-            loading.setVisibility(View.GONE);
+            content.setVisibility(View.GONE);
             rel_net.setVisibility(View.VISIBLE);
         }
     }

@@ -257,6 +257,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
                 index_img.clearAnimation();
                 time_tv.setTextColor(Color.RED);
                 time_tv.setText("时间结束了");
+                index_img.clearAnimation();
                 //判断是否正确
                 MusicUtils.stop();
                 answer();

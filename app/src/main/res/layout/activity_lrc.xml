@@ -11,9 +11,18 @@
     <LinearLayout
         android:id="@+id/lin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:orientation="horizontal" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lrc_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp"
+            android:background="@mipmap/cha" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,19 +30,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/lrc_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="15dp"
-            android:background="@mipmap/cha" />
-
-        <TextView
             android:id="@+id/lrc_song_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="110dp"
             android:layout_weight="1"
+            android:gravity="center"
+            android:maxLines="2"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -43,7 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:maxLines="2" />
 
     <view.CircleImageView
         android:id="@+id/lrc_img"

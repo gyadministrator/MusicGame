@@ -59,12 +59,12 @@
             <ProgressBar
                 android:id="@+id/loading"
                 style="?android:progressBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerInParent="true" />
 
             <TextView
-                android:id="@+id/msg"
+                android:id="@id/msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/loading"
@@ -74,6 +74,29 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/no_data_rel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/no_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/no_data" />
+
+            <TextView
+                android:id="@id/msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/no_data"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/no_data"
+                android:textSize="14sp" />
+        </RelativeLayout>
         <!--无网络时-->
         <RelativeLayout
             android:id="@+id/rel_net"
@@ -83,7 +106,6 @@
 
             <TextView
                 android:id="@+id/msg_tv"
-                style="?android:progressBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -91,16 +113,18 @@
 
             <Button
                 android:id="@+id/reload"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/msg_tv"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/sure"
                 android:text="@string/reload"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>
 
-        <view.MyListView
+        <ListView
             android:id="@+id/music_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

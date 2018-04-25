@@ -35,6 +35,12 @@ public abstract class BaseFragment extends Fragment {
         initData();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        utils.FragmentController.removeFragment(this);
+    }
+
     protected void initData() {
     }
 

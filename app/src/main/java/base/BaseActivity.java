@@ -13,12 +13,10 @@ import com.example.gy.musicgame.MainActivity;
 import com.example.gy.musicgame.R;
 
 import abc.abc.abc.nm.sp.SpotManager;
-import application.MyApplication;
 import bean.Music;
 import bean.RecommendMusic;
 import utils.ActivityController;
 import utils.CurrentMusicUtils;
-import utils.MusicUtils;
 import utils.NotificationUtils;
 import utils.ToastUtils;
 
@@ -41,10 +39,6 @@ public class BaseActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityController.addActivity(this);
-
-        MyApplication application = (MyApplication) getApplication();
-        application.init();
-        application.addActivity(this);
     }
 
     @Override

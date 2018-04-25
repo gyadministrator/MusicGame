@@ -206,7 +206,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.delete:
                 if (list.size() == 0) {
-                    ToastUtils.showToast(this, R.mipmap.music_warning, "没有记录呀.");
+                    ToastUtils.showToast(this, R.mipmap.music_warning, "你当前没有播放记录");
                 } else {
                     MusicDaoUtils.deleteAllMusic(musicDao);
                     handler.sendEmptyMessage(1);

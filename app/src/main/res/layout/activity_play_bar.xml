@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="65dp"
     android:background="@color/white"
     android:orientation="horizontal">
-
-    <view.CircleImageView
-        android:id="@+id/music_img"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_margin="6dp"
-        android:background="@mipmap/default_music" />
-
     <LinearLayout
+        android:id="@+id/bar_lin"
         android:layout_width="0dp"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="15dp"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <view.CircleImageView
+            android:id="@+id/music_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="6dp"
+            android:background="@mipmap/default_music" />
 
-        <TextView
-            android:id="@+id/singer_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:text="@string/singer_name" />
+            android:layout_marginStart="15dp"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
 
-        <TextView
-            android:id="@+id/singer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="6dp"
-            android:gravity="center_vertical"
-            android:text="@string/singer" />
+            <TextView
+                android:id="@+id/singer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="@string/singer_name" />
+
+            <TextView
+                android:id="@+id/singer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:text="@string/singer" />
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
@@ -44,7 +54,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@mipmap/music_play"
         android:enabled="false" />
 
@@ -53,7 +63,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@mipmap/music_next"
         android:enabled="false" />
 </LinearLayout>

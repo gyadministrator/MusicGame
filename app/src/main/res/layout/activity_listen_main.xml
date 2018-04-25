@@ -107,5 +107,10 @@
             android:divider="@color/white" />
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#CCCCCC" />
+
     <include layout="@layout/activity_play_bar" />
 </LinearLayout>

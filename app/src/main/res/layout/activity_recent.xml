@@ -49,8 +49,8 @@
 
         <TextView
             android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:background="@mipmap/delete" />
 
@@ -58,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="3dp"
             android:text="@string/remove_all" />
     </LinearLayout>
 
@@ -97,6 +98,11 @@
         android:text="@string/no_play"
         android:textSize="16sp"
         android:visibility="gone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#CCCCCC" />
 
     <include layout="@layout/activity_play_bar" />
 </LinearLayout>

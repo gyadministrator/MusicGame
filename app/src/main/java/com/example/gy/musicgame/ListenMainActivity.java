@@ -84,6 +84,8 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     TextView music_next;
     @BindView(R.id.lin)
     LinearLayout lin;
+    @BindView(R.id.bar_lin)
+    LinearLayout bar_lin;
     private static boolean flag = true;
     private static int item_position;
     private static final String url = Constant.BASE_URL + "/music/getSongList";
@@ -368,7 +370,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        music_img.setOnClickListener(this);
+        bar_lin.setOnClickListener(this);
         item_position = position + 1;
         temp = list.get(position);
         b = false;
@@ -448,7 +450,13 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 } else {
                     ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "无网络连接");
                 }
-            case R.id.music_img:
+                break;
+            case R.id.add_lin:
+                //添加至歌单
+                //获取歌单
+                getTypes();
+                break;
+            case R.id.bar_lin:
                 Intent intent1 = new Intent(this, LrcActivity.class);
                 RecommendMusic music = list.get(item_position - 1);
                 intent1.putExtra("name", music.getTitle());
@@ -459,11 +467,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 intent1.putExtra("position", item_position - 1);
                 intent1.putExtra("list", (Serializable) musicList);
                 startActivity(intent1);
-                break;
-            case R.id.add_lin:
-                //添加至歌单
-                //获取歌单
-                getTypes();
                 break;
             default:
                 break;

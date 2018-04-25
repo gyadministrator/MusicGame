@@ -51,9 +51,9 @@ public class StartActivity extends BaseActivity {
             if (msg.what == 1) {
                 String url = parseJson(msg.obj.toString());
                 Map<String, Object> map = ScreenUtils.getAndroiodScreenProperty(StartActivity.this);
-                Picasso.with(StartActivity.this).load(url).resize((int) map.get("width") * 5 + (int) map.get("width") / 2 + (int) map.get("width") / 10, (int) map.get("height") * 4 + (int) map.get("height") / 2 + (int) map.get("height") / 4).into(imageView);
+                Picasso.with(StartActivity.this).load(url).resize((int) map.get("width") * 6 + (int) map.get("width") / 2 + (int) map.get("width") / 2, (int) map.get("height") * 5 + (int) map.get("height") / 2 + (int) map.get("height") / 3).into(imageView);
             } else if (msg.what == 0) {
-                ToastUtils.showToast(StartActivity.this, R.mipmap.music_icon, "发生了错误");
+                ToastUtils.showToast(StartActivity.this, R.mipmap.music_icon, "获取图片错误");
             }
         }
     };

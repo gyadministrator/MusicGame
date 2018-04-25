@@ -66,6 +66,8 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
     TextView music_next;
     @BindView(R.id.lin)
     LinearLayout lin;
+    @BindView(R.id.bar_lin)
+    LinearLayout bar_lin;
 
     private static int item_position;
 
@@ -95,7 +97,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 ToastUtils.showToast(RecentActivity.this, R.mipmap.music_warning, "清空成功");
                 MusicUtils.destoryMedia();
 
-                music_img.setImageResource(R.mipmap.music_icon);
+                music_img.setImageResource(R.mipmap.default_music);
                 singer_name.setText("歌名");
                 singer.setText("歌手");
                 play.setBackgroundResource(R.mipmap.music_play);
@@ -147,7 +149,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
         delete.setOnClickListener(this);
         play.setOnClickListener(this);
         music_next.setOnClickListener(this);
-        music_img.setOnClickListener(this);
+        bar_lin.setOnClickListener(this);
         /*查询记录
          * */
         allPage = MusicDaoUtils.getPage(MusicDaoUtils.queryAllMusic(musicDao));
@@ -237,7 +239,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                     }
                 }
                 break;
-            case R.id.music_img:
+            case R.id.bar_lin:
                 if (recommendMusic != null) {
                     Intent intent1 = new Intent(this, LrcActivity.class);
                     intent1.putExtra("name", recommendMusic.getTitle());

@@ -74,6 +74,8 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
     TextView music_end;
     @BindView(R.id.seekBar)
     SeekBar seekBar;
+    @BindView(R.id.lrc_back)
+    TextView lrc_back;
 
     private String url = Constant.BASE_URL + "/music/GetLrc";
     //更新歌词的频率，每秒更新一次
@@ -141,6 +143,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
         lrc_pre.setOnClickListener(this);
         lrc_play.setOnClickListener(this);
         lrc_next.setOnClickListener(this);
+        lrc_back.setOnClickListener(this);
 
 
         /*设置沉侵式导航栏*/
@@ -275,6 +278,9 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
                 break;
             case R.id.lrc_next:
                 next();
+                break;
+            case R.id.lrc_back:
+                finish();
                 break;
             default:
                 break;

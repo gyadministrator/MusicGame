@@ -204,6 +204,10 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                     AddMusicDialogUtils.hidden();
                     MoreDialog.hidden();
                     ToastUtils.showToast(ListenMainActivity.this, R.mipmap.about, "添加歌单成功");
+                } else if (addCode == 200) {
+                    AddMusicDialogUtils.hidden();
+                    MoreDialog.hidden();
+                    ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_warning, "添加歌单失败");
                 }
             }
         }

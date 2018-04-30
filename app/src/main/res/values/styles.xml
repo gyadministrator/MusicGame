@@ -56,4 +56,9 @@
     </declare-styleable>
 
     <style name="Widget_GifView" />
+
+    <style name="popwindowAnim" type="text/css">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
 </resources>

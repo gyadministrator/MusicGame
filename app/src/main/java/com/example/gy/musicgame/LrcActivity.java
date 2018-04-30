@@ -3,6 +3,7 @@ package com.example.gy.musicgame;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ import view.CircleImageView;
 import view.ILrcBuilder;
 import view.ILrcView;
 import view.ILrcViewListener;
+import view.MyPopWindow;
 import view.impl.DefaultLrcBuilder;
 import view.impl.LrcRow;
 
@@ -76,6 +78,8 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
     SeekBar seekBar;
     @BindView(R.id.lrc_back)
     TextView lrc_back;
+    @BindView(R.id.lrc_more)
+    TextView lrc_more;
 
     private String url = Constant.BASE_URL + "/music/GetLrc";
     //更新歌词的频率，每秒更新一次
@@ -115,14 +119,14 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
                 //ToastUtils.showToast(LrcActivity.this, R.mipmap.music_warning, "发生了异常");
             } else if (msg.what == 3) {
                 sendHttp(url, temp.getSong_id());
-                MusicUtils.play(playUrls.get(0),LrcActivity.this);
+                MusicUtils.play(playUrls.get(0), LrcActivity.this);
                 lrc_song_name.setText(temp.getTitle());
                 lrc_singer.setText(temp.getAuthor());
                 lrc_play.setBackgroundResource(R.mipmap.music_stop);
 
             } else if (msg.what == 4) {
                 sendHttp(url, temp.getSong_id());
-                MusicUtils.play(playUrls.get(0),LrcActivity.this);
+                MusicUtils.play(playUrls.get(0), LrcActivity.this);
                 lrc_song_name.setText(temp.getTitle());
                 lrc_singer.setText(temp.getAuthor());
                 lrc_play.setBackgroundResource(R.mipmap.music_stop);
@@ -144,6 +148,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
         lrc_play.setOnClickListener(this);
         lrc_next.setOnClickListener(this);
         lrc_back.setOnClickListener(this);
+        lrc_more.setOnClickListener(this);
 
 
         /*设置沉侵式导航栏*/
@@ -281,6 +286,11 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
                 break;
             case R.id.lrc_back:
                 finish();
+                break;
+            case R.id.lrc_more:
+                //打开popwindow
+                MyPopWindow myPopWindow = new MyPopWindow(this);
+                myPopWindow.showPopupWindow(lrc_more);
                 break;
             default:
                 break;

@@ -115,14 +115,14 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
                 //ToastUtils.showToast(LrcActivity.this, R.mipmap.music_warning, "发生了异常");
             } else if (msg.what == 3) {
                 sendHttp(url, temp.getSong_id());
-                MusicUtils.play(playUrls.get(0));
+                MusicUtils.play(playUrls.get(0),LrcActivity.this);
                 lrc_song_name.setText(temp.getTitle());
                 lrc_singer.setText(temp.getAuthor());
                 lrc_play.setBackgroundResource(R.mipmap.music_stop);
 
             } else if (msg.what == 4) {
                 sendHttp(url, temp.getSong_id());
-                MusicUtils.play(playUrls.get(0));
+                MusicUtils.play(playUrls.get(0),LrcActivity.this);
                 lrc_song_name.setText(temp.getTitle());
                 lrc_singer.setText(temp.getAuthor());
                 lrc_play.setBackgroundResource(R.mipmap.music_stop);

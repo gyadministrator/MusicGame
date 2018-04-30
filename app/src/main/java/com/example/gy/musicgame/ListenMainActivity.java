@@ -131,13 +131,15 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                     content.setVisibility(View.GONE);
                     adapter = new MusicListAdapter(list, ListenMainActivity.this);
                     listView.setAdapter(adapter);
+
+                    CurrentMusicUtils.setRecommendMusics(list);
                 }
             } else if (msg.what == 0) {
                 loading.setVisibility(View.GONE);
                 rel_net.setVisibility(View.VISIBLE);
                 ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_icon, "发生了错误");
             } else if (msg.what == 3) {
-                MusicUtils.play(playUrls.get(0));
+                MusicUtils.play(playUrls.get(0), ListenMainActivity.this);
                 Picasso.with(ListenMainActivity.this).load(temp.getPic_small()).into(music_img);
                 String tempTitle = temp.getTitle();
                 if (tempTitle.length() > 15) {
@@ -156,7 +158,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 size += 20;
                 listView.loadComplete(list.size() - 20);
             } else if (msg.what == 8) {
-                MusicUtils.play(playUrls.get(0));
+                MusicUtils.play(playUrls.get(0), ListenMainActivity.this);
             }
             if (msg.what == 9) {
                 if (list.size() == 0) {
@@ -235,6 +237,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         music_next.setOnClickListener(this);
 
         reload.setOnClickListener(this);
+        bar_lin.setOnClickListener(this);
 
         setTitle();
         initPlayBar();
@@ -374,7 +377,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        bar_lin.setOnClickListener(this);
         item_position = position + 1;
         temp = list.get(position);
         b = false;
@@ -461,16 +463,18 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 getTypes();
                 break;
             case R.id.bar_lin:
-                Intent intent1 = new Intent(this, LrcActivity.class);
-                RecommendMusic music = list.get(item_position - 1);
-                intent1.putExtra("name", music.getTitle());
-                intent1.putExtra("singer", music.getAuthor());
-                intent1.putExtra("url", music.getPic_big());
-                intent1.putExtra("songid", music.getSong_id());
-                intent1.putExtra("duration", music.getFile_duration());
-                intent1.putExtra("position", item_position - 1);
-                intent1.putExtra("list", (Serializable) musicList);
-                startActivity(intent1);
+                recommendMusic = CurrentMusicUtils.getRecommendMusic();
+                if (recommendMusic != null) {
+                    Intent intent1 = new Intent(this, LrcActivity.class);
+                    intent1.putExtra("name", recommendMusic.getTitle());
+                    intent1.putExtra("singer", recommendMusic.getAuthor());
+                    intent1.putExtra("url", recommendMusic.getPic_big());
+                    intent1.putExtra("songid", recommendMusic.getSong_id());
+                    intent1.putExtra("duration", recommendMusic.getFile_duration());
+                    intent1.putExtra("position", item_position - 1);
+                    intent1.putExtra("list", (Serializable) musicList);
+                    startActivity(intent1);
+                }
                 break;
             default:
                 break;
@@ -521,6 +525,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     }
 
     private void next() {
+        list = CurrentMusicUtils.getRecommendMusics();
         if (b) {
             ToastUtils.showToast(this, R.mipmap.music_warning, "没有下一曲");
         } else {

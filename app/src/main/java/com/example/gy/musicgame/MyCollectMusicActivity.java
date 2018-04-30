@@ -27,9 +27,11 @@ import java.util.Map;
 import adapter.MyMusicListAdapter;
 import base.BaseActivity;
 import bean.MyMusic;
+import bean.RecommendMusic;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.Constant;
+import utils.CurrentMusicUtils;
 import utils.HttpUtils;
 import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
@@ -175,7 +177,15 @@ public class MyCollectMusicActivity extends BaseActivity implements View.OnClick
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         MyMusic myMusic = myMusicList.get(i);
         if (NetWorkUtils.checkNetworkState(this)) {
-            MusicUtils.play(myMusic.getUrl());
+            MusicUtils.play(myMusic.getUrl(),this);
+
+            RecommendMusic recommendMusic = new RecommendMusic();
+            recommendMusic.setAuthor(myMusic.getAuthor());
+            recommendMusic.setFile_duration(Integer.parseInt(myMusic.getDuration()));
+            recommendMusic.setTitle(myMusic.getName());
+            recommendMusic.setPic_big(myMusic.getImg());
+
+            CurrentMusicUtils.setRecommendMusic(recommendMusic);
         } else {
             ToastUtils.showToast(MyCollectMusicActivity.this, R.mipmap.music_warning, "无网络连接");
         }

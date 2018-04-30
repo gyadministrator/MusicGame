@@ -24,10 +24,12 @@ import java.util.Map;
 
 import adapter.MusicSearchListAdapter;
 import base.BaseActivity;
+import bean.RecommendMusic;
 import bean.SearchSong;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.Constant;
+import utils.CurrentMusicUtils;
 import utils.DialogUtils;
 import utils.HttpUtils;
 import utils.MusicUtils;
@@ -64,7 +66,7 @@ public class SearchMusicActivity extends BaseActivity implements AdapterView.OnI
                 DialogUtils.hidden();
                 ToastUtils.showToast(SearchMusicActivity.this, R.mipmap.music_icon, "发生了错误");
             } else if (msg.what == 3) {
-                MusicUtils.play(playUrls.get(0));
+                MusicUtils.play(playUrls.get(0),SearchMusicActivity.this);
             }
         }
     };
@@ -164,6 +166,13 @@ public class SearchMusicActivity extends BaseActivity implements AdapterView.OnI
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (NetWorkUtils.checkNetworkState(SearchMusicActivity.this)) {
             getPlayUrls(position);
+
+            SearchSong searchSong = list.get(position);
+            RecommendMusic recommendMusic = new RecommendMusic();
+            recommendMusic.setAuthor(searchSong.getArtistname());
+            recommendMusic.setSong_id(searchSong.getSongid());
+            recommendMusic.setTitle(searchSong.getSongname());
+            CurrentMusicUtils.setRecommendMusic(recommendMusic);
         } else {
             ToastUtils.showToast(SearchMusicActivity.this, R.mipmap.music_warning, "无网络连接");
         }

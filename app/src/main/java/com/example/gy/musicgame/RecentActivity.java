@@ -102,7 +102,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 singer.setText("歌手");
                 play.setBackgroundResource(R.mipmap.music_play);
             } else if (msg.what == 2) {
-                MusicUtils.play(playUrls.get(0));
+                MusicUtils.play(playUrls.get(0),RecentActivity.this);
                 Picasso.with(RecentActivity.this).load(temp.getPic_small()).into(music_img);
                 String tempTitle = temp.getTitle();
                 if (tempTitle.length() > 15) {
@@ -116,6 +116,8 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 adapter.notifyDataSetChanged();
                 listView.setAdapter(adapter);
                 total.setText("共" + list.size() + "首");
+
+                CurrentMusicUtils.setRecommendMusics(list);
             }
         }
     };
@@ -225,6 +227,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 }
                 break;
             case R.id.music_next:
+                list = CurrentMusicUtils.getRecommendMusics();
                 //下一首
                 if (item_position + 1 > list.size()) {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是最后一首了");
@@ -240,6 +243,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 }
                 break;
             case R.id.bar_lin:
+                recommendMusic = CurrentMusicUtils.getRecommendMusic();
                 if (recommendMusic != null) {
                     Intent intent1 = new Intent(this, LrcActivity.class);
                     intent1.putExtra("name", recommendMusic.getTitle());
@@ -261,10 +265,14 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
     public void onLoad() {
         if (pageNum == allPage - 1) {
             listView.loadComplete(list.size() - 1);
-            ToastUtils.showToast(this, R.mipmap.music_warning, "没有更多数据了...");
         } else {
-            list.addAll(MusicDaoUtils.getMusicByPageSize(++pageNum, musicDao));
-            adapter.notifyDataSetChanged();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    list.addAll(MusicDaoUtils.getMusicByPageSize(++pageNum, musicDao));
+                    adapter.notifyDataSetChanged();
+                }
+            }, 2000);
         }
     }
 

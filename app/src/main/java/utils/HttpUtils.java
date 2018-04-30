@@ -1,6 +1,10 @@
 package utils;
 
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -49,19 +53,26 @@ public class HttpUtils {
         client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
                 .build();
         //创建请求队列
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                listener.onFail("请求错误");
+                if (e instanceof SocketTimeoutException) {
+                    //超时异常
+                    listener.onFail("连接超时");
+                } else if (e instanceof ConnectException) {
+                    //连接异常
+                    listener.onFail("连接超时");
+                }
             }
 
             @Override
-            public void onResponse(Call call, final Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull final Response response) throws IOException {
                 if (listener == null) return;
                 try {
+                    assert response.body() != null;
                     listener.onSuccess(response.body().string());
                 } catch (IOException e) {
                     e.printStackTrace();

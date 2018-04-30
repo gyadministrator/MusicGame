@@ -116,7 +116,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
                 //播放音乐
                 if (NetWorkUtils.checkNetworkState(mContext)) {
                     for (int i = 0; i < playUrls.size(); i++) {
-                        MusicUtils.play(playUrls.get(i));
+                        MusicUtils.play(playUrls.get(i), mContext);
                     }
                 } else {
                     ToastUtils.showToast(mContext, R.mipmap.music_warning, "无网络连接");
@@ -272,7 +272,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
             ToastUtils.showToast(mContext, R.mipmap.music_icon, "没有更多歌曲了");
         } else {
             if (NetWorkUtils.checkNetworkState(mContext)) {
-                MusicUtils.play(playUrls.get(num));
+                MusicUtils.play(playUrls.get(num), mContext);
                 num = num + 1;
             } else {
                 ToastUtils.showToast(mContext, R.mipmap.music_warning, "无网络连接");

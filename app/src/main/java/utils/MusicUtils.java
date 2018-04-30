@@ -1,8 +1,14 @@
 package utils;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.util.Log;
 
+import com.example.gy.musicgame.R;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -17,36 +23,43 @@ public class MusicUtils {
      *
      * @param url
      */
-    public static void play(final String url) {
+    public static void play(final String url, final Context context) {
         if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
         }
         try {
             mediaPlayer.reset();
-            mediaPlayer.setDataSource(url);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.prepare();
+            mediaPlayer.setDataSource(url);
+            //mediaPlayer.prepare();
+            mediaPlayer.prepareAsync();
+
+            DialogUtils.show(context);
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
                     mediaPlayer.start();
+                    DialogUtils.hidden();
                 }
             });
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
+                    DialogUtils.hidden();
                     mediaPlayer.stop();
                 }
             });
             mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                 @Override
                 public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                    replay(url);
-                    return false;
+                    DialogUtils.hidden();
+                    ToastUtils.showToast(context, R.mipmap.music_warning, "获取音乐失败");
+                    return true;
                 }
             });
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("result", "play: " + e.getMessage());
         }
     }
 
@@ -75,19 +88,6 @@ public class MusicUtils {
             mediaPlayer.release();
             mediaPlayer = null;
         }
-    }
-
-    /**
-     * 重新播放
-     *
-     * @param url
-     */
-    private static void replay(String url) {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.seekTo(0);
-            return;
-        }
-        play(url);
     }
 
     /**

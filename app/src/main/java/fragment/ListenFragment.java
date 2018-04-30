@@ -25,6 +25,8 @@ import com.example.gy.musicgame.SingerInfoActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
+import junit.framework.Assert;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -354,6 +356,7 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray song = jsonObject.optJSONArray("song_list");
+            assert song != null;
             for (int i = 0; i < song.length(); i++) {
                 RecommendMusic recommendMusic = JSON.parseObject(song.get(i).toString(), RecommendMusic.class);
                 images.add(recommendMusic.getPic_big());

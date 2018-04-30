@@ -17,6 +17,7 @@ import bean.Music;
 import bean.RecommendMusic;
 import utils.ActivityController;
 import utils.CurrentMusicUtils;
+import utils.MusicUtils;
 import utils.NotificationUtils;
 import utils.ToastUtils;
 
@@ -65,11 +66,11 @@ public class BaseActivity extends FragmentActivity {
                     music.setTitle(recommendMusic.getTitle());
                     music.setAuthor(recommendMusic.getAuthor());
                     music.setPic_big(recommendMusic.getPic_big());
-                    music.setFile_duration(recommendMusic.getFile_duration());
+                    music.setFile_duration(MusicUtils.mediaPlayer.getDuration());
                     NotificationUtils.showNotification(this, music);
 
                     //开启线程监听
-                    myThread = new myThread(music.getFile_duration());
+                    myThread = new myThread(MusicUtils.mediaPlayer.getDuration());
                     myThread.start();
                     //ActivityController.removeAllActivity();
                 }

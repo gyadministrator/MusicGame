@@ -3,6 +3,7 @@ package utils;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.gy.musicgame.R;
@@ -25,7 +26,7 @@ public class MusicUtils {
      */
     public static void play(final String url, final Context context) {
         if (mediaPlayer == null) {
-            mediaPlayer = new MediaPlayer();
+            mediaPlayer = MediaPlayer.create(context, Uri.parse(url));
         }
         try {
             mediaPlayer.reset();
@@ -59,7 +60,6 @@ public class MusicUtils {
             });
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("result", "play: " + e.getMessage());
         }
     }
 

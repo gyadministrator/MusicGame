@@ -55,8 +55,8 @@ public class MyMusicListAdapter extends BaseAdapter {
         MyMusic myMusic = allValues.get(position);
         Picasso.with(mContext).load(myMusic.getImg()).into(music_image);
         String musicTitle = myMusic.getName();
-        if (musicTitle.length() > 15) {
-            musicTitle = musicTitle.substring(0, 15) + "...";
+        if (musicTitle.length() > 10) {
+            musicTitle = musicTitle.substring(0, 10) + "...";
         }
         music_title.setText(musicTitle);
         music_des.setText(myMusic.getAuthor());

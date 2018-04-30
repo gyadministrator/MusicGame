@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.example.gy.musicgame"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 15
         versionName "2.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -42,6 +43,20 @@ dependencies {
     compile name: 'YoumiSdk_v7.5.1_2018-01-16', ext: 'aar'
     implementation project(':azadlib_2.2')
     implementation 'com.alibaba:fastjson:1.2.47'
+    implementation files('libs/MobCommons-2018.0418.1102.jar')
+    implementation files('libs/MobTools-2018.0419.1211.jar')
+    implementation files('libs/ShareSDK-Core-3.1.4.jar')
+    implementation files('libs/ShareSDK-Email-3.1.4.jar')
+    implementation files('libs/ShareSDK-QQ-3.1.4.jar')
+    implementation files('libs/ShareSDK-QZone-3.1.4.jar')
+    implementation files('libs/ShareSDK-ShortMessage-3.1.4.jar')
+    implementation files('libs/ShareSDK-SinaWeibo-3.1.4.jar')
+    implementation files('libs/ShareSDK-Wechat-3.1.4.jar')
+    implementation files('libs/ShareSDK-Wechat-Core-3.1.4.jar')
+    implementation files('libs/ShareSDK-Wechat-Favorite-3.1.4.jar')
+    implementation files('libs/ShareSDK-Wechat-Moments-3.1.4.jar')
+    implementation files('libs/SMSSDK-3.1.0.jar')
+    implementation 'com.google.code.gson:gson:2.8.3'
 }
 
 android {
@@ -54,15 +69,15 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     // Glide
     /*greenDao框架*/
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:appcompat-v7:27.1.1'
+    compile 'com.android.support:design:27.1.1'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
@@ -82,10 +97,10 @@ dependencies {
 }
 
 dependencies {
-    //noinspection GradleDynamicVersion
-    implementation 'com.android.support.constraint:constraint-layout:+'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 }
 
 dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:+'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 }
+

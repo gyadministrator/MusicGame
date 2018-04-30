@@ -14,6 +14,16 @@ public class CurrentMusicUtils {
     private static List<RecommendMusic> recommendMusics;
     private static List<MyMusic> myMusics;
 
+    private static boolean Click;
+
+    public static boolean getClick() {
+        return Click;
+    }
+
+    public static void setClick(boolean click) {
+        Click = click;
+    }
+
     public static List<RecommendMusic> getRecommendMusics() {
         return recommendMusics;
     }

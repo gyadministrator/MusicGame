@@ -34,6 +34,7 @@ import utils.Constant;
 import utils.CurrentMusicUtils;
 import utils.HttpUtils;
 import utils.ImmersedStatusbarUtils;
+import utils.ListDataSaveUtils;
 import utils.MusicDaoUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
@@ -102,7 +103,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 singer.setText("歌手");
                 play.setBackgroundResource(R.mipmap.music_play);
             } else if (msg.what == 2) {
-                MusicUtils.play(playUrls.get(0),RecentActivity.this);
+                MusicUtils.play(playUrls.get(0), RecentActivity.this);
                 Picasso.with(RecentActivity.this).load(temp.getPic_small()).into(music_img);
                 String tempTitle = temp.getTitle();
                 if (tempTitle.length() > 15) {
@@ -112,12 +113,14 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                 singer.setText(temp.getAuthor());
                 play.setBackgroundResource(R.mipmap.music_stop);
             } else if (msg.what == 3) {
+                list.remove(CurrentMusicUtils.getRecommendMusic());
                 adapter = new MusicListAdapter(list, RecentActivity.this);
                 adapter.notifyDataSetChanged();
                 listView.setAdapter(adapter);
-                total.setText("共" + list.size() + "首");
-
-                CurrentMusicUtils.setRecommendMusics(list);
+                if (CurrentMusicUtils.getClick()) {
+                    CurrentMusicUtils.setRecommendMusics(list);
+                    CurrentMusicUtils.setClick(false);
+                }
             }
         }
     };
@@ -156,6 +159,9 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
          * */
         allPage = MusicDaoUtils.getPage(MusicDaoUtils.queryAllMusic(musicDao));
         queryRecored(pageNum);
+
+        int size = MusicDaoUtils.queryAllMusic(musicDao).size();
+        total.setText("共" + size + "首");
     }
 
     private void initPlayBar() {
@@ -183,7 +189,17 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onStart() {
         super.onStart();
-        list.clear();
+        int size = MusicDaoUtils.queryAllMusic(musicDao).size();
+        total.setText("共" + size + "首");
+        queryRecored(pageNum);
+        initPlayBar();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        int size = MusicDaoUtils.queryAllMusic(musicDao).size();
+        total.setText("共" + size + "首");
         queryRecored(pageNum);
         initPlayBar();
     }
@@ -235,7 +251,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                     temp = list.get(item_position);
                     if (NetWorkUtils.checkNetworkState(this)) {
                         getPlayUrls(item_position, 2);
-
+                        CurrentMusicUtils.setRecommendMusic(temp);
                         item_position++;
                     } else {
                         ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放下一首");
@@ -263,21 +279,35 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onLoad() {
-        if (pageNum == allPage - 1) {
-            listView.loadComplete(list.size() - 1);
-        } else {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    list.addAll(MusicDaoUtils.getMusicByPageSize(++pageNum, musicDao));
-                    adapter.notifyDataSetChanged();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (pageNum == allPage - 1) {
+                    listView.loadComplete(list.size() - 1);
+                } else {
+                    pageNum = pageNum + 1;
+                    List<RecommendMusic> musicByPageSize = MusicDaoUtils.getMusicByPageSize(pageNum, musicDao);
+                    if (musicByPageSize.size() > 0) {
+                        list.addAll(musicByPageSize);
+                        adapter = new MusicListAdapter(list, RecentActivity.this);
+                        adapter.notifyDataSetChanged();
+                        listView.setAdapter(adapter);
+                        listView.loadComplete(list.size()-musicByPageSize.size());
+                    } else {
+                        listView.loadComplete(list.size() - 1);
+                    }
                 }
-            }, 2000);
-        }
+            }
+        }, 2000);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        CurrentMusicUtils.setClick(true);
+        if (CurrentMusicUtils.getClick()) {
+            CurrentMusicUtils.setRecommendMusics(list);
+            CurrentMusicUtils.setClick(false);
+        }
         item_position = position + 1;
         temp = list.get(position);
         if (NetWorkUtils.checkNetworkState(this)) {
@@ -320,5 +350,11 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        list.clear();
     }
 }

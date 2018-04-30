@@ -1,8 +1,8 @@
 package application;
 
-import android.app.Application;
+import com.mob.MobApplication;
 
-public class MyApplication extends Application {
+public class MyApplication extends MobApplication {
     @Override
     public void onCreate() {
         super.onCreate();

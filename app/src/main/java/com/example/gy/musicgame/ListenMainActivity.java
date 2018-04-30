@@ -45,6 +45,7 @@ import utils.CurrentMusicUtils;
 import utils.DownloadUtil;
 import utils.HttpUtils;
 import utils.ImmersedStatusbarUtils;
+import utils.ListDataSaveUtils;
 import utils.MoreDialog;
 import utils.MusicDaoUtils;
 import utils.MusicUtils;
@@ -115,7 +116,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     private TypeAdapter typeAdapter;
     private static String add_list_url = Constant.BASE_URL + "/person/addMusic";
 
-
     private static final String TAG = "ListenMainActivity";
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -129,10 +129,14 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 } else {
                     rel_net.setVisibility(View.GONE);
                     content.setVisibility(View.GONE);
+                    list.remove(CurrentMusicUtils.getRecommendMusic());
                     adapter = new MusicListAdapter(list, ListenMainActivity.this);
                     listView.setAdapter(adapter);
 
-                    CurrentMusicUtils.setRecommendMusics(list);
+                    if (CurrentMusicUtils.getClick()) {
+                        CurrentMusicUtils.setRecommendMusics(list);
+                        CurrentMusicUtils.setClick(false);
+                    }
                 }
             } else if (msg.what == 0) {
                 loading.setVisibility(View.GONE);
@@ -377,6 +381,11 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        CurrentMusicUtils.setClick(true);
+        if (CurrentMusicUtils.getClick()) {
+            CurrentMusicUtils.setRecommendMusics(list);
+            CurrentMusicUtils.setClick(false);
+        }
         item_position = position + 1;
         temp = list.get(position);
         b = false;
@@ -392,6 +401,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
              * */
             CurrentMusicUtils.setRecommendMusic(temp);
             List<RecommendMusic> music = MusicDaoUtils.queryOneMusic(musicDao, temp);
+            Log.e(TAG, "onItemClick: " + music.toString());
             if (music.size() == 0) {
                 MusicDaoUtils.addMusic(temp, musicDao);
             }
@@ -526,19 +536,16 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
 
     private void next() {
         list = CurrentMusicUtils.getRecommendMusics();
-        if (b) {
-            ToastUtils.showToast(this, R.mipmap.music_warning, "没有下一曲");
+        if (item_position + 1 > list.size()) {
+            ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是最后一首了");
         } else {
-            if (item_position + 1 > list.size()) {
-                ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是最后一首了");
+            temp = list.get(item_position);
+            if (NetWorkUtils.checkNetworkState(this)) {
+                getPlayUrls(item_position, 3);
+                CurrentMusicUtils.setRecommendMusic(temp);
+                item_position++;
             } else {
-                temp = list.get(item_position);
-                if (NetWorkUtils.checkNetworkState(this)) {
-                    getPlayUrls(item_position, 3);
-                    item_position++;
-                } else {
-                    ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放下一首");
-                }
+                ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放下一首");
             }
         }
     }
@@ -569,12 +576,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        list.clear();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
         list.clear();
     }
 }

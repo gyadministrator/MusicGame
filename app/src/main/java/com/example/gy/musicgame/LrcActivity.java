@@ -37,6 +37,7 @@ import bean.Music;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.Constant;
+import utils.CurrentMusicUtils;
 import utils.HttpUtils;
 import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
@@ -99,6 +100,8 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
     private int item_position = 0;
 
     private static boolean b = false;
+
+    private SeekBarThread seekBarThread;
 
 
     private static final String TAG = "LrcActivity";
@@ -181,7 +184,14 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
         seekBar.setOnSeekBarChangeListener(this);
         seekBar.setMax(MusicUtils.mediaPlayer.getDuration());
 
-        new SeekBarThread().start();
+        if (seekBarThread == null) {
+            seekBarThread = new SeekBarThread();
+            seekBarThread.start();
+        } else {
+            seekBarThread.interrupt();
+            seekBarThread = null;
+            seekBar.setProgress(0);
+        }
     }
 
     private void initLrc() {
@@ -218,21 +228,6 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
             mTimer = null;
         }
     }
-
-    //设置背景
-    private static void LoadImgToBackground(Activity activity, Object img, final View view) {
-        Glide
-                .with(activity)
-                .load(img)
-                .into(new SimpleTarget<GlideDrawable>() {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource, GlideAnimation<?
-                            super GlideDrawable> glideAnimation) {
-                        view.setBackgroundDrawable(resource);
-                    }
-                });
-    }
-
     private void sendHttp(String url, String songid) {
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
@@ -297,6 +292,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
         }
     }
 
+    @SuppressLint("Assert")
     private void pre() {
         initSeekBar();
         stopLrcPlay();
@@ -311,6 +307,9 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
                     getPlayUrls(item_position - 1, 3);
                     item_position--;
                     initLrc();
+                    if (list.size() > 0) {
+                        Picasso.with(this).load(list.get(item_position).getPic_big()).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
+                    }
                 } else {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放上一首");
                 }
@@ -415,6 +414,9 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
                 if (NetWorkUtils.checkNetworkState(this)) {
                     getPlayUrls(item_position + 1, 4);
                     item_position++;
+                    if (list.size() > 0) {
+                        Picasso.with(this).load(list.get(item_position).getPic_big()).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
+                    }
                     initLrc();
                 } else {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放下一首");

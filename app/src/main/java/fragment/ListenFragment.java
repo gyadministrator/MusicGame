@@ -23,6 +23,8 @@ import com.example.gy.musicgame.R;
 import com.example.gy.musicgame.SearchMusicActivity;
 import com.example.gy.musicgame.SingerInfoActivity;
 import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 
 import junit.framework.Assert;
@@ -97,7 +99,8 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
     private String[] types;
     private List<Type> typeNames = new ArrayList<>();
     private static final String TAG = "ListenFragment";
-    List<String> images = new ArrayList<>();
+    private static List<String> images = new ArrayList<>();
+    private static List<String> titles = new ArrayList<>();
     List<RecommendMusic> list = new ArrayList<>();
     private static final String url = Constant.BASE_URL + "/music/getSongList";
     private String type_url = Constant.BASE_URL + "/type/queryAllType";
@@ -263,7 +266,14 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        banner.setBannerAnimation(Transformer.DepthPage);
+        banner.isAutoPlay(true);
+        //设置轮播时间
+        banner.setDelayTime(1500);
+        banner.setIndicatorGravity(BannerConfig.RIGHT);
         banner.setImages(images);
+        banner.setBannerTitles(titles);
         //banner设置方法全部调用完毕时最后调用
         banner.start();
     }
@@ -360,6 +370,7 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
             for (int i = 0; i < song.length(); i++) {
                 RecommendMusic recommendMusic = JSON.parseObject(song.get(i).toString(), RecommendMusic.class);
                 images.add(recommendMusic.getPic_big());
+                titles.add(recommendMusic.getTitle());
                 list.add(recommendMusic);
             }
         } catch (JSONException e) {

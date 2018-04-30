@@ -26,7 +26,7 @@ public class MusicUtils {
      */
     public static void play(final String url, final Context context) {
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(context, Uri.parse(url));
+            mediaPlayer = new MediaPlayer();
         }
         try {
             mediaPlayer.reset();

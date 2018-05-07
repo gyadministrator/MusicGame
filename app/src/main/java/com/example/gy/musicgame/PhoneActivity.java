@@ -123,6 +123,7 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void getCode() {
         SMSSDK.getVerificationCode("86", phone.getText().toString()); // 调用sdk发送短信验证
         getCode.setClickable(false);// 设置按钮不可点击 显示倒计时
@@ -174,6 +175,7 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
 
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
+        @SuppressLint("SetTextI18n")
         public void handleMessage(Message msg) {
             if (msg.what == 3) {
                 DialogUtils.hidden();
@@ -196,17 +198,23 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // 短信注册成功后，返回PhoneActivity,然后提示
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
-                        ToastUtils.showToast(PhoneActivity.this, R.mipmap.music_icon, "提交验证码成功");
+                        ToastUtils.showToast(PhoneActivity.this, R.mipmap.music_icon, "验证码效验成功");
                         // 验证成功后跳转主界面
                         Intent intent = new Intent(PhoneActivity.this, RegisterActivity.class);
                         intent.putExtra("phone", phone.getText().toString());
                         startActivity(intent);
                         finish();
-                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                    } else {
+                        ToastUtils.showToast(PhoneActivity.this, R.mipmap.music_warning, "验证码效验失败");
+                    }
+                    if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         ToastUtils.showToast(PhoneActivity.this, R.mipmap.music_icon, "验证码已经发送");
                     } else {
+                        ToastUtils.showToast(PhoneActivity.this, R.mipmap.music_warning, "验证码发送失败");
                         ((Throwable) data).printStackTrace();
                     }
+                } else {
+                    ToastUtils.showToast(PhoneActivity.this, R.mipmap.music_warning, "验证码发送失败");
                 }
             }
         }

@@ -23,6 +23,7 @@
             android:indeterminateDrawable="@drawable/progressbar" />
 
         <TextView
+            android:id="@+id/msg_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pb"

@@ -131,7 +131,7 @@ public class ChangeActivity extends BaseActivity {
     }
 
     private void sendUpdate(String update_url, Map<String, Object> params) {
-        DialogUtils.show(this);
+        DialogUtils.show(this,"修改密码中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

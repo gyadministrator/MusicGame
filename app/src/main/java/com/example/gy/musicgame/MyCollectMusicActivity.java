@@ -28,6 +28,7 @@ import java.util.Map;
 
 import adapter.MyMusicListAdapter;
 import base.BaseActivity;
+import bean.Music;
 import bean.MyMusic;
 import bean.RecommendMusic;
 import butterknife.BindView;
@@ -258,7 +259,20 @@ public class MyCollectMusicActivity extends BaseActivity implements View.OnClick
                     intent1.putExtra("songid", recommendMusic.getSong_id());
                     intent1.putExtra("duration", recommendMusic.getFile_duration());
                     intent1.putExtra("position", item_position - 1);
-                    intent1.putExtra("list", (Serializable) myMusicList);
+                    List<Music> musicList = new ArrayList<>();
+                    for (int i = 0; i < myMusicList.size(); i++) {
+                        MyMusic myMusic = myMusicList.get(i);
+                        Music music = new Music();
+                        music.setFile_duration(Integer.parseInt(myMusic.getDuration()));
+                        music.setPic_big(myMusic.getImg());
+                        music.setAuthor(myMusic.getAuthor());
+                        music.setTitle(myMusic.getName());
+                        music.setSong_id(myMusic.getUrl());
+
+                        musicList.add(music);
+
+                    }
+                    intent1.putExtra("list", (Serializable) musicList);
                     startActivity(intent1);
                 }
                 break;

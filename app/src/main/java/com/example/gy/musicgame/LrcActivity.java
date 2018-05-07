@@ -228,6 +228,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
             mTimer = null;
         }
     }
+
     private void sendHttp(String url, String songid) {
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
@@ -299,17 +300,18 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
         if (b) {
             ToastUtils.showToast(this, R.mipmap.music_warning, "没有上一曲");
         } else {
-            if (item_position - 1 < 0) {
+            item_position = item_position - 1;
+            if (item_position < 0) {
+                item_position = 0;
                 ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是第一首了");
             } else {
-                temp = list.get(item_position - 1);
+                temp = list.get(item_position);
                 if (NetWorkUtils.checkNetworkState(this)) {
-                    getPlayUrls(item_position - 1, 3);
-                    item_position--;
-                    initLrc();
+                    getPlayUrls(item_position, 3);
                     if (list.size() > 0) {
                         Picasso.with(this).load(list.get(item_position).getPic_big()).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
                     }
+                    initLrc();
                 } else {
                     ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络,无法播放上一首");
                 }
@@ -407,13 +409,14 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
         if (b) {
             ToastUtils.showToast(this, R.mipmap.music_warning, "没有下一曲");
         } else {
-            if (item_position + 1 > list.size()) {
+            item_position = item_position + 1;
+            if (item_position == list.size() || item_position > list.size()) {
+                item_position = list.size() - 1;
                 ToastUtils.showToast(this, R.mipmap.music_warning, "亲,已经是最后一首了");
             } else {
-                temp = list.get(item_position + 1);
+                temp = list.get(item_position);
                 if (NetWorkUtils.checkNetworkState(this)) {
-                    getPlayUrls(item_position + 1, 4);
-                    item_position++;
+                    getPlayUrls(item_position, 4);
                     if (list.size() > 0) {
                         Picasso.with(this).load(list.get(item_position).getPic_big()).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
                     }

@@ -141,7 +141,7 @@ public class SingerInfoActivity extends AppCompatActivity {
     }
 
     private void send(String url, Map<String, Object> map) {
-        DialogUtils.show(this);
+        DialogUtils.show(this,"获取歌手信息中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

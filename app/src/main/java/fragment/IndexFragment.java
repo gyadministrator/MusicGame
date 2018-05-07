@@ -337,7 +337,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void sendQuery(String queryUserUrl, Map<String, Object> params) {
-        DialogUtils.show(mContext);
+        DialogUtils.show(mContext,"获取用户数据中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {
@@ -391,7 +391,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void send(String url, Map<String, Object> map) {
-        DialogUtils.show(mContext);
+        DialogUtils.show(mContext,"查询中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

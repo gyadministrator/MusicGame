@@ -116,7 +116,7 @@ public class InfoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void send(String url, Map<String, Object> map, final int i) {
-        DialogUtils.show(mContext);
+        DialogUtils.show(mContext,"获取消息中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

@@ -135,7 +135,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void send(String url, Map<String, Object> map) {
-        DialogUtils.show(this);
+        DialogUtils.show(this,"登录中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

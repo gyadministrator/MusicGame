@@ -336,7 +336,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
     }
 
     private void send(String url, Map<String, Object> map) {
-        DialogUtils.show(mContext);
+        DialogUtils.show(mContext, "获取数据中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

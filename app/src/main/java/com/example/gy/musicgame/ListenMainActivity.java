@@ -196,7 +196,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                             map.put("duration", currentLongMusic.getFile_duration());
                             map.put("typeId", type.getId());
                             map.put("userId", userId);
-                            map.put("url",currentLongMusic.getSong_id());
+                            map.put("url", currentLongMusic.getSong_id());
                             if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
                                 sendAddListHttp(add_list_url, map);
                             } else {
@@ -258,7 +258,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         if (NetWorkUtils.checkNetworkState(this)) {
             recommendMusic = CurrentMusicUtils.getRecommendMusic();
             if (recommendMusic != null) {
-                Picasso.with(ListenMainActivity.this).load(recommendMusic.getPic_small()).into(music_img);
+                Picasso.with(ListenMainActivity.this).load(recommendMusic.getPic_big()).into(music_img);
                 singer_name.setText(recommendMusic.getTitle());
                 singer.setText(recommendMusic.getAuthor());
                 play.setEnabled(true);

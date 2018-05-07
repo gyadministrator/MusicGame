@@ -87,7 +87,7 @@ public class SearchMusicActivity extends BaseActivity implements AdapterView.OnI
                         list.clear();
                         Map<String, Object> params = new HashMap<>();
                         params.put("query", search_edit.getText().toString());
-                        DialogUtils.show(SearchMusicActivity.this);
+                        DialogUtils.show(SearchMusicActivity.this,"查询中...");
                         send(URL, params);
                     } else {
                         ToastUtils.showToast(SearchMusicActivity.this, R.mipmap.music_icon, "无网络连接");

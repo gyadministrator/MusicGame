@@ -168,7 +168,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
         if (NetWorkUtils.checkNetworkState(this)) {
             recommendMusic = CurrentMusicUtils.getRecommendMusic();
             if (recommendMusic != null) {
-                Picasso.with(RecentActivity.this).load(recommendMusic.getPic_small()).into(music_img);
+                Picasso.with(RecentActivity.this).load(recommendMusic.getPic_big()).into(music_img);
                 singer_name.setText(recommendMusic.getTitle());
                 singer.setText(recommendMusic.getAuthor());
                 play.setEnabled(true);
@@ -292,7 +292,7 @@ public class RecentActivity extends BaseActivity implements View.OnClickListener
                         adapter = new MusicListAdapter(list, RecentActivity.this);
                         adapter.notifyDataSetChanged();
                         listView.setAdapter(adapter);
-                        listView.loadComplete(list.size()-musicByPageSize.size());
+                        listView.loadComplete(list.size() - musicByPageSize.size());
                     } else {
                         listView.loadComplete(list.size() - 1);
                     }

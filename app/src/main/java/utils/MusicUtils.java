@@ -36,7 +36,7 @@ public class MusicUtils {
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepareAsync();
 
-            DialogUtils.show(context);
+            DialogUtils.show(context, "连接音乐中...");
 
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override

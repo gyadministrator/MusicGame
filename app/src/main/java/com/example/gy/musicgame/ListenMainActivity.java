@@ -196,7 +196,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                             map.put("duration", currentLongMusic.getFile_duration());
                             map.put("typeId", type.getId());
                             map.put("userId", userId);
-                            map.put("url", playUrls.get(0));
+                            map.put("url",currentLongMusic.getSong_id());
                             if (NetWorkUtils.checkNetworkState(ListenMainActivity.this)) {
                                 sendAddListHttp(add_list_url, map);
                             } else {
@@ -401,7 +401,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
              * */
             CurrentMusicUtils.setRecommendMusic(temp);
             List<RecommendMusic> music = MusicDaoUtils.queryOneMusic(musicDao, temp);
-            Log.e(TAG, "onItemClick: " + music.toString());
             if (music.size() == 0) {
                 MusicDaoUtils.addMusic(temp, musicDao);
             }

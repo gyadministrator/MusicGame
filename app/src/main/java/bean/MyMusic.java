@@ -1,6 +1,8 @@
 package bean;
 
-public class MyMusic {
+import java.io.Serializable;
+
+public class MyMusic implements Serializable {
     private Integer id;
 
     private String name;

@@ -99,7 +99,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
     private String lrcContent = "";
     private int item_position = 0;
 
-    private static boolean b = false;
+    private static boolean b = true;
 
     private SeekBarThread seekBarThread;
 
@@ -268,13 +268,16 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
                     MusicUtils.pause();
                     lrc_play.setBackgroundResource(R.mipmap.music_play);
                     b = false;
+                    if (seekBarThread != null) {
+                        seekBarThread.interrupt();
+                        seekBarThread = null;
+                    }
                 } else {
+                    seekBarThread = new SeekBarThread();
+                    seekBarThread.start();
                     MusicUtils.playContinue();
                     lrc_play.setBackgroundResource(R.mipmap.music_stop);
                     b = true;
-
-                    MusicUtils.mediaPlayer.stop();
-                    seekBar.setProgress(0);
                 }
                 break;
             case R.id.lrc_next:

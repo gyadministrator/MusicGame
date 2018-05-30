@@ -1,6 +1,7 @@
 package base;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -107,4 +108,20 @@ public class BaseActivity extends FragmentActivity {
         }
     }
 
+    /***
+     * 带动画启动  activity
+     * @param intent
+     */
+    protected void startActivityWithAnim(Intent intent){
+        startActivity(intent);
+        overridePendingTransition(R.anim.default_fromright_in,R.anim.default_toleft_out);
+    }
+
+    /***
+     * 带动画退出  activity
+     */
+    protected void finishWithAnim(){
+        finish();
+        overridePendingTransition(R.anim.default_fromright_in,R.anim.default_toleft_out);
+    }
 }

@@ -41,7 +41,7 @@ public class SplashActivity extends BaseActivity {
                 SharedPreferences.Editor edit = preferences.edit();
                 edit.putBoolean("b", true);
                 edit.apply();
-                Intent intent = new Intent(this, StartActivity.class);
+                Intent intent = new Intent(this, GuideActivity.class);
                 startActivity(intent);
                 finish();
             } else {
@@ -70,7 +70,7 @@ public class SplashActivity extends BaseActivity {
                     }
                 }
             }
-        }else {
+        } else {
             ToastUtils.showToast(this, R.mipmap.music_warning, "无网络连接");
             Intent intent = new Intent(this, StartActivity.class);
             startActivity(intent);

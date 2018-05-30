@@ -115,4 +115,5 @@
     <string name="add_list">添加至歌单</string>
     <string name="no_data">没有获取到数据</string>
     <string name="share">分享</string>
+    <string name="enter">进入应用</string>
 </resources>

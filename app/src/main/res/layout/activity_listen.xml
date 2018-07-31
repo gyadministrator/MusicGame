@@ -23,6 +23,12 @@
                 android:layout_height="140dp"
                 android:visibility="gone" />
 
+            <RelativeLayout
+                android:id="@+id/ad_rel"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:id="@+id/progress_lin"
                 android:layout_width="match_parent"
@@ -38,8 +44,8 @@
                     style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:indeterminateDrawable="@drawable/progressbar"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:indeterminateDrawable="@drawable/progressbar" />
 
                 <TextView
                     android:layout_width="match_parent"

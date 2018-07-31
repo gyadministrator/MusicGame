@@ -5,7 +5,7 @@ public class AdUtils {
     /**
      * 广告ID
      */
-    public final static String APPKEY = "4a51d434218ae541343bdd3540d46c1e";
+    public final static String APPKEY = "65484a8a406d5ec2775657c1a3c2b530";
 
     /**
      * 开屏广告id
@@ -35,5 +35,5 @@ public class AdUtils {
     /**
      * 视频贴片ID
      */
-    public final static String PERO_ID = "38";
+    public final static String PERO_ID = "423";
 }

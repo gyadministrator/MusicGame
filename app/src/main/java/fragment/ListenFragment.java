@@ -18,24 +18,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.anzhi.sdk.ad.main.AzBannerAdView;
-import com.anzhi.sdk.ad.main.AzPrerollAd;
-import com.anzhi.sdk.ad.manage.AnzhiAdPrerollAdCallBack;
-import com.anzhi.sdk.ad.manage.AzMediaCallback;
 import com.example.gy.musicgame.ListenMainActivity;
 import com.example.gy.musicgame.MyCollectMusicActivity;
 import com.example.gy.musicgame.R;
 import com.example.gy.musicgame.SearchMusicActivity;
 import com.example.gy.musicgame.SingerInfoActivity;
-import com.leedavid.adslib.comm.preroll.PrerollAd;
-import com.leedavid.adslib.comm.preroll.PrerollAdData;
-import com.leedavid.adslib.comm.preroll.PrerollAdType;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
-
-import junit.framework.Assert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,10 +41,8 @@ import adapter.TypeAdapter;
 import base.BaseFragment;
 import bean.RecommendMusic;
 import bean.Type;
-import bean.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import utils.AdUtils;
 import utils.AddDialogUtils;
 import utils.Constant;
 import utils.GlideImageLoader;
@@ -186,138 +175,6 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
         View view = LayoutInflater.from(mContext).inflate(R.layout.activity_listen, null);
         ButterKnife.bind(this, view);
         return view;
-    }
-
-    private void initAd() {
-        AzPrerollAd azPrerollAd = new AzPrerollAd(getActivity(), AdUtils.APPKEY, AdUtils.PERO_ID, new AnzhiAdPrerollAdCallBack() {
-            @Override
-            public List<PrerollAdData> onAdLoaded(List<PrerollAdData> list) {
-                return null;
-            }
-
-            @Override
-            public List<PrerollAdData> onADClicked(PrerollAdData prerollAdData) {
-                return null;
-            }
-
-            @Override
-            public List<PrerollAdData> onADVideoLoaded(PrerollAdData prerollAdData) {
-                return null;
-            }
-
-            @Override
-            public void onAdFail(String s) {
-                getBanner();
-            }
-        }, ad_rel, PrerollAd.TYPE_NORMAL, new AzMediaCallback() {
-            @Override
-            public void onVideoReady(long l) {
-
-            }
-
-            @Override
-            public void onVideoStart() {
-
-            }
-
-            @Override
-            public void onVideoPause() {
-
-            }
-
-            @Override
-            public void onVideoComplete() {
-                getBanner();
-            }
-
-            @Override
-            public void onReplayButtonClicked() {
-
-            }
-
-            @Override
-            public void onADButtonClicked() {
-
-            }
-
-            @Override
-            public void onFullScreenChanged(boolean b) {
-
-            }
-
-            @Override
-            public void onAdFail(String s) {
-                getBanner();
-            }
-        });
-
-        azPrerollAd.loadAd();
-
-        azPrerollAd.setSize(RelativeLayout.LayoutParams.MATCH_PARENT, 140);
-
-        new AnzhiAdPrerollAdCallBack() {
-            @Override
-            public List<PrerollAdData> onAdLoaded(List<PrerollAdData> list) {
-                return null;
-            }
-
-            @Override
-            public List<PrerollAdData> onADClicked(PrerollAdData prerollAdData) {
-                return null;
-            }
-
-            @Override
-            public List<PrerollAdData> onADVideoLoaded(PrerollAdData prerollAdData) {
-                return null;
-            }
-
-            @Override
-            public void onAdFail(String s) {
-                getBanner();
-            }
-        };
-
-        new AzMediaCallback() {
-            @Override
-            public void onVideoReady(long l) {
-
-            }
-
-            @Override
-            public void onVideoStart() {
-
-            }
-
-            @Override
-            public void onVideoPause() {
-
-            }
-
-            @Override
-            public void onVideoComplete() {
-
-            }
-
-            @Override
-            public void onReplayButtonClicked() {
-
-            }
-
-            @Override
-            public void onADButtonClicked() {
-
-            }
-
-            @Override
-            public void onFullScreenChanged(boolean b) {
-
-            }
-
-            @Override
-            public void onAdFail(String s) {
-                getBanner();
-            }
-        };
     }
 
     @Override

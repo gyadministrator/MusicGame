@@ -10,10 +10,11 @@
 
     <LinearLayout
         android:id="@+id/lin"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_margin="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -32,7 +33,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:maxLines="2"
-            android:text="dshjhds"
             android:textSize="20sp" />
 
         <TextView
@@ -46,6 +46,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:orientation="horizontal">
 
@@ -55,8 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:maxLines="2"
-            android:text="djjdkdkjkjd" />
+            android:maxLines="2" />
     </LinearLayout>
 
     <view.CircleImageView

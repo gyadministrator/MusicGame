@@ -130,7 +130,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                 if (user.getImage() == null) {
                     Picasso.with(mContext).load(Constant.BASE_URL + "/upload/default.png").into(user_image);
                 } else {
-                    Picasso.with(mContext).load(user.getImage()).into(user_image);
+                    Picasso.with(mContext).load(user.getImage()).error(R.mipmap.default_user).placeholder(R.mipmap.default_user).into(user_image);
                 }
             } else if (msg.what == 0) {
                 DialogUtils.hidden();

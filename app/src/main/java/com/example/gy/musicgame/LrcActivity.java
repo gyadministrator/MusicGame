@@ -13,10 +13,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -152,7 +154,11 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
 
         item_position = intent.getIntExtra("position", 0);
         list = (List<Music>) intent.getSerializableExtra("list");
-        lrc_song_name.setText(intent.getStringExtra("name"));
+        String name = intent.getStringExtra("name");
+        if (name.length() > 10) {
+            name = name.substring(0, 10) + "...";
+        }
+        lrc_song_name.setText(name);
         lrc_singer.setText(intent.getStringExtra("singer"));
 
         if (NetWorkUtils.checkNetworkState(this)) {

@@ -192,7 +192,7 @@
                     android:layout_width="20dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     android:background="@mipmap/delete" />
 
                 <TextView
@@ -237,10 +237,11 @@
                 android:paddingLeft="10dp">
 
                 <TextView
-                    android:layout_width="20dp"
+                    android:layout_width="10dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_weight="0.5"
+                    android:layout_marginStart="3dp"
+                    android:layout_weight="0.4"
                     android:background="@mipmap/update" />
 
                 <TextView
@@ -308,10 +309,11 @@
                 android:paddingLeft="10dp">
 
                 <TextView
-                    android:layout_width="20dp"
+                    android:layout_width="10dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_weight="0.5"
+                    android:layout_marginStart="3dp"
+                    android:layout_weight="0.4"
                     android:background="@mipmap/exit" />
 
                 <TextView

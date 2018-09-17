@@ -9,7 +9,6 @@ import base.BaseActivity;
 import bean.Info;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import utils.ImmersedStatusbarUtils;
 
 public class InfoDetailActivity extends BaseActivity {
     @BindView(R.id.back)
@@ -28,9 +27,6 @@ public class InfoDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_detail);
         ButterKnife.bind(this);
-
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

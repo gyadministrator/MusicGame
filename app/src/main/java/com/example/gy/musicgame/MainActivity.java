@@ -1,6 +1,7 @@
 package com.example.gy.musicgame;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import fragment.IndexFragment;
 import fragment.InfoFragment;
 import fragment.ListenFragment;
 import fragment.MyFragment;
+import utils.NotificationPermissionUtils;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.music_index)
@@ -50,7 +52,6 @@ public class MainActivity extends BaseActivity {
         setListener();
 
         setupSpotAd();
-
 
         now_play.setOnClickListener(new View.OnClickListener() {
             @Override

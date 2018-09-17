@@ -10,8 +10,9 @@
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D64A27"
-        android:orientation="horizontal">
+        android:background="@color/txt_color_pressed"
+        android:orientation="horizontal"
+        android:paddingTop="15dp">
 
         <TextView
             android:id="@+id/back"
@@ -50,8 +51,7 @@
         <view.CircleImageView
             android:id="@+id/change_user"
             android:layout_width="75dp"
-            android:layout_height="match_parent"
-            android:background="@mipmap/default_user" />
+            android:layout_height="match_parent" />
 
         <TextView
             android:layout_width="0dp"

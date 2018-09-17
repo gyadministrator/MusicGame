@@ -21,8 +21,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="100dp"
             android:layout_marginEnd="15dp"
-            android:src="@mipmap/now_play"
-            app:backgroundTint="@color/colorAccent" />
+            android:src="@mipmap/now_play" />
     </FrameLayout>
 
     <TextView
@@ -35,7 +34,7 @@
         android:id="@+id/rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/grey_900_96p"
         android:orientation="horizontal"
         android:padding="3dp">
 

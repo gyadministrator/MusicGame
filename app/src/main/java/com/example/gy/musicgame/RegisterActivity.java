@@ -124,7 +124,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void sendCheckuser(String url, Map<String, Object> params) {
-        DialogUtils.show(this,"检查用户中...");
+        DialogUtils.show(this, "检查用户中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {
@@ -151,7 +151,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void send(String url, Map<String, Object> map) {
-        DialogUtils.show(this,"注册中...");
+        DialogUtils.show(this, "注册中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

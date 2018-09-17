@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -42,10 +41,7 @@ import butterknife.ButterKnife;
 import utils.AddMusicDialogUtils;
 import utils.Constant;
 import utils.CurrentMusicUtils;
-import utils.DownloadUtil;
 import utils.HttpUtils;
-import utils.ImmersedStatusbarUtils;
-import utils.ListDataSaveUtils;
 import utils.MoreDialog;
 import utils.MusicDaoUtils;
 import utils.MusicUtils;
@@ -144,7 +140,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
                 ToastUtils.showToast(ListenMainActivity.this, R.mipmap.music_icon, "发生了错误");
             } else if (msg.what == 3) {
                 MusicUtils.play(playUrls.get(0), ListenMainActivity.this);
-                Picasso.with(ListenMainActivity.this).load(temp.getPic_small()).into(music_img);
+                Picasso.get().load(temp.getPic_small()).into(music_img);
                 String tempTitle = temp.getTitle();
                 if (tempTitle.length() > 15) {
                     tempTitle = tempTitle.substring(0, 15);
@@ -229,9 +225,6 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         SharedPreferences sharedPreferences = getSharedPreferences("userId", Context.MODE_PRIVATE);
         userId = sharedPreferences.getInt("userId", 0);
 
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
-
         listView.setLoadListener(this);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
@@ -258,7 +251,7 @@ public class ListenMainActivity extends BaseActivity implements AdapterView.OnIt
         if (NetWorkUtils.checkNetworkState(this)) {
             recommendMusic = CurrentMusicUtils.getRecommendMusic();
             if (recommendMusic != null) {
-                Picasso.with(ListenMainActivity.this).load(recommendMusic.getPic_big()).into(music_img);
+                Picasso.get().load(recommendMusic.getPic_big()).into(music_img);
                 singer_name.setText(recommendMusic.getTitle());
                 singer.setText(recommendMusic.getAuthor());
                 play.setEnabled(true);

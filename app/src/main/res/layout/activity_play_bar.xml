@@ -5,6 +5,7 @@
     android:layout_height="65dp"
     android:background="@color/white"
     android:orientation="horizontal">
+
     <LinearLayout
         android:id="@+id/bar_lin"
         android:layout_width="0dp"
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal">
+
         <view.CircleImageView
             android:id="@+id/music_img"
             android:layout_width="40dp"

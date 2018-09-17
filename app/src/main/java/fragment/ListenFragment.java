@@ -46,7 +46,6 @@ import utils.AddDialogUtils;
 import utils.Constant;
 import utils.GlideImageLoader;
 import utils.HttpUtils;
-import utils.ImmersedStatusbarUtils;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
 
@@ -188,9 +187,6 @@ public class ListenFragment extends BaseFragment implements View.OnClickListener
         //initAd();
         //获取歌单
         getTypes();
-
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
         nums = mContext.getResources().getIntArray(R.array.types_num);
         types = mContext.getResources().getStringArray(R.array.types);
 

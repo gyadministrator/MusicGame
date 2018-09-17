@@ -63,7 +63,6 @@ import utils.DialogUtils;
 import utils.ExitDialogUtils;
 import utils.FileUtils;
 import utils.HttpUtils;
-import utils.ImmersedStatusbarUtils;
 import utils.MethodsCompat;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
@@ -128,9 +127,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                 user_txt.setText(user.getUsername());
                 my_money.setText(user.getStar() + "");
                 if (user.getImage() == null) {
-                    Picasso.with(mContext).load(Constant.BASE_URL + "/upload/default.png").into(user_image);
+                    Picasso.get().load(Constant.BASE_URL + "/upload/default.png").into(user_image);
                 } else {
-                    Picasso.with(mContext).load(user.getImage()).error(R.mipmap.default_user).placeholder(R.mipmap.default_user).into(user_image);
+                    Picasso.get().load(user.getImage()).error(R.mipmap.default_user).placeholder(R.mipmap.default_user).into(user_image);
                 }
             } else if (msg.what == 0) {
                 DialogUtils.hidden();
@@ -143,9 +142,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                         user_txt.setText(user.getUsername());
                         my_money.setText(user.getStar() + "");
                         if (user.getImage() == null) {
-                            Picasso.with(mContext).load(Constant.BASE_URL + "/upload/default.png").into(user_image);
+                            Picasso.get().load(Constant.BASE_URL + "/upload/default.png").into(user_image);
                         } else {
-                            Picasso.with(mContext).load(user.getImage()).into(user_image);
+                            Picasso.get().load(user.getImage()).into(user_image);
                         }
                     }
                 }
@@ -184,11 +183,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
     @Override
     protected void initData() {
         super.initData();
-
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
-        //计算缓存
-        caculateCacheSize();
         Intent intent = getActivity().getIntent();
         user = (User) intent.getBundleExtra("user").getSerializable("user");
         //获取用户数据
@@ -242,6 +236,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                 }
                 break;
             case R.id.setting_tv:
+                //计算缓存
+                caculateCacheSize();
                 onClickCleanCache();
                 break;
             case R.id.refresh_tv:

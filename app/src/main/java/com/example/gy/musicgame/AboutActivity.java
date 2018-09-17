@@ -8,7 +8,6 @@ import android.widget.TextView;
 import base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import utils.ImmersedStatusbarUtils;
 
 public class AboutActivity extends BaseActivity {
     @BindView(R.id.back)
@@ -27,7 +26,5 @@ public class AboutActivity extends BaseActivity {
                 finish();
             }
         });
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
     }
 }

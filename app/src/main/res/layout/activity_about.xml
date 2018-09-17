@@ -10,9 +10,10 @@
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D64A27"
+        android:background="@color/txt_color_pressed"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
+        android:paddingTop="15dp"
         android:paddingRight="10dp">
 
         <LinearLayout

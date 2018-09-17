@@ -21,13 +21,17 @@ public class FileUtils {
             return 0;
         }
         long dirSize = 0;
-        File[] files = dir.listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                dirSize += file.length();
-            } else if (file.isDirectory()) {
-                dirSize += file.length();
-                dirSize += getDirSize(file); // 递归调用继续统计
+        if (dir.listFiles() != null) {
+            if (dir.listFiles().length > 0) {
+                File[] files = dir.listFiles();
+                for (File file : files) {
+                    if (file.isFile()) {
+                        dirSize += file.length();
+                    } else if (file.isDirectory()) {
+                        dirSize += file.length();
+                        dirSize += getDirSize(file); // 递归调用继续统计
+                    }
+                }
             }
         }
         return dirSize;

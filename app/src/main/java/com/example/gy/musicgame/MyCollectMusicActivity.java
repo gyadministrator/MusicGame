@@ -36,12 +36,10 @@ import butterknife.ButterKnife;
 import utils.Constant;
 import utils.CurrentMusicUtils;
 import utils.HttpUtils;
-import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
 import view.CircleImageView;
-import view.MyListView;
 
 public class MyCollectMusicActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     @BindView(R.id.back_listen)
@@ -130,7 +128,7 @@ public class MyCollectMusicActivity extends BaseActivity implements View.OnClick
                 ToastUtils.showToast(MyCollectMusicActivity.this, R.mipmap.music_icon, "发生了错误");
             } else if (msg.what == 3) {
                 MusicUtils.play(playUrls.get(0), MyCollectMusicActivity.this);
-                Picasso.with(MyCollectMusicActivity.this).load(temp.getPic_big()).into(music_img);
+                Picasso.get().load(temp.getPic_big()).into(music_img);
                 String tempTitle = temp.getTitle();
                 if (tempTitle.length() > 15) {
                     tempTitle = tempTitle.substring(0, 15);
@@ -147,9 +145,6 @@ public class MyCollectMusicActivity extends BaseActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_collect_music);
         ButterKnife.bind(this);
-
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
 
         Intent intent = getIntent();
         typeId = intent.getIntExtra("typeId", 0);
@@ -389,7 +384,7 @@ public class MyCollectMusicActivity extends BaseActivity implements View.OnClick
         if (NetWorkUtils.checkNetworkState(this)) {
             recommendMusic = CurrentMusicUtils.getRecommendMusic();
             if (recommendMusic != null) {
-                Picasso.with(MyCollectMusicActivity.this).load(recommendMusic.getPic_big()).into(music_img);
+                Picasso.get().load(recommendMusic.getPic_big()).into(music_img);
                 singer_name.setText(recommendMusic.getTitle());
                 singer.setText(recommendMusic.getAuthor());
                 play.setEnabled(true);

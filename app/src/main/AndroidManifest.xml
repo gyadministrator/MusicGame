@@ -149,6 +149,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".GuideActivity" />
+
+        <receiver android:name="receiver.BackBroadCastReceiver" />
     </application>
 
 </manifest>

@@ -3,7 +3,6 @@ package com.example.gy.musicgame;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,18 +16,18 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
+import base.BaseActivity;
 import bean.Singer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.Constant;
 import utils.DialogUtils;
 import utils.HttpUtils;
-import utils.ImmersedStatusbarUtils;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
 import view.CircleImageView;
 
-public class SingerInfoActivity extends AppCompatActivity {
+public class SingerInfoActivity extends BaseActivity {
     @BindView(R.id.singer_image)
     CircleImageView singer_image;
     @BindView(R.id.name)
@@ -71,7 +70,7 @@ public class SingerInfoActivity extends AppCompatActivity {
             if (msg.what == 1) {
                 DialogUtils.hidden();
                 if (singer != null) {
-                    Picasso.with(SingerInfoActivity.this).load(singer.getAvatar_middle()).into(singer_image);
+                    Picasso.get().load(singer.getAvatar_middle()).into(singer_image);
                     name.setText("姓名:" + singer.getName());
                     if (singer.getGender().equals("1")) {
                         sex.setText("性别:女");
@@ -98,9 +97,6 @@ public class SingerInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singer_info);
         ButterKnife.bind(this);
-
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
 
         final String tinguid = getIntent().getStringExtra("tinguid");
         if (NetWorkUtils.checkNetworkState(this)) {
@@ -141,7 +137,7 @@ public class SingerInfoActivity extends AppCompatActivity {
     }
 
     private void send(String url, Map<String, Object> map) {
-        DialogUtils.show(this,"获取歌手信息中...");
+        DialogUtils.show(this, "获取歌手信息中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

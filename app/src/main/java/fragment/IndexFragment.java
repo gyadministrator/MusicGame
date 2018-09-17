@@ -1,6 +1,7 @@
 package fragment;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -39,12 +40,14 @@ import butterknife.ButterKnife;
 import utils.Constant;
 import utils.DialogUtils;
 import utils.HttpUtils;
-import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
+import utils.NotificationPermissionUtils;
 import utils.ToastMoneyUtils;
 import utils.ToastUtils;
 import view.CircleImageView;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Administrator on 2017/9/12.
@@ -320,9 +323,16 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     @Override
     protected void initData() {
         super.initData();
-
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(getActivity(), lin);
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("notice", MODE_PRIVATE);
+        boolean b = sharedPreferences.getBoolean("b", true);
+        if (b) {
+            if (NotificationPermissionUtils.isNotificationEnabled(mContext)) {
+                NotificationPermissionUtils.openPermission(mContext);
+            }
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putBoolean("b", false);
+            edit.apply();
+        }
         if (NetWorkUtils.checkNetworkState(mContext)) {
             //重新获取用户最新数据
             user = (User) getActivity().getIntent().getBundleExtra("user").getSerializable("user");
@@ -337,7 +347,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void sendQuery(String queryUserUrl, Map<String, Object> params) {
-        DialogUtils.show(mContext,"获取用户数据中...");
+        DialogUtils.show(mContext, "获取用户数据中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {
@@ -391,7 +401,7 @@ public class IndexFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void send(String url, Map<String, Object> map) {
-        DialogUtils.show(mContext,"查询中...");
+        DialogUtils.show(mContext, "查询中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 import utils.Constant;
 import utils.DialogUtils;
 import utils.HttpUtils;
-import utils.ImmersedStatusbarUtils;
 import utils.MD5;
 import utils.NetWorkUtils;
 import utils.ToastUtils;
@@ -78,17 +77,14 @@ public class ChangeActivity extends BaseActivity {
         setContentView(R.layout.activity_change);
         ButterKnife.bind(this);
 
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
-
         u = (User) getIntent().getBundleExtra("user").getSerializable("user");
         user.setText(u.getUsername());
 
         if (NetWorkUtils.checkNetworkState(ChangeActivity.this)) {
             if (u.getImage() == null) {
-                Picasso.with(this).load(Constant.BASE_URL + "/upload/default.png").into(change_user);
+                Picasso.get().load(Constant.BASE_URL + "/upload/default.png").into(change_user);
             } else {
-                Picasso.with(this).load(u.getImage()).placeholder(R.mipmap.default_user).error(R.mipmap.default_user).into(change_user);
+                Picasso.get().load(u.getImage()).placeholder(R.mipmap.default_user).error(R.mipmap.default_user).into(change_user);
             }
         } else {
             ToastUtils.showToast(ChangeActivity.this, R.mipmap.music_warning, "无网络连接");
@@ -131,7 +127,7 @@ public class ChangeActivity extends BaseActivity {
     }
 
     private void sendUpdate(String update_url, Map<String, Object> params) {
-        DialogUtils.show(this,"修改密码中...");
+        DialogUtils.show(this, "修改密码中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

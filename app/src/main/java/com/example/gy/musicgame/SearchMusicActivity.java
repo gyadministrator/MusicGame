@@ -66,7 +66,7 @@ public class SearchMusicActivity extends BaseActivity implements AdapterView.OnI
                 DialogUtils.hidden();
                 ToastUtils.showToast(SearchMusicActivity.this, R.mipmap.music_icon, "发生了错误");
             } else if (msg.what == 3) {
-                MusicUtils.play(playUrls.get(0),SearchMusicActivity.this);
+                MusicUtils.play(playUrls.get(0), SearchMusicActivity.this);
             }
         }
     };
@@ -87,7 +87,7 @@ public class SearchMusicActivity extends BaseActivity implements AdapterView.OnI
                         list.clear();
                         Map<String, Object> params = new HashMap<>();
                         params.put("query", search_edit.getText().toString());
-                        DialogUtils.show(SearchMusicActivity.this,"查询中...");
+                        DialogUtils.show(SearchMusicActivity.this, "查询中...");
                         send(URL, params);
                     } else {
                         ToastUtils.showToast(SearchMusicActivity.this, R.mipmap.music_icon, "无网络连接");

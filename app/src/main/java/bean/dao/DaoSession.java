@@ -18,7 +18,7 @@ import bean.dao.RecommendMusicDao;
 
 /**
  * {@inheritDoc}
- * 
+ *
  * @see org.greenrobot.greendao.AbstractDaoSession
  */
 public class DaoSession extends AbstractDaoSession {
@@ -45,7 +45,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(CurrentUser.class, currentUserDao);
         registerDao(RecommendMusic.class, recommendMusicDao);
     }
-    
+
     public void clear() {
         currentUserDaoConfig.clearIdentityScope();
         recommendMusicDaoConfig.clearIdentityScope();

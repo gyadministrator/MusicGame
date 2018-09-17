@@ -148,7 +148,7 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void sendCheckuser(String url, Map<String, Object> params) {
-        DialogUtils.show(this,"检查用户中...");
+        DialogUtils.show(this, "检查用户中...");
         HttpUtils httpUtils = new HttpUtils(new HttpUtils.IHttpResponseListener() {
             @Override
             public void onSuccess(String json) {

@@ -9,28 +9,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="76"
-        android:orientation="horizontal">
+        android:layout_height="80dp"
+        android:background="@color/txt_color_pressed"
+        android:paddingTop="15dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="80"
             android:gravity="center"
             android:text="@string/phone_txt"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:textColor="@color/white"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -46,7 +36,7 @@
 
         <EditText
             android:id="@+id/phone"
-            android:layout_width="0dp"
+            android:layout_width="310dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
@@ -66,26 +56,32 @@
         android:layout_weight="30"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/code"
-            android:layout_width="220dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="0dp"
-            android:hint="@string/code"
-            android:inputType="number"
-            android:maxLength="10" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/getCode"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginRight="15sp"
-            android:background="@drawable/login_btn"
-            android:gravity="center"
-            android:text="@string/getCode"
-            android:textSize="14sp" />
+            <EditText
+                android:id="@+id/code"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="0dp"
+                android:hint="@string/code"
+                android:inputType="number"
+                android:maxLength="10" />
+
+            <Button
+                android:id="@+id/getCode"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_alignEnd="@+id/code"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="@string/getCode"
+                android:textSize="14sp" />
+        </RelativeLayout>
     </LinearLayout>
 
     <TextView

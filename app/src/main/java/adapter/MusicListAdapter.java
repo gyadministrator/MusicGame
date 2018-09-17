@@ -59,7 +59,7 @@ public class MusicListAdapter extends BaseAdapter {
         TextView music_title = convertView.findViewById(R.id.music_title);
         TextView music_des = convertView.findViewById(R.id.music_des);
         RecommendMusic recommendMusic = allValues.get(position);
-        Picasso.with(mContext).load(recommendMusic.getPic_big()).into(music_image);
+        Picasso.get().load(recommendMusic.getPic_big()).into(music_image);
         String musicTitle = recommendMusic.getTitle();
         if (musicTitle.length() > 15) {
             musicTitle = musicTitle.substring(0, 15) + "...";

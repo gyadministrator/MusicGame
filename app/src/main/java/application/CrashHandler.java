@@ -101,7 +101,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                if (e instanceof IndexOutOfBoundsException){
+                if (e instanceof IndexOutOfBoundsException) {
                     Toast.makeText(mContext, "捕获到异常", Toast.LENGTH_SHORT).show();
                 }
                 Toast.makeText(mContext, "捕获到异常", Toast.LENGTH_SHORT).show();

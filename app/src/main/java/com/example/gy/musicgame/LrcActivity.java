@@ -1,11 +1,8 @@
 package com.example.gy.musicgame;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.location.Location;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,7 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import utils.Constant;
 import utils.HttpUtils;
-import utils.ImmersedStatusbarUtils;
 import utils.MusicUtils;
 import utils.NetWorkUtils;
 import utils.TimeFormat;
@@ -146,10 +142,6 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
         lrc_back.setOnClickListener(this);
         lrc_more.setOnClickListener(this);
 
-
-        /*设置沉侵式导航栏*/
-        ImmersedStatusbarUtils.initAfterSetContentView(this, lin);
-
         intent = getIntent();
 
         item_position = intent.getIntExtra("position", 0);
@@ -162,7 +154,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
         lrc_singer.setText(intent.getStringExtra("singer"));
 
         if (NetWorkUtils.checkNetworkState(this)) {
-            Picasso.with(this).load(intent.getStringExtra("url")).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
+            Picasso.get().load(intent.getStringExtra("url")).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
             sendHttp(url, intent.getStringExtra("songid"));
         } else {
             ToastUtils.showToast(this, R.mipmap.music_warning, "没有网络了...");
@@ -309,7 +301,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
                 if (NetWorkUtils.checkNetworkState(this)) {
                     getPlayUrls(item_position, 3);
                     if (list.size() > 0) {
-                        Picasso.with(this).load(list.get(item_position).getPic_big()).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
+                        Picasso.get().load(list.get(item_position).getPic_big()).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
                     }
                     initLrc();
                 } else {
@@ -418,7 +410,7 @@ public class LrcActivity extends BaseActivity implements View.OnClickListener, S
                 if (NetWorkUtils.checkNetworkState(this)) {
                     getPlayUrls(item_position, 4);
                     if (list.size() > 0) {
-                        Picasso.with(this).load(list.get(item_position).getPic_big()).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
+                        Picasso.get().load(list.get(item_position).getPic_big()).placeholder(R.mipmap.default_music).error(R.mipmap.default_music).into(lrc_img);
                     }
                     initLrc();
                 } else {

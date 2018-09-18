@@ -18,6 +18,7 @@ import com.example.gy.musicgame.LrcActivity;
 import com.example.gy.musicgame.R;
 
 import bean.Music;
+import service.BackService;
 
 import static android.app.Notification.VISIBILITY_SECRET;
 
@@ -50,16 +51,10 @@ public class NotificationUtils {
         remoteViews.setTextViewText(R.id.back_music_singer, music.getAuthor());
         //PendingIntent intent = PendingIntent.getActivity(context, -1, new Intent(context, LrcActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         //remoteViews.setOnClickPendingIntent(R.id.back_music_play, intent);
-        Intent stopIntent = new Intent();
-        stopIntent.setAction(Constant.STOP);
-        PendingIntent stopbroadcast = PendingIntent.getBroadcast(context, 0, stopIntent, 0);
-        remoteViews.setOnClickPendingIntent(R.id.back_music_play, stopbroadcast);
-        remoteViews.setTextViewCompoundDrawables(R.mipmap.music_play, 0, 0, 0, 0);
-
-        Intent cancelIntent = new Intent();
-        cancelIntent.setAction(Constant.CANCEL);
-        PendingIntent cancalbroadcast = PendingIntent.getBroadcast(context, 0, cancelIntent, 0);
-        remoteViews.setOnClickPendingIntent(R.id.back_music_close, cancalbroadcast);
+        Intent service = new Intent(context, BackService.class);
+        service.setAction(Constant.CANCEL);
+        PendingIntent cancelIntent = PendingIntent.getService(context, 2, service, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.back_music_close, cancelIntent);
         builder.setCustomContentView(remoteViews);
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_ONGOING_EVENT;
@@ -121,7 +116,7 @@ public class NotificationUtils {
     public static void closeNotification() {
         if (notificationManager != null) {
             notificationManager.deleteNotificationChannel("channel");
-            notificationManager.cancel(100);
+            notificationManager.cancel(1);
         }
     }
 }

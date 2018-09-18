@@ -5,7 +5,7 @@
     <string name="loading">获取数据中</string>
     <string name="me">我的</string>
     <string name="no_msg">暂时没有消息</string>
-    <string name="type">挑战类型:例如悲伤</string>
+    <string name="type">请输入歌手或类型</string>
     <string name="sure">确定</string>
     <string name="update">检查更新</string>
     <string name="setting">清除缓存</string>
@@ -116,4 +116,7 @@
     <string name="no_data">没有获取到数据</string>
     <string name="share">分享</string>
     <string name="enter">进入应用</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="no_song">无歌曲</string>
 </resources>

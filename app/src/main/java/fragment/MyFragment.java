@@ -2,8 +2,10 @@ package fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -236,9 +238,24 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Se
                 }
                 break;
             case R.id.setting_tv:
-                //计算缓存
-                caculateCacheSize();
-                onClickCleanCache();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+                dialog.setTitle("温馨提示");
+                dialog.setMessage("清除缓存之后,下一次进入主页时，会重新进行登录，你确定需要清理吗?");
+                dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //计算缓存
+                        caculateCacheSize();
+                        onClickCleanCache();
+                    }
+                });
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                dialog.show();
                 break;
             case R.id.refresh_tv:
                 //重新获取用户最新数据

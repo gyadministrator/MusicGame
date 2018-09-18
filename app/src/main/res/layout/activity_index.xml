@@ -3,24 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/play_page_default_bg"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/lin"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:background="@color/txt_color_pressed"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:paddingTop="45dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            tools:ignore="UselessParent">
 
             <EditText
                 android:id="@+id/type_edit"
@@ -31,8 +29,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_shape"
                 android:hint="@string/type"
+                android:inputType="text"
                 android:maxLines="3"
-                android:paddingLeft="15dp" />
+                android:paddingStart="15dp"
+                tools:ignore="RtlSymmetry" />
 
             <TextView
                 android:id="@+id/search_type"
@@ -40,7 +40,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="6dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="@mipmap/music_search" />
         </LinearLayout>
     </LinearLayout>
